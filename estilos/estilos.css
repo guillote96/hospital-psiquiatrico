@@ -1,0 +1,33 @@
+html{
+	background-color:white;
+}
+body {
+	font-family:Arial;font-size:19px;
+}
+header{
+	border:1px solid grey;
+	border-color:black;
+	height: 75px;
+	width: 100%;
+    display: flex;
+    align-items: center;
+}
+section {
+	border:1px solid grey;
+	border-color:black;	
+	display: flex;
+	width: 100%;
+}
+footer{
+	border-color:black;
+	height: 60px;
+	width: 100%;	
+	display: flex;
+    align-items: center;
+	border:1px solid grey;
+	position: absolute;
+	bottom: 0; width:100%;
+}
+span{
+	color: white;
+}
