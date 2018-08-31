@@ -29,5 +29,15 @@ footer{
 	bottom: 0; width:100%;
 }
 span{
-	color: white;
+	color: black;
+}
+
+form{
+	display:inline-block;
+}
+
+.center {
+    margin: auto;
+    width: 20%;
+    padding: 10px;
 }
