@@ -68,3 +68,11 @@ form{
 
 }
 
+.titulo{
+      text-color: black;
+	  font-family:Arial;font-size:35px;
+	  text-align: center;
+	  text-decoration: underline;
+
+}
+
