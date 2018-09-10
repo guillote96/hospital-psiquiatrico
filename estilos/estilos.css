@@ -17,6 +17,7 @@ article {
 	border-color:black;	
 	display: flex;
 	width: 100%;
+	box-sizing: border-box;
 }
 footer{
 	border-color:black;
@@ -25,7 +26,7 @@ footer{
 	display: flex;
     align-items: center;
 	border:1px solid grey;
-	position: absolute;
+	position: relative;
 	bottom: 0; width:100%;
 }
 span{
@@ -50,8 +51,9 @@ form{
 	font-family:Verdana;
 	font-size:17px;
 	float: left;
-	width: 350px;
-	margin-left: 75px;
+	width: 35%;        /*350 px*/
+	margin-left: 4%;   /* 75px */
+	margin-right: 4%;
 	text-align: center;
 }
 
@@ -75,4 +77,34 @@ form{
 	  text-decoration: underline;
 
 }
+
+@media screen and (max-width: 600px) {
+	article {
+	border:1px solid grey;
+	border-color:black;	
+	width: 100%;
+	box-sizing: border-box;
+    bottom: 100%;
+    } 
+
+
+  .parrafo {
+  	
+    position: absolute;
+    top:25px;
+    bottom:500px;
+    width: 100%;
+    max-width:100%;
+  }
+
+
+
+
+
+
+
+
+
+}
+
 
