@@ -13,17 +13,16 @@ header{
     display: flex;
     align-items: center;
 }
-article {
+.article {
 	display: flex;
 	width: 100%;
 }
-section{
+.main{
 	width: 100%;
 	padding-bottom: 20%;
 }
 footer{
  	border-color:black;
-/*	padding-bottom: 20%;*/
 	width: 100%;	
 	display: flex;
     align-items: center;
@@ -39,15 +38,11 @@ form{
 	display:inline-block;
 }
 
-
 .center {
     margin: auto;
     width: 20%;
     padding: 10px;
 }
-
-
-
 
 .parrafo{
 	font-family:Verdana;
@@ -87,7 +82,6 @@ form{
     bottom: 100%;
     } 
 
-
   .parrafo {
   	
     position: absolute;
@@ -96,15 +90,4 @@ form{
     width: 100%;
     max-width:100%;
   }
-
-
-
-
-
-
-
-
-
 }
-
-
