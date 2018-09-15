@@ -1,8 +1,47 @@
-html{
+*{
+	color:#000;
 	background-color:white;
 }
+#header {
+	margin:auto;
+}
+			
+ul, ol {
+	list-style:none;
+}
+
+.nav {	
+	margin:0 auto;
+}
+ 
+.nav > li {
+
+	float:left;
+}	
+
+.nav li a {
+	text-decoration:none
+	display:block;
+}	
+
+.nav li ul {
+	display:none;
+	position:absolute;
+	border:1px solid grey;
+	border-color:black;
+}	
+
+.nav li:hover > ul {
+	display:block;
+}	
+
+.nav li ul li {
+	position:relative;
+}
+
 body {
-	font-family:Arial;font-size:19px;
+	font-family:Arial;
+	font-size:19px;
 }
 header{
 	border:1px solid grey;
@@ -90,4 +129,6 @@ form{
     width: 100%;
     max-width:100%;
   }
+
+	
 }
