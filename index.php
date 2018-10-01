@@ -10,11 +10,15 @@ require_once('model/Localidad.php');
 require_once('view/TwigView.php');
 require_once('view/SimpleResourceList.php');
 require_once('view/Home.php');
+require_once('controller/UsuarioController.php');
+require_once('model/PDOUsuario.php');
+require_once('model/Usuario.php');
 
 
-//echo "hola";
+
+
 if(isset($_GET["action"]) && $_GET["action"] == 'listResources'){
-    LocalidadController::getInstance()->listResources();
+    UsuarioController::getInstance()->listResources();
 }else{
-    LocalidadController::getInstance()->home();
+    UsuarioController::getInstance()->home();
 }
