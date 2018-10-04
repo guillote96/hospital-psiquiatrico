@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Instituciones</title>
+    </head>
+    <body>
+        <h1>Instituciones</h1>
+        <ul>
+        {% for item in resources %}
+           <li>{{item.nombre}} </li>
+        {% endfor %}
+        </ul>
+    </body>
+</html>
