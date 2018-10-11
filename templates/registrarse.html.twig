@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <title>Home</title>
+    </head>
+    <body>
+		<form action="./index.php?action=agregarUsuario" method="POST">
+		Usuario <input type="text" name="usuario"/><br><br>
+		Password <input type="password" name="password"/><br><br>
+		Email <input type="text" name="email"/><br><br>
+		Activo <select name="activo">
+			<option value="1">Activo</option>
+			<option value="2">Desactivo</option>
+		     </select> <br>
+		Nombre <input type="text" name="nombre"/><br><br>
+		Apellido <input type="text" name="apellido"/><br><br>
+		<input type="submit" value="Enviar"/>
+		</form>
+    </body>
+</html>

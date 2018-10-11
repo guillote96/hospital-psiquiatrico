@@ -5,7 +5,7 @@ abstract class PDORepository {
     const USERNAME = "root";
     const PASSWORD = "";
 	const HOST ="localhost";
-	const DB = "grupo2";
+	const DB = "proyecto";
     
     
     private function getConnection(){
@@ -22,6 +22,12 @@ abstract class PDORepository {
         $stmt = $connection->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll();
+    }
+
+    protected function addObj($sql){
+        $connection = $this->getConnection();
+        $stmt = $connection->prepare($sql);
+        $stmt-> execute();
     }
     
 }

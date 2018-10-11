@@ -8,6 +8,8 @@ require_once('model/PDORepository.php');
 require_once('model/PDOLocalidad.php');
 require_once('model/Localidad.php');
 require_once('view/TwigView.php');
+require_once('view/Registrarse.php');
+require_once('view/EditarUsuario.php');
 require_once('view/SimpleResourceList.php');
 require_once('view/Home.php');
 require_once('controller/UsuarioController.php');
@@ -17,8 +19,28 @@ require_once('model/Usuario.php');
 
 
 
-if(isset($_GET["action"]) && $_GET["action"] == 'listResources'){
-    UsuarioController::getInstance()->listResources();
-}else{
-    UsuarioController::getInstance()->home();
-}
+if(isset($_GET["action"])){
+	if ($_GET["action"] == 'listResources'){
+	    UsuarioController::getInstance()->listResources();
+	}else if ($_GET["action"] == 'agregarUsuario'){
+		UsuarioController::getInstance()->agregarUsuario();		
+	}
+	else if ($_GET["action"] == 'eliminarUsuario'){
+		$id = $_GET["id"];
+		UsuarioController::getInstance()->eliminarUsuario($id);
+	}
+	else if ($_GET["action"] == 'registrarse'){
+		UsuarioController::getInstance()->registrarse();
+	}
+	else if ($_GET["action"] == 'editarUsuario'){
+		$id= $_GET["id"];
+		UsuarioController::getInstance()->editarUsuario($id);
+	}
+	else if ($_GET["action"] == 'actualizarUsuario'){
+		$id= $_GET["id"];
+		UsuarioController::getInstance()->actualizarUsuario($id);
+	}			
+}	
+else{
+	    UsuarioController::getInstance()->home();
+	}

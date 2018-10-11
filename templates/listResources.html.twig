@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Localidades</title>
+        <title>Usuarios</title>
     </head>
     <body>
-        <h1>Localidades</h1>
+        <h1>Usuarios</h1>
         <ul>
         {% for item in resources %}
-           <li>{{item.username}} </li>
+           <li>{{item.username}} </li> <a href="./?action=eliminarUsuario&id={{ item.id }}">Eliminar Usuario</a><a href="./?action=editarUsuario&id={{ item.id }}">Editar Usuario</a>
         {% endfor %}
         </ul>
     </body>

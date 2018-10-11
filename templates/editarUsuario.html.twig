@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <title>Home</title>
+    </head>
+    <body>
+        <form action="./index.php?action=actualizarUsuario&id={{resources.id}}" method="POST">
+        Usuario <input type="text" name="usuario" value="{{resources.username}}" /><br><br>
+
+        Email <input type="text" name="email" value="{{resources.email}}"><br><br>
+        Activo <select name="activo" value="{{resources.activo}}">
+            <option value="0">Activo</option>
+            <option value="1">Desactivo</option>
+             </select> <br><br>
+        Nombre <input type="text" name="nombre" value="{{resources.firstname}}"/><br><br>
+        Apellido <input type="text" name="apellido" value="{{resources.lastname}}"/><br><br>
+        <input type="submit" value="Enviar"/>
+        </form>
+    </body>
+</html>
