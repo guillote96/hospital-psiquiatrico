@@ -15,9 +15,11 @@
 &emsp;&emsp;&emsp;
 &emsp;&emsp;&emsp;
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+<form action=./index.php?action=buscarUsuario method="POST" >
 <input type="text" name="buscar" placeholder="Buscar ... ">
 &nbsp;
-<input type="button" value="Buscar">
+<input type="submit" value="Buscar">
+</form>
 &emsp;&emsp;&emsp;
   
  {% if resources.sesion == false %}

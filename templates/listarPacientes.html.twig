@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Pacientes</title>
+    </head>
+    <body>
+        <h1>Pacientes</h1>
+        <ul>
+        {% for item in resources %}
+           <li>{{item.apellido}} {{item.nombre}} {{item.domicilio}}  <li>
+        {% endfor %}
+        </ul>
+    </body>
+</html>

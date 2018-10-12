@@ -73,8 +73,12 @@ class UsuarioController {
     }
 
     public function verificarDatos(){
+        if(empty($_POST['usuario']) && empty($_POST['contraseña'])){
+            return false;
+        }
         $usuario = $_POST['usuario'];
         $password = $_POST['contraseña'];
+
         if( PDOUsuario::getInstance()->existe_usuario($usuario)){
              
             if(PDOUsuario::getInstance()->verificar_password($usuario,$password)){
@@ -82,12 +86,15 @@ class UsuarioController {
                     //redireccionar a Home
                     $view = new HomeVerdadero();
                     $view->show($_SESSION);
+                    return true;
             }else{
                 echo "Contraseña incorrecta";
+                return false;
             }
                
         }
-         echo "Nombre de usuario o contraseña incorrecto";
+        echo "Usuario o Contraseña Incorrecta";
+        return false;
     }
     public function alta_sesion($usuario){
         session_start();
@@ -101,6 +108,30 @@ class UsuarioController {
         $view = new HomeVerdadero();
         $_SESSION['sesion']=false;
         $view->show($_SESSION);
+    }
+   public function buscarPorUsername(){
+         if(empty($_POST['buscar'])){
+            return false;
+          }
+         $datos= PDOUsuario:: getInstance()->buscarPorUsername($_POST['buscar']);
+         $view= new BuscarUsuario();
+         $view->show($datos);
+    }
+    public function tipoDeBusqueda(){
+        if(empty($_POST['buscar'])){
+            return false;
+          }
+        $datos; $view;
+        if($_POST['buscar'] == "activo"){
+            $datos= PDOUsuario:: getInstance()->buscarPorActivo(1);
+        }else if($_POST['buscar'] == "bloqueado"){
+            $datos= PDOUsuario:: getInstance()->buscarPorActivo(2);
+        } else{
+            $datos= PDOUsuario:: getInstance()->buscarPorUsername($_POST['buscar']);
+        }
+         $view= new BuscarUsuario();
+         $view->show($datos);
+
     }
 
 }

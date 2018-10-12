@@ -65,13 +65,34 @@ class PDOUsuario extends PDORepository {
         $answer = $this->queryList("select * from usuario WHERE username='$username'");
         $final_answer = [];
         foreach ($answer as &$element) {
-            $final_answer[] = new Usuario($element['id'],$element['email'],$element['username'],$element['password'],$element['activo'],$element['updated_at'],$element['created_at'],$element['first_name'],$element['last_name']);
+            $final_answer[] = new Usuario($element['id'],$element['email'],$element['username'],$element['activo'],$element['password'],$element['updated_at'],$element['created_at'],$element['first_name'],$element['last_name']);
         }
-        if($password = ($final_answer[0]->getPassword())){
+        if($password == ($final_answer[0]->getPassword())){
+                
                 return true;
         }
 
         return false;
+
+    }
+
+    public function buscarPorUsername($username){
+        $answer = $this->queryList("select * from usuario WHERE username='$username'");
+        $final_answer = [];
+        foreach ($answer as &$element) {
+            $final_answer[] = new Usuario($element['id'],$element['email'],$element['username'],$element['activo'],$element['password'],$element['updated_at'],$element['created_at'],$element['first_name'],$element['last_name']);
+        }
+        return $final_answer;
+
+    }
+
+    public function buscarPorActivo($valor){
+        $answer = $this->queryList("select * from usuario WHERE activo='$valor'");
+        $final_answer = [];
+        foreach ($answer as &$element) {
+            $final_answer[] = new Usuario($element['id'],$element['email'],$element['username'],$element['activo'],$element['password'],$element['updated_at'],$element['created_at'],$element['first_name'],$element['last_name']);
+        }
+        return $final_answer;
 
     }
 
