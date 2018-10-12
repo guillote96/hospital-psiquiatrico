@@ -12,6 +12,8 @@ require_once('view/Registrarse.php');
 require_once('view/EditarUsuario.php');
 require_once('view/SimpleResourceList.php');
 require_once('view/Home.php');
+require_once('view/HomeVerdadero.php');
+require_once('view/IniciarSesion.php');
 require_once('controller/UsuarioController.php');
 require_once('model/PDOUsuario.php');
 require_once('model/Usuario.php');
@@ -39,7 +41,16 @@ if(isset($_GET["action"])){
 	else if ($_GET["action"] == 'actualizarUsuario'){
 		$id= $_GET["id"];
 		UsuarioController::getInstance()->actualizarUsuario($id);
-	}			
+	}
+	else if ($_GET["action"] == 'iniciarSesion'){
+		UsuarioController::getInstance()->iniciarSesion();
+	}
+	else if ($_GET["action"] == 'verificarDatos'){
+		UsuarioController::getInstance()->verificarDatos();
+	}
+	else if ($_GET["action"] == 'cerrarSesion'){
+		UsuarioController::getInstance()->cerrarSesion();
+	}						
 }	
 else{
 	    UsuarioController::getInstance()->home();

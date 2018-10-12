@@ -67,5 +67,43 @@ class UsuarioController {
         $view->show($resources[0]);
     }
 
-    
+     public function iniciarSesion(){
+        $view = new IniciarSesion();
+        $view->show();   
+    }
+
+    public function verificarDatos(){
+        $usuario = $_POST['usuario'];
+        $password = $_POST['contraseña'];
+        if( PDOUsuario::getInstance()->existe_usuario($usuario)){
+             
+            if(PDOUsuario::getInstance()->verificar_password($usuario,$password)){
+                    self::getInstance()->alta_sesion($usuario);
+                    //redireccionar a Home
+                    $view = new HomeVerdadero();
+                    $view->show($_SESSION);
+            }else{
+                echo "Contraseña incorrecta";
+            }
+               
+        }
+         echo "Nombre de usuario o contraseña incorrecto";
+    }
+    public function alta_sesion($usuario){
+        session_start();
+        $_SESSION['sesion']= true;
+        $_SESSION['usuario']= $usuario;
+
+    }
+
+    public function cerrarSesion(){
+        session_destroy();
+        $view = new HomeVerdadero();
+        $_SESSION['sesion']=false;
+        $view->show($_SESSION);
+    }
+
 }
+
+    
+

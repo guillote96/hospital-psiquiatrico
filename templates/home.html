@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <meta charset="utf-8" />
-<link rel="stylesheet" href="../recursos/estilos/estilos.css" />
+<link rel="stylesheet" href="../grupo2/recursos/estilos/estilos.css" />
 <title>Hospital Dr. Alejandro-Korn</title>
 <meta name="viewport" content="initial-scale=1, width=device-width">
 <body>
@@ -19,8 +19,16 @@
 &nbsp;
 <input type="button" value="Buscar">
 &emsp;&emsp;&emsp;
+  
+ {% if resources.sesion == false %}
+       <span><a href="./index.php?action=iniciarSesion">Login </a></span>
+ {% else%}
+    <span><a href="./index.php?action=cerrarSesion">{{resources.usuario}} </a></span>
+{% endif %}
 
-<span><a href="">Login </a></span>
+
+
+
 
 </HEADER>
 <main class="article">
