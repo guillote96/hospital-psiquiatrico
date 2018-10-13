@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <title>Home</title>
+    </head>
+    <body>
+		<form action="./index.php?action=agregar_paciente" method="POST">
+		     Apellido <input type="text" name="apellido"/><br><br>
+
+		       Nombre <input type="text" name="nombre"/><br><br>
+
+  Fecha de Nacimiento <input type="date" name="fecha_nac"/><br><br>
+
+  Lugar de Nacimiento <input type="text" name="lugar_nac"/><br><br>
+
+		        Partido <select name="partido">
+			            <option value="Rivadavia">Rivadavia</option>
+			            <option value="Trenque Launquen">Trenque Launquen</option>
+		                </select> <br>
+
+		      Localidad <select name="localidad">
+			            <option value="America">America</option>
+			            <option value="Fortin Olavarria">Fortin Olavarria</option>
+		                </select> <br>
+
+		     Domicilio <input type="text" name="domicilio"/><br><br>
+
+		     Genero <select name="genero">
+			            <option value="Masculino">Masculino</option>
+			            <option value="Femenino">Femenino</option>
+			            <option value="Otro">Femenino</option>
+		                </select> <br>
+
+		 Tiene Documento<select name="tiene_doc">
+			            <option value="1">SI</option>
+			            <option value="0">NO</option>
+		                </select> <br>
+
+		    Tipo de Doc <select name="tipo_doc">
+			            <option value="DNI">DNI</option>
+			            <option value="LC">LC</option>
+			            <option value="CI">CI</option>
+			            <option value="LE">LE</option>
+		                </select> <br>
+
+    Numero de Documento <input type="number" name="numero_documento"/><br><br>
+ Nº de Historia Clinica <input type="number" name="numero_historia_clinica" min="0" max= "999999"/><br><br>
+ Nº de Carpeta <input type="number" name="numero_carpeta" min="0" max= "99999"/><br><br>
+
+		<input type="submit" value="Enviar"/>
+		</form>
+    </body>
+</html>
