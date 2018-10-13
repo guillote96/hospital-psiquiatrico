@@ -19,6 +19,7 @@ require_once('view/IniciarSesion.php');
 require_once('view/BuscarUsuario.php');
 require_once('view/ListarPaciente.php');
 require_once('view/AgregarPaciente.php');
+require_once('view/EditarPaciente.php');
 require_once('controller/UsuarioController.php');
 require_once('controller/PacienteController.php');
 require_once('model/PDOUsuario.php');
@@ -69,7 +70,17 @@ if(isset($_GET["action"])){
 	}
 	else if ($_GET["action"] == 'agregar_paciente'){
 		PacienteController:: getInstance()->agregar_paciente();
-	}												
+	}
+	else if ($_GET["action"] == 'editarPaciente'){
+		$id= $_GET["id"];
+		PacienteController:: getInstance()->editarPaciente($id);
+	}
+	else if ($_GET["action"] == 'actualizarPaciente'){
+		PacienteController:: getInstance()->actualizar_paciente();
+	}
+	else if ($_GET["action"] == 'eliminarPaciente'){
+		PacienteController:: getInstance()->eliminarPaciente($_GET["id"]);
+	}															
 }	
 else{
 	    UsuarioController::getInstance()->home();
