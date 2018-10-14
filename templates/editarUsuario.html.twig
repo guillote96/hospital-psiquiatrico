@@ -8,8 +8,8 @@
 
         Email <input type="text" name="email" value="{{resources.email}}"><br><br>
         Activo <select name="activo" value="{{resources.activo}}">
-            <option value="0">Activo</option>
-            <option value="1">Desactivo</option>
+            <option value="0" {% if resources.activo == 0 %} selected {% endif %}>Activo</option>
+            <option value="1" {% if resources.activo == 1 %} selected {% endif %}>Desactivo</option>
              </select> <br><br>
         Nombre <input type="text" name="nombre" value="{{resources.firstname}}"/><br><br>
         Apellido <input type="text" name="apellido" value="{{resources.lastname}}"/><br><br>
