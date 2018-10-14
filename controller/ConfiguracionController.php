@@ -20,8 +20,13 @@ class ConfiguracionController {
     
     public function listarVariables(){
         $resources = PDOConfiguracion::getInstance()->listAll();
-        $view = new SimpleResourceList();
+        $view = new ModuloDeConfiguracion();
         $view->show($resources);
+    }
+
+     public function moduloDeConfiguracion(){
+        $view = new Configuracion();
+        $view->show();
     }
     
     public function home(){

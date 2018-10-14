@@ -24,6 +24,11 @@ require_once('controller/UsuarioController.php');
 require_once('controller/PacienteController.php');
 require_once('model/PDOUsuario.php');
 require_once('model/Usuario.php');
+require_once('controller/ConfiguracionController.php');
+require_once('model/Configuracion.php');
+require_once('model/PDOConfiguracion.php');
+require_once('view/ModuloDeConfiguracion.php');
+
 
 
 
@@ -31,7 +36,8 @@ require_once('model/Usuario.php');
 if(isset($_GET["action"])){
 	if ($_GET["action"] == 'listResources'){
 	    UsuarioController::getInstance()->listResources();
-	}else if ($_GET["action"] == 'agregarUsuario'){
+	}
+	else if ($_GET["action"] == 'agregarUsuario'){
 		UsuarioController::getInstance()->agregarUsuario();		
 	}
 	else if ($_GET["action"] == 'eliminarUsuario'){
@@ -80,6 +86,9 @@ if(isset($_GET["action"])){
 	}
 	else if ($_GET["action"] == 'eliminarPaciente'){
 		PacienteController:: getInstance()->eliminarPaciente($_GET["id"]);
+	}
+	else if ($_GET["action"] == 'moduloDeConfiguracion'){
+		ConfiguracionController:: getInstance()->listarVariables();
 	}															
 }	
 else{
