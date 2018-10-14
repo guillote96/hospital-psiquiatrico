@@ -1,9 +1,10 @@
-<html>
+{% include 'encabezado.html'%}
     <head>
         <title>Home</title>
     </head>
     <body>
-		<form action="./index.php?action=agregar_paciente" method="POST">
+{% include 'barra.html'%}
+		<!--<form action="./index.php?action=agregar_paciente" method="POST">
 		     Apellido <input type="text" name="apellido" required /><br><br>
 
 		       Nombre <input type="text" name="nombre" required/><br><br>
@@ -60,6 +61,113 @@
  Nº de Carpeta <input type="number" name="numero_carpeta" min="0" max= "99999" required/><br><br>
 
 		<input type="submit" value="Enviar"/>
-		</form>
+		</form>-->
+		
+		<div class="container">
+  <h2><u>Registrar Paciente</u></h2>
+  <form>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="apellido">Apellido:</label>
+      <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellido" required>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="nombre">Nombre:</label>
+      <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre">
+    </div>
+  </div>
+   <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="fecha_nac">Fecha de Nacimiento:</label>
+      <input type="datetime" class="form-control" id="fecha_nac" name="fecha_nac" required>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="lugar_nac">Lugar de Nacimiento:</label>
+      <input type="text" class="form-control" id="lugar_nac" name="lugar_nac" placeholder="Lugar de Nacimiento" required>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="partido">Partido:</label>
+      <select class="form-control" name="partido" id="partido" required>
+      <option value="Rivadavia">Rivadavia</option>
+      <option value="Trenque Lauquen">Trenque Lauquen</option>
+      </select>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="localidad">Localidad</label>
+      <select class="form-control" name="localidad" id="localidad" required>
+      <option value="America">America</option>
+      <option value="Fortin Olavarria">Fortin Olavarria</option>
+  	  </select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="domicilio">Domicilio</label>
+    <input type="text" class="form-control" id="domicilio" name="domicilio" placeholder="Domicilio" required>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-2">
+      <label for="genero">Genero</label>
+      <select class="form-control" name="genero" id="genero" required>
+      <option value="masculino">Masculino</option>
+      <option value="femenino">Femenino</option>
+      <option value="otro">Otro</option>
+  	  </select>
+    </div>
+    <div class="form-group col-md-2">
+      <label for="region_sanitaria">Región Sanitaria</label>
+      <select class="form-control" name="region_sanitaria" id="region_sanitaria" required>
+      <option value="I">I</option>
+      <option value="II">II</option>
+      <option value="III">III</option>
+      <option value="IV">IV</option>
+  	  </select>
+    </div>
+    <div class="form-group col-md-8">
+      <label for="obra_social">Obra Social:</label>
+      <select class="form-control" name="obra_social" id="obra_social" required>
+      <option value="IOMA">IOMA</option>
+      <option value="OSDE">OSDE</option>
+      <option value="OSECAC">OSECAC</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-2">
+      <label for="tiene_doc">Tiene Documento?</label>
+     <select class="form-control" name="tiene_doc" id="tiene_doc" required>
+      <option value="1">Si</option>
+      <option value="0">No</option>
+      </select>
+    </div>
+    <div class="form-group col-md-2">
+      <label for="tipo_doc">Tipo de Documento:</label>
+      <select class="form-control" name="tiene_doc" id="tiene_doc" required>
+      <option value="DNI">DNI</option>
+      <option value="LC">LC</option>
+      <option value="CI">CI</option>
+      <option value="LE">LE</option>
+      </select>
+    </div>
+    <div class="form-group col-md-8">
+      <label for="numero_documento">Número de Documento</label>
+       <input type="number" class="form-control" id="numero_documento" name="numero_documento" placeholder="Número de Documento">
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="numero:historia_clinica">Número de Historia Clínica:</label>
+      <input type="number" class="form-control" id="numero_historia_clinica" name="numero_historia_clinica" placeholder="Número de Historia Clíica" required>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="numero_carpeta">Número de Carpeta:</label>
+      <input type="number" class="form-control" id="numero_carpeta" name="numero_carpeta" placeholder="Número de Carpeta" required>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Aceptar</button>
+</form>
+</div>
+{% include 'footer.html'%}
     </body>
 </html>
