@@ -7,7 +7,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="./index.php">Inicio <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Consultas</a>
@@ -30,10 +30,15 @@
       <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
     </form>
-    <ul class="navbar-nav">
-      <li class="nav-item active">
+     {% if resources is empty %}
+           <ul class="navbar-nav">
+        <li class="nav-item active">
           <a class="nav-link" href="./?action=iniciarSesion">Login <span class="sr-only">(current)</span></a>
-      </li>
-    </ul>
+       </li>
+        </ul>
+     {% else%}
+    <span><a href="./index.php?action=cerrarSesion">{{resources.usuario}} </a></span>
+    {% endif %}
+
   </div>
 </nav>

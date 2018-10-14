@@ -95,6 +95,20 @@ class PDOPaciente extends PDORepository {
              $answer = $this->addObj("UPDATE paciente SET apellido = '$datos[apellido]', nombre = '$datos[nombre]', fecha_nac = '$datos[fecha_nac]', lugar_nac ='$datos[lugar_nac]', localidad_id = $idLocalidad, region_sanitaria_id = $idRegionSanitaria, domicilio ='$datos[domicilio]', genero_id=$idGenero ,tiene_documento ='$datos[tiene_doc]', tipo_doc_id = $idTipoDocumentoId, numero ='$datos[numero_documento]', nro_historia_clinica = '$datos[numero_historia_clinica]',nro_carpeta ='$datos[numero_carpeta]', obra_social_id =$idObraSocial WHERE id='$_GET[id]'");
     }
 
+    public function traer_datosVarios($id){
+      // Trae Nombre de los siguientes campos: localidad, region sanitaria, genero, tipo de documento y obrasocial
+      $consulta= $this->queryList("SELECT l.nombre as localidad, pa.nombre as partido, rs.nombre as regionsanitaria, td.nombre as tipodocumento, g.nombre as genero, os.nombre as obrasocial FROM paciente p inner join localidad l on ( p.localidad_id = l. id) inner join partido pa on (pa.id = l.partido_id) inner join region_sanitaria rs on (rs.id=pa.region_sanitaria_id) inner join tipo_documento td on (td.id = p.tipo_doc_id) inner join genero g on ( g.id = p.genero_id) inner join obra_social os on (os.id=p.obra_social_id) WHERE p.id = $id");
+         
+        $datos = array(  "localidad" => $consulta [0]["localidad"],
+                              "partido" =>   $consulta [0]["partido"],
+                              "region" => $consulta [0]["regionsanitaria"],
+                              "tipodocumento" => $consulta [0]["tipodocumento"],
+                              "genero" => $consulta [0]["genero"],
+                              "obrasocial" => $consulta [0]["obrasocial"]);
+
+          return $datos;
+    }
+
 
 
 

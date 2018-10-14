@@ -3,9 +3,9 @@
 
 class EditarPaciente extends TwigView {
     
-    public function show($resources) {
+    public function show($resources,$datos) {
         
-         echo self::getTwig()->render('editarPaciente.html.twig', array('resources' => $resources));
+         echo self::getTwig()->render('editarPaciente.html.twig', array('resources' => $resources,'datos' => $datos));
         
         
     }

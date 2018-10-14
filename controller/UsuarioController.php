@@ -84,8 +84,8 @@ class UsuarioController {
             if(PDOUsuario::getInstance()->verificar_password($usuario,$password)){
                     self::getInstance()->alta_sesion($usuario);
                     //redireccionar a Home
-                    $view = new HomeVerdadero();
-                    $view->show($_SESSION);
+                    $view = new Home();
+                    $view->inicio($_SESSION);
                     return true;
             }else{
                 echo "Contraseña incorrecta";
@@ -105,9 +105,9 @@ class UsuarioController {
 
     public function cerrarSesion(){
         session_destroy();
-        $view = new HomeVerdadero();
+        $view = new Home();
         $_SESSION['sesion']=false;
-        $view->show($_SESSION);
+        $view->inicio($_SESSION);
     }
    public function buscarPorUsername(){
          if(empty($_POST['buscar'])){

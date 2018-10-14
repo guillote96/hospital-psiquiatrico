@@ -80,8 +80,9 @@ class PacienteController{
 
      public function editarPaciente($id){
         $resources = PDOPaciente::getInstance()->traer_paciente($id);
+        $datos = PDOPaciente::getInstance()->traer_datosVarios($id);
         $view = new EditarPaciente();
-        $view->show($resources[0]);
+        $view->show($resources[0],$datos);
     }
 
          public function eliminarPaciente($id){

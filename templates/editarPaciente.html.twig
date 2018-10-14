@@ -13,51 +13,47 @@
   Lugar de Nacimiento <input type="text" name="lugar_nac" value="{{resources.lugarnac}}" required/><br><br>
 
 		        Partido <select name="partido" required>
-			            <option value="Rivadavia">Rivadavia</option>
-			            <option value="Trenque Launquen">Trenque Launquen</option>
+			            <option value="Rivadavia" {% if datos.partido == "Rivadavia" %} selected {% endif %}>Rivadavia</option>
+			            <option value="Trenque Launquen" {% if datos.partido == "Trenque Launquen" %} selected {% endif %}>Trenque Launquen</option>
 		                </select> <br>
 
-		      Localidad <select name="localidad" value="{{resources.localidadid}}" required >
-			            <option value="America"> America </option>
-			            <option value="Fortin Olavarria">Fortin Olavarria</option>
+		      Localidad <select name="localidad" value="{{datos.localidad}}" required >
+			            <option value="America" {% if datos.localidad == "America" %} selected {% endif %}> America </option>
+			            <option value="Fortin Olavarria" {% if datos.localidad == "Fortin Olavarria" %} selected {% endif %} >Fortin Olavarria</option>
 		                </select> <br>
 
 		     Domicilio <input type="text" name="domicilio" value="{{resources.domicilio}}" required/><br><br>
 
-		     Genero <select name="genero" value="{{resources.genero}}" required>
-			            <option value="Masculino">Masculino</option>
-			            <option value="Femenino">Femenino</option>
-			            <option value="Otro">Otro</option>
+		     Genero <select name="genero" value="{{datos.genero}}" required>
+			            <option value="Masculino" {% if datos.genero == "Masculino" %} selected {% endif %}>Masculino</option>
+			            <option value="Femenino"  {% if datos.genero == "Femenino" %} selected {% endif %}>Femenino</option>
+			            <option value="Otro"  {% if datos.genero == "Otro" %} selected {% endif %}>Otro</option>
 		                </select> <br>
 
-	  Region Sanitaria <select name="region_sanitaria"  required>
-			            <option value="I">I</option>
-			            <option value="II">II</option>
-			            <option value="III">III</option>
-			            <option value="IV">IV</option>
-		                </select> <br>
 
-		 Tiene Documento<select name="tiene_doc"   required>
-			            <option value="1">SI</option>
-			            <option value="0">NO</option>
+	  Region Sanitaria  <input  name="region_sanitaria" type="text" value="{{datos.region}}" readonly onmousedown="return false;" /><br>
+
+		 Tiene Documento<select name="tiene_doc" value="{{resources.tienedocumento}}"   required>
+			            <option value="1" {% if resources.tienedocumento == 1 %} selected {% endif %}>SI</option>
+			            <option value="0" {% if resources.tienedocumento == 0 %} selected {% endif %}>NO</option>
 		                </select> <br>
 
 		    Tipo de Doc <select name="tipo_doc" required>
-			            <option value="DNI">DNI</option>
-			            <option value="LC">LC</option>
-			            <option value="CI">CI</option>
-			            <option value="LE">LE</option>
+			            <option value="DNI"  {% if datos.tipodocumento == "DNI" %} selected {% endif %}>DNI</option>
+			            <option value="LC" {% if datos.tipodocumento == "LC" %} selected {% endif %}>LC</option>
+			            <option value="CI" {% if datos.tipodocumento == "CI" %} selected {% endif %}>CI</option>
+			            <option value="LE" {% if datos.tipodocumento == "LE" %} selected {% endif %}>LE</option>
 		                </select> <br>
 
 		   Obra Social  <select name="obra_social" required>
-			            <option value="IOMA">IOMA</option>
-			            <option value="OSDE">OSDE</option>
-			            <option value="OSECAC">OSECAC</option>
+			            <option value="IOMA" {% if datos.obrasocial == "IOMA" %} selected {% endif %}>IOMA</option>
+			            <option value="OSDE" {% if datos.obrasocial == "OSDE" %} selected {% endif %}>OSDE</option>
+			            <option value="OSECAC" {% if datos.obrasocial == "OSECAC" %} selected {% endif %}>OSECAC</option>
 		                </select> <br>
 
-    Numero de Documento <input type="number" name="numero_documento" required/><br><br>
- Nº de Historia Clinica <input type="number" name="numero_historia_clinica" min="0" max= "999999" required/><br><br>
- Nº de Carpeta <input type="number" name="numero_carpeta" min="0" max= "99999" required/><br><br>
+    Numero de Documento <input type="number" name="numero_documento" value={{resources.numero}} required/><br><br>
+ Nº de Historia Clinica <input type="number" name="numero_historia_clinica" value= {{resources.nrohistoriaclinica}} min="0" max= "999999" required/><br><br>
+ Nº de Carpeta <input type="number" name="numero_carpeta" min="0" max= "99999" value={{resources.nrocarpeta}} required/><br><br>
 
 		<input type="submit" value="Enviar"/>
 		</form>
