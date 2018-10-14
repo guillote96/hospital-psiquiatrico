@@ -30,9 +30,6 @@ class PacienteController{
     }
 
     public function agregar_paciente(){
-        /*if(count($_POST) < 13){
-            return false;
-        }*/
 
         $datos=array("apellido" => $_POST['apellido'],
                     "nombre"  => $_POST['nombre'],
@@ -58,9 +55,6 @@ class PacienteController{
 
 
     public function actualizar_paciente(){
-        /*if(count($_POST) < 13){
-            return false;
-        }*/
 
         $datos=array("apellido" => $_POST['apellido'],
                     "nombre"  => $_POST['nombre'],

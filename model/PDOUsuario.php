@@ -21,7 +21,7 @@ class PDOUsuario extends PDORepository {
         $answer = $this->queryList("select * from usuario");
         $final_answer = [];
         foreach ($answer as &$element) {
-            $final_answer[] = new Usuario($element['id'],$element['email'],$element['username'],$element['password'],$element['activo'],$element['updated_at'],$element['created_at'],$element['first_name'],$element['last_name']);
+            $final_answer[] = new Usuario($element['id'],$element['email'],$element['username'],$element['activo'],$element['password'],$element['updated_at'],$element['created_at'],$element['first_name'],$element['last_name']);
         }
         return $final_answer;
 
@@ -45,7 +45,7 @@ class PDOUsuario extends PDORepository {
         $answer = $this->queryList("select * from usuario WHERE id='$id'");
         $final_answer = [];
         foreach ($answer as &$element) {
-            $final_answer[] = new Usuario($element['id'],$element['email'],$element['username'],$element['password'],$element['activo'],$element['updated_at'],$element['created_at'],$element['first_name'],$element['last_name']);
+            $final_answer[] = new Usuario($element['id'],$element['email'],$element['username'],$element['activo'],$element['password'],$element['updated_at'],$element['created_at'],$element['first_name'],$element['last_name']);
         }
         return $final_answer;
 

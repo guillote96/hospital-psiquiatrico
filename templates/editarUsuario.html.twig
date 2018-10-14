@@ -24,8 +24,8 @@
     <div class="col-4">
       <label for="estado">Estado:</label>
       <select class="form-control" name="activo" id="estado">
-      <option value="0">Activo</option>
-      <option value="1">Inactivo</option>
+      <option value="0" {% if resources.activo == 0 %} selected {% endif %}>Activo</option>
+      <option value="1" {% if resources.activo == 1 %} selected {% endif %}>Inactivo</option>
       </select>
     </div>
     </div>

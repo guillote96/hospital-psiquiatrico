@@ -122,9 +122,9 @@ class UsuarioController {
             return false;
           }
         $datos; $view;
-        if($_POST['buscar'] == "activo"){
+        if(strtolower ($_POST['buscar']) == "activo"){
             $datos= PDOUsuario:: getInstance()->buscarPorActivo(1);
-        }else if($_POST['buscar'] == "bloqueado"){
+        }else if(strtolower ($_POST['buscar']) == "bloqueado"){
             $datos= PDOUsuario:: getInstance()->buscarPorActivo(2);
         } else{
             $datos= PDOUsuario:: getInstance()->buscarPorUsername($_POST['buscar']);
