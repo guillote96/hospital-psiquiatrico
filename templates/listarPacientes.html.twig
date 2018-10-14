@@ -1,8 +1,8 @@
-<!DOCTYPE html>
-<html>
+{% include 'encabezado.html'%}
     <head>
         <title>Pacientes</title>
     </head>
+{% include 'barra.html'%}
     <body>
         <h1>Pacientes</h1>
         <ul>
@@ -11,5 +11,6 @@
            <a href="./?action=eliminarPaciente&id={{ item.id }}"> Eliminar Paciente</a>
         {% endfor %}
         </ul>
+{% include 'footer.html'%}
     </body>
 </html>
