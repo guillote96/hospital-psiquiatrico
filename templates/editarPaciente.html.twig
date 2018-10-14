@@ -3,41 +3,41 @@
         <title>Home</title>
     </head>
     <body>
-		<form action="./index.php?action=agregar_paciente" method="POST">
-		     Apellido <input type="text" name="apellido" required /><br><br>
+		<form action="./index.php?action=actualizarPaciente&id={{resources.id}}" method="POST">
+		     Apellido <input type="text" name="apellido" value="{{resources.apellido}}" required/><br><br>
 
-		       Nombre <input type="text" name="nombre" required/><br><br>
+		       Nombre <input type="text" name="nombre" value="{{resources.nombre}}"  required/><br><br>
 
-  Fecha de Nacimiento <input type="date" name="fecha_nac" required/><br><br>
+  Fecha de Nacimiento <input type="date" name="fecha_nac" value="{{resources.apellido}}" required/><br><br>
 
-  Lugar de Nacimiento <input type="text" name="lugar_nac" required/><br><br>
+  Lugar de Nacimiento <input type="text" name="lugar_nac" value="{{resources.lugarnac}}" required/><br><br>
 
 		        Partido <select name="partido" required>
 			            <option value="Rivadavia">Rivadavia</option>
 			            <option value="Trenque Launquen">Trenque Launquen</option>
 		                </select> <br>
 
-		      Localidad <select name="localidad" required >
+		      Localidad <select name="localidad" value="{{resources.localidadid}}required >
 			            <option value="America">America</option>
 			            <option value="Fortin Olavarria">Fortin Olavarria</option>
 		                </select> <br>
 
-		     Domicilio <input type="text" name="domicilio" required/><br><br>
+		     Domicilio <input type="text" name="domicilio" value="{{resources.domicilio}}" required/><br><br>
 
-		     Genero <select name="genero" required>
+		     Genero <select name="genero" value="{{resources.genero}}" required>
 			            <option value="Masculino">Masculino</option>
 			            <option value="Femenino">Femenino</option>
 			            <option value="Otro">Otro</option>
 		                </select> <br>
 
-	  Region Sanitaria <select name="region_sanitaria" required>
+	  Region Sanitaria <select name="region_sanitaria"  required>
 			            <option value="I">I</option>
 			            <option value="II">II</option>
 			            <option value="III">III</option>
 			            <option value="IV">IV</option>
 		                </select> <br>
 
-		 Tiene Documento<select name="tiene_doc" required>
+		 Tiene Documento<select name="tiene_doc"   required>
 			            <option value="1">SI</option>
 			            <option value="0">NO</option>
 		                </select> <br>
