@@ -20,6 +20,7 @@ require_once('view/BuscarUsuario.php');
 require_once('view/ListarPaciente.php');
 require_once('view/AgregarPaciente.php');
 require_once('view/EditarPaciente.php');
+require_once('view/BuscarPaciente.php');
 require_once('controller/UsuarioController.php');
 require_once('controller/PacienteController.php');
 require_once('model/PDOUsuario.php');
@@ -89,7 +90,13 @@ if(isset($_GET["action"])){
 	}
 	else if ($_GET["action"] == 'moduloDeConfiguracion'){
 		ConfiguracionController:: getInstance()->listarVariables();
-	}															
+	}
+	else if ($_GET["action"] == 'buscarPaciente'){
+		PacienteController:: getInstance()->buscarPaciente();
+	}
+	else if ($_GET["action"] == 'buscar_paciente'){
+		PacienteController:: getInstance()->buscar_paciente();
+	}																		
 }	
 else{
 	    UsuarioController::getInstance()->home();

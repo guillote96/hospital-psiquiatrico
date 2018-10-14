@@ -89,6 +89,32 @@ class PacienteController{
         $resources = PDOPaciente::getInstance()->eliminar_paciente($id);
         PacienteController:: getInstance()->listarTodosLosPacientes();
     }
+
+    public function buscarPaciente (){
+        $view = new BuscarPaciente();
+        $view->show();
+
+
+    }
+     public function buscar_paciente(){
+
+        if(!empty($_POST['apellido']) && !empty($_POST['nombre']) && !empty($_POST['numero_documento']) && !empty($_POST['tipo_doc'])){
+                $datos=PDOPaciente::getInstance()->buscarPacientePorDatosPersonales($_POST['apellido'],$_POST['nombre'],$_POST['numero_documento'],$_POST['tipo_doc']);
+                 $view = new ListarPaciente();
+                 $view->show($datos);
+                 return true;
+        }else if( !empty($_POST['numero_historia_clinica'])){
+             $datos=PDOPaciente::getInstance()->buscarPacienteHistoriaClinica($_POST['numero_historia_clinica']);
+             $view = new ListarPaciente();
+             $view->show($datos);
+             return true;
+        }else{
+            echo "Falta completar campos de Datos de paciente o Numero de Historia clinica";
+            return false;
+        }
+
+
+     }
 	
 
 
