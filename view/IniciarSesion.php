@@ -5,7 +5,7 @@ class IniciarSesion extends TwigView {
     
     public function show() {
         
-         echo self::getTwig()->render('login.html');
+         echo self::getTwig()->render('login.html.twig');
         
         
     }
