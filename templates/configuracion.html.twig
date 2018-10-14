@@ -2,6 +2,9 @@
 <body>
 {% include 'barra.html' %}
 <h1>Módulo de Configuración</h1>
+{% for item in resources %}
+    <li>Variable: {{item.variable}} <br> Valor: {{item.valor}} </li>
+{% endfor %}
 {% include 'footer.html' %}
 </body>
 </html>
