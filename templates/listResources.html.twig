@@ -1,8 +1,8 @@
-<!DOCTYPE html>
-<html>
+{% include 'encabezado.html'%}
     <head>
         <title>Usuarios</title>
     </head>
+{% include 'barra.html'%}
     <body>
         <h1>Usuarios</h1>
         <ul>
@@ -10,5 +10,6 @@
            <li>{{item.username}} </li> <a href="./?action=eliminarUsuario&id={{ item.id }}">Eliminar Usuario</a><a href="./?action=editarUsuario&id={{ item.id }}">Editar Usuario</a>
         {% endfor %}
         </ul>
+{% include 'footer.html'%}
     </body>
 </html>
