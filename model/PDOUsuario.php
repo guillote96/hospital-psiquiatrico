@@ -95,6 +95,8 @@ class PDOUsuario extends PDORepository {
         return $final_answer;
 
     }
-
-
+    public function asignar_rol($id,$idRol){
+        $answer = $this->addObj("INSERT INTO usuario_tiene_rol (usuario_id, rol_id) VALUES ('$id', '$idRol')");
+        
+    }
 }

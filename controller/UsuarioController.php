@@ -103,6 +103,14 @@ class UsuarioController {
 
     }
 
+    public function agregar_rol($id){
+        $usuario = PDOUsuario::getInstance()->traer_usuario($id);
+        $resources = PDORol::getInstance()->traer_roles();
+        $misRoles = PDORol::getInstance()->traer_roles_usuario($id);
+        $view = new AgregarRol();
+        $view->show($usuario, $resources, $misRoles); 
+    }
+
     public function cerrarSesion(){
         session_destroy();
         $view = new Home();
@@ -132,6 +140,13 @@ class UsuarioController {
          $view= new BuscarUsuario();
          $view->show($datos);
 
+    }
+    public function asignar_rol($id){
+        $idRol= $_POST['idRol'];
+        $consulta = PDOUsuario::getInstance()->asignar_rol($id, $idRol);
+        $resources = PDOUsuario::getInstance()->listAll();
+        $view = new SimpleResourceList();
+        $view->show($resources);
     }
 
 }

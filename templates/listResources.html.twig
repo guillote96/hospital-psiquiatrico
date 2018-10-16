@@ -7,7 +7,12 @@
         <h1>Usuarios</h1>
         <ul>
         {% for item in resources %}
-           <li>{{item.username}} </li> <a href="./?action=eliminarUsuario&id={{ item.id }}">Eliminar Usuario</a><a href="./?action=editarUsuario&id={{ item.id }}">Editar Usuario</a>
+           <li>{{item.username}}
+            <a href="">Activar/Bloquear</a>
+            </li>
+           <a href="./?action=eliminarUsuario&id={{ item.id }}">Eliminar Usuario</a>&nbsp;
+           <a href="./?action=editarUsuario&id={{ item.id }}">Editar Usuario</a>&nbsp;
+           <a href="./?action=agregarRol&id={{ item.id }}">Agregar un rol</a>
         {% endfor %}
         </ul>
 {% include 'footer.html'%}

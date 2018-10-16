@@ -24,11 +24,14 @@ require_once('view/BuscarPaciente.php');
 require_once('controller/UsuarioController.php');
 require_once('controller/PacienteController.php');
 require_once('model/PDOUsuario.php');
+require_once('model/PDORol.php');
 require_once('model/Usuario.php');
 require_once('controller/ConfiguracionController.php');
 require_once('model/Configuracion.php');
+require_once('model/Rol.php');
 require_once('model/PDOConfiguracion.php');
 require_once('view/ModuloDeConfiguracion.php');
+require_once('view/AgregarRol.php');
 
 
 
@@ -99,6 +102,14 @@ if(isset($_GET["action"])){
 	}
 	else if ($_GET["action"] == 'modificarConfiguracion'){
 		ConfiguracionController::getInstance()->modificarConfiguracion();
+	}
+	else if ($_GET["action"] == 'agregarRol'){
+		$id= $_GET["id"];
+		UsuarioController::getInstance()->agregar_rol($id);
+	}
+	else if ($_GET["action"] == 'asignarRol'){
+		$id= $_GET["id"];
+		UsuarioController::getInstance()->asignar_rol($id);
 	}																		
 }	
 else{
