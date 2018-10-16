@@ -96,6 +96,9 @@ if(isset($_GET["action"])){
 	}
 	else if ($_GET["action"] == 'buscar_paciente'){
 		PacienteController:: getInstance()->buscar_paciente();
+	}
+	else if ($_GET["action"] == 'modificarConfiguracion'){
+		ConfiguracionController::getInstance()->modificarConfiguracion();
 	}																		
 }	
 else{

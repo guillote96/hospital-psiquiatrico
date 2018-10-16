@@ -1,10 +1,36 @@
 {% include 'encabezado.html' %}
 <body>
 {% include 'barra.html' %}
-<h1>Módulo de Configuración</h1>
-{% for item in resources %}
-    <li>Variable: {{item.variable}} <br> Valor: {{item.valor}} </li>
-{% endfor %}
+<div class="container">
+  <br>
+  <h2><u>Configuración</u></h2>
+  <form id="formulario" action="./index.php?action=modificarConfiguracion" method="POST">
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="apellido">Título:</label>
+      <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Título" value="{{resources[0].valor}}" required>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="nombre">Descripción:</label>
+      <textarea class="form-control" id="descripcion" name="descripcion" form="formulario" required>{{resources[1].valor}}</textarea>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="nombre">E-mail:</label>
+      <input type="text" class="form-control" id="email" name="email" placeholder="E-mail" value="{{resources[2].valor}}" required>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="nombre">Cantidad de elementos por página en los listados:</label>
+      <input type="text" class="form-control" id="cantidadDeElementos" name="cantidadDeElementos" placeholder="Nombre" value="{{resources[3].valor}}" required>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Aceptar</button>
+</form>
 {% include 'footer.html' %}
 </body>
 </html>

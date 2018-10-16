@@ -33,5 +33,16 @@ class ConfiguracionController {
         $view = new Home();
         $view->show();
     }
+
+    public function modificarConfiguracion(){
+        $titulo = $_POST['titulo'];
+        $descripcion = $_POST['descripcion'];
+        $email = $_POST['email'];
+        $cantidad = $_POST['cantidadDeElementos'];
+        $resources = PDOConfiguracion::getInstance()->modificarConfiguracion($titulo,$descripcion,$email,$cantidad);
+        $view = new Home();
+        $view->show();
+
+    }
     
 }
