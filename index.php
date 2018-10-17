@@ -110,7 +110,17 @@ if(isset($_GET["action"])){
 	else if ($_GET["action"] == 'asignarRol'){
 		$id= $_GET["id"];
 		UsuarioController::getInstance()->asignar_rol($id);
-	}																		
+	}
+	else if ($_GET["action"] == 'desasignarRol'){
+		$idU= $_GET["idU"];
+		$idR= $_GET["idR"];
+		UsuarioController::getInstance()->desasignar_rol($idU, $idR);
+	}
+	else if ($_GET["action"] == 'cambiarEstado'){
+		$id= $_GET["id"];
+		$estado= $_GET["estado"];
+		UsuarioController::getInstance()->cambiar_estado($id, $estado);
+	}																			
 }	
 else{
 	    UsuarioController::getInstance()->home();

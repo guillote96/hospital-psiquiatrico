@@ -7,12 +7,19 @@
         <h1>Usuarios</h1>
         <ul>
         {% for item in resources %}
-           <li>{{item.username}}
-            <a href="">Activar/Bloquear</a>
+        <a href="./?action=editarUsuario&id={{ item.id }}">
+           <li><u><strong>{{item.username}}</strong></u><span></a>
+            {% if (item.activo > 0) %}
+              (inactivo)
+             {% else %}
+             (activo) 
+             {% endif %}
+           </span>
+            <a href="./?action=cambiarEstado&id={{ item.id }}&estado={{item.activo}}">Activar/Bloquear</a>
             </li>
-           <a href="./?action=eliminarUsuario&id={{ item.id }}">Eliminar Usuario</a>&nbsp;
-           <a href="./?action=editarUsuario&id={{ item.id }}">Editar Usuario</a>&nbsp;
-           <a href="./?action=agregarRol&id={{ item.id }}">Agregar un rol</a>
+           <a class="btn btn-primary btn-sm" href="./?action=eliminarUsuario&id={{ item.id }}">Eliminar</a>&nbsp;
+           <a class="btn btn-primary btn-sm" href="./?action=agregarRol&id={{ item.id }}">Agregar rol</a>
+           <br>
         {% endfor %}
         </ul>
 {% include 'footer.html'%}

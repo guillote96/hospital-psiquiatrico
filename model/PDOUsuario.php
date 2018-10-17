@@ -61,7 +61,7 @@ class PDOUsuario extends PDORepository {
     }
 
 
-        public function verificar_password($username, $password){
+    public function verificar_password($username, $password){
         $answer = $this->queryList("select * from usuario WHERE username='$username'");
         $final_answer = [];
         foreach ($answer as &$element) {
@@ -95,8 +95,32 @@ class PDOUsuario extends PDORepository {
         return $final_answer;
 
     }
+
     public function asignar_rol($id,$idRol){
         $answer = $this->addObj("INSERT INTO usuario_tiene_rol (usuario_id, rol_id) VALUES ('$id', '$idRol')");
         
     }
+    public function desasignar_rol($idU,$idR){
+        $answer = $this->addObj("DELETE FROM usuario_tiene_rol WHERE usuario_id = '$idU' AND rol_id = '$idR'");
+    }
+    public function verificar_rol($idU, $idR){
+        $answer = $this->addObj ("SELECT * FROM usuario_tiene_rol WHERE usuario_id = '$idU' AND rol_id = '$idR'");
+        if (count($answer) > 0){
+            return false;    
+        }
+        else{
+            return true;
+        }     
+    }
+
+    public function cambiar_estado($id, $estado){
+        if($estado==0){
+            $activo = 1;
+        }
+        else{
+            $activo = 0;
+        }
+        $answer = $this->addObj("UPDATE usuario SET activo='$activo' WHERE id='$id'");
+    }
+
 }
