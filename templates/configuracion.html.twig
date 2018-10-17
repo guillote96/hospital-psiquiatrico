@@ -7,26 +7,35 @@
   <form id="formulario" action="./index.php?action=modificarConfiguracion" method="POST">
   <div class="form-row">
     <div class="form-group col-md-4">
-      <label for="apellido">Título:</label>
+      <label for="titulo">Título:</label>
       <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Título" value="{{resources[0].valor}}" required>
     </div>
   </div>
   <div class="form-row">
     <div class="form-group col-md-4">
-      <label for="nombre">Descripción:</label>
+      <label for="descripcion">Descripción:</label>
       <textarea class="form-control" id="descripcion" name="descripcion" form="formulario" required>{{resources[1].valor}}</textarea>
     </div>
   </div>
   <div class="form-row">
     <div class="form-group col-md-4">
-      <label for="nombre">E-mail:</label>
+      <label for="e-mail">E-mail:</label>
       <input type="text" class="form-control" id="email" name="email" placeholder="E-mail" value="{{resources[2].valor}}" required>
     </div>
   </div>
   <div class="form-row">
     <div class="form-group col-md-4">
-      <label for="nombre">Cantidad de elementos por página en los listados:</label>
+      <label for="cantidad">Cantidad de elementos por página en los listados:</label>
       <input type="text" class="form-control" id="cantidadDeElementos" name="cantidadDeElementos" placeholder="Nombre" value="{{resources[3].valor}}" required>
+    </div>
+  </div>
+   <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="estado">Estado del sitio:</label>
+      <select class="form-control" name="estado" id="estado" required>
+      <option value="1">Habilitado</option>
+      <option value="0">Deshabilitado</option>
+      </select>
     </div>
   </div>
   <button type="submit" class="btn btn-primary">Aceptar</button>
