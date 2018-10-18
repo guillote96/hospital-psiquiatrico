@@ -34,6 +34,7 @@ class PDORol extends PDORepository {
         }
         return $final_answer;
     }
+    
 
     //ARREGLA ESTA FUNCION
      public function traer_roles_noUsuario($id) {

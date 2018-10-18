@@ -181,6 +181,17 @@ class UsuarioController {
         $view->show($resources);
     }
 
+    public function traer_mis_permisos($u){
+        $datos= PDOUsuario:: getInstance()->buscarPorUsername($u);
+        $id= $datos[0]->getId();
+        $misRoles = PDORol::getInstance()->traer_roles_usuario($id);
+        $consulta = PDOPermiso::getInstance()->traer_permisos_usuario($id,$misRoles);
+        $view = new MisPermisos();
+        $view->show($consulta);
+
+    }
+
+
 }
 
     

@@ -1,6 +1,6 @@
 <?php
 
-class RolController {
+class PermisoController {
     
     private static $instance;
 
@@ -18,13 +18,13 @@ class RolController {
     }
     
     
-    public function traerRoles(){
-        $resources = PDORol::getInstance()->traer_roles();
+    public function traerPermisos(){
+        $resources = PDOPermiso::getInstance()->traer_permisos();
         return $resources;
     }
-    public function listar_roles(){
-        $resources = PDORol::getInstance()->traer_roles();
-        $view = new ListarRoles();
+    public function listar_permisos(){
+        $resources = PDOPermiso::getInstance()->traer_permisos();
+        $view = new ListarPermisos();
         $view->show($resources);
     }
     

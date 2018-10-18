@@ -1,0 +1,18 @@
+{% include 'encabezado.html'%}
+    <head>
+        <title>Mis permisos</title>
+    </head>
+{% include 'barra.html'%}
+    <body>
+      <div class="container">
+        <h1>Mis permisos</h1>
+        <ul>
+        {% for item in resources %}
+           <li><u><strong>{{item.nombre}}</strong></u></li>
+           <br>
+        {% endfor %}
+        </ul>
+        </div>
+{% include 'footer.html'%}
+    </body>
+</html>

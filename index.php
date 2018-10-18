@@ -10,6 +10,7 @@ require_once('model/PDOPaciente.php');
 require_once('model/Paciente.php');
 require_once('model/Localidad.php');
 require_once('view/TwigView.php');
+require_once('view/ListarRoles.php');
 require_once('view/Registrarse.php');
 require_once('view/EditarUsuario.php');
 require_once('view/SimpleResourceList.php');
@@ -23,6 +24,8 @@ require_once('view/EditarPaciente.php');
 require_once('view/BuscarPaciente.php');
 require_once('controller/UsuarioController.php');
 require_once('controller/PacienteController.php');
+require_once('controller/RolController.php');
+require_once('controller/PermisoController.php');
 require_once('model/PDOUsuario.php');
 require_once('model/PDORol.php');
 require_once('model/Usuario.php');
@@ -30,8 +33,12 @@ require_once('controller/ConfiguracionController.php');
 require_once('model/Configuracion.php');
 require_once('model/Rol.php');
 require_once('model/PDOConfiguracion.php');
+require_once('model/Permiso.php');
+require_once('model/PDOPermiso.php');
 require_once('view/ModuloDeConfiguracion.php');
 require_once('view/AgregarRol.php');
+require_once('view/ListarPermisos.php');
+require_once('view/MisPermisos.php');
 
 
 
@@ -120,7 +127,17 @@ if(isset($_GET["action"])){
 		$id= $_GET["id"];
 		$estado= $_GET["estado"];
 		UsuarioController::getInstance()->cambiar_estado($id, $estado);
-	}																			
+	}
+	else if ($_GET["action"] == 'listarRoles'){
+		RolController::getInstance()->listar_roles();
+	}
+	else if ($_GET["action"] == 'listarPermisos'){
+		PermisoController::getInstance()->listar_permisos();
+	}
+	else if ($_GET["action"] == 'traerMisPermisos'){
+		$us= $_GET["us"];
+		UsuarioController::getInstance()->traer_mis_permisos($us);
+	}																					
 }	
 else{
 	    UsuarioController::getInstance()->home();
