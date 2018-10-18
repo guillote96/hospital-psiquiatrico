@@ -33,4 +33,11 @@ class PDOConfiguracion extends PDORepository {
          $answer = $this->addObj("UPDATE configuracion SET valor='$email' WHERE id=3");
          $answer = $this->addObj("UPDATE configuracion SET valor='$cantidad' WHERE id=4");
     }
+
+    public function cantidadDeElementos(){
+        $answer = $this->queryList("select valor from configuracion where id = 4");
+        $final_answer = [];
+        //$final_answer[] = new Configuracion($answer);
+        return $answer;
+    }
 }

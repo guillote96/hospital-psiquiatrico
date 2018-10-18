@@ -20,8 +20,9 @@ class UsuarioController {
     
     public function listResources(){
         $resources = PDOUsuario::getInstance()->listAll();
+        $cantidad = PDOConfiguracion::getInstance()->cantidadDeElementos();
         $view = new SimpleResourceList();
-        $view->show($resources);
+        $view->show($resources,$cantidad);
     }
     
     public function home(){
