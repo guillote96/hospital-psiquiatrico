@@ -1,6 +1,6 @@
 <?php
 
-class ObraSocial {
+class Genero {
     
     private $nombre;
     private $id;

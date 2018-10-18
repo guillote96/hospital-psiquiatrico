@@ -22,7 +22,7 @@ class PDOLocalidad extends PDORepository {
         $answer = $this->queryList("select * from localidad");
         $final_answer = [];
         foreach ($answer as &$element) {
-            $final_answer[] = new Localidad($element['nombre'],$element['partido_id']);
+            $final_answer[] = new Localidad($element['nombre'],$element['id'],$element['partido_id']);
         }
         return $final_answer;
     }

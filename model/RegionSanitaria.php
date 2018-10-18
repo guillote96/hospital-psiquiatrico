@@ -1,9 +1,9 @@
 <?php
 
-class ObraSocial {
+class RegionSanitaria {
     
     private $nombre;
-    private $id;
+     private $id;
     
     public function __construct($nombre,$id) {
         $this->nombre = $nombre;

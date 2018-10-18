@@ -1,6 +1,7 @@
 <?php
 
-class PDOObraSocial extends PDORepository {
+
+class PDOTipoDoc extends PDORepository {
 
     private static $instance;
 
@@ -18,10 +19,10 @@ class PDOObraSocial extends PDORepository {
     }
 
     public function listAll() {
-        $answer = $this->queryList("select * from obra_social");
+        $answer = $this->queryList("select * from tipo_documento");
         $final_answer = [];
         foreach ($answer as &$element) {
-            $final_answer[] = new ObraSocial($element['nombre'],$element['id']);
+            $final_answer[] = new TipoDoc($element['nombre'],$element['id']);
         }
         return $final_answer;
     }

@@ -34,11 +34,9 @@ class PDORol extends PDORepository {
         }
         return $final_answer;
     }
-    
-
-    //ARREGLA ESTA FUNCION
+  
      public function traer_roles_noUsuario($id) {
-        $answer = $this->queryList("select * from rol INNER JOIN usuario_tiene_rol ON rol.id = usuario_tiene_rol.rol_id WHERE NOT usuario_id=$id");
+        $answer = $this->queryList("select * from rol WHERE id NOT IN (SELECT rol_id from usuario_tiene_rol WHERE  usuario_id=$id)");
         $final_answer = [];
         foreach ($answer as &$element) {
             $final_answer[] = new Rol($element['nombre'],$element['id']);

@@ -25,8 +25,14 @@ class PacienteController{
 
     }
     public function agregarPaciente(){
+        $partidos = PDOPartido:: getInstance()->listAll();
+        $localidades = PDOLocalidad:: getInstance()->listAll();
+        $obraSociales = PDOObraSocial:: getInstance()->listAll();
+        $regionSanitaria = PDORegionSanitaria:: getInstance()->listAll();
+        $generos = PDOGenero:: getInstance()->listAll();
+        $tiposDoc = PDOTipoDoc:: getInstance()->listAll();
         $view = new AgregarPaciente();
-        $view->show();
+        $view->show($partidos, $localidades,$obraSociales,$regionSanitaria,$generos,$tiposDoc);
     }
 
     public function agregar_paciente(){
@@ -48,8 +54,8 @@ class PacienteController{
                     "obra_social" => $_POST['obra_social']);
 
         $resources = PDOPaciente:: getInstance()->agregar_paciente($datos);
-        $view = new ListarPaciente();
-        $view->show(PDOPaciente:: getInstance()->listAll());
+    //    $view = new ListarPaciente();
+     //   $view->show(PDOPaciente:: getInstance()->listAll());
 
     }
 
