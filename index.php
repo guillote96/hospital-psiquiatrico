@@ -42,8 +42,6 @@ require_once('view/MisPermisos.php');
 
 
 
-
-
 if(isset($_GET["action"])){
 	if ($_GET["action"] == 'listResources'){
 	    UsuarioController::getInstance()->listResources();
@@ -137,6 +135,9 @@ if(isset($_GET["action"])){
 	else if ($_GET["action"] == 'traerMisPermisos'){
 		$us= $_GET["us"];
 		UsuarioController::getInstance()->traer_mis_permisos($us);
+	}
+	else if ($_GET["action"] == 'listarUsuarios'){
+		UsuarioController::getInstance()->listarUsuarios();
 	}																					
 }	
 else{

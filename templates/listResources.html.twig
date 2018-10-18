@@ -1,4 +1,5 @@
 {% include 'encabezado.html'%}
+{% set const = 1 %}
     <head>
         <title>Usuarios</title>
     </head>
@@ -20,7 +21,6 @@
     </tr>
   </thead>
    <tbody>
-        {% set cant = ((resources|length) / (cantidad[0])[0])|round(0,'ceil') %}
         {% for item in resources %}
           <tr>
           <td><a href="./?action=editarUsuario&id={{ item.id }}">
@@ -46,15 +46,15 @@
         </table>
       </div>
         <br>
-        {% if cant > 1 %}
+        {% if cantidad > 1 %}
           <nav aria-label="Page navigation example">
           <nav aria-label="Page navigation example">
           <ul class="pagination justify-content-center">
-          <li class="page-item"><a class="page-link" href="./?action=listResources&pagina={{i - 1}}" tabindex="-1">Anterior</a></li>
-          {% for i in 1..cant %}
-            <li class="page-item"><a class="page-link" href="./?action=listResources&pagina={{i}}">{{i}}</a></li>
+          <!--<li class="page-item"><a class="page-link" href="./?action=listarUsuarios&pagina={{i - 1}}" tabindex="-1">Anterior</a></li>-->
+          {% for i in 1..cantidad %}
+            <li class="page-item"><a class="page-link" href="./?action=listarUsuarios&pagina={{i}}">{{i}}</a></li>
           {% endfor %}
-          <li class="page-item"><a class="page-link" href="./?action=listResources&pagina={{i + 1}}">Siguiente</a></li>
+          <!--<li class="page-item"><a class="page-link" href="./?action=listarUsuarios&pagina={{i + 1}}">Siguiente</a></li>-->
           </ul>
           </nav>
           </nav>

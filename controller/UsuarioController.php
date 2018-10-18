@@ -19,10 +19,33 @@ class UsuarioController {
     
     
     public function listResources(){
-        $resources = PDOUsuario::getInstance()->listAll();
-        $cantidad = PDOConfiguracion::getInstance()->cantidadDeElementos();
+        $cantidadDeElementosPorPagina = PDOConfiguracion::getInstance()->cantidadDeElementos();
+        $cantidadDeRegistros = PDOUsuario::getInstance()->cantidad();
+        $cantElementos=$cantidadDeElementosPorPagina[0][0];
+        $cantRegistros =$cantidadDeRegistros[0][0];
+        $cantidadDePaginas = round(($cantRegistros / $cantElementos),0,PHP_ROUND_HALF_UP);
+        $resources = PDOUsuario::getInstance()->listarCantidad(1,$cantElementos);
         $view = new SimpleResourceList();
-        $view->show($resources,$cantidad);
+        $view->show($resources,$cantidadDePaginas);
+    }
+
+    public function listarUsuarios(){
+        if (empty($_GET['pagina'])){
+            return false;
+        }
+        $pagina = $_GET['pagina'];
+        $cantidadDeElementosPorPagina = PDOConfiguracion::getInstance()->cantidadDeElementos();
+        $cantidadDeRegistros = PDOUsuario::getInstance()->cantidad();
+        $cantElementos=$cantidadDeElementosPorPagina[0][0];
+        $cantRegistros =$cantidadDeRegistros[0][0];
+        $cantidadDePaginas = round(($cantRegistros / $cantElementos),0,PHP_ROUND_HALF_UP);
+
+
+        $cantidad = PDOConfiguracion::getInstance()->cantidadDeElementos();
+        $resources = PDOUsuario::getInstance()->listarCantidad($pagina,$cantElementos);
+        $view = new SimpleResourceList();
+        $cantElementos=$cantidad[0][0];
+        $view->show($resources,$cantidadDePaginas);
     }
     
     public function home(){
