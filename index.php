@@ -2,13 +2,21 @@
 ini_set('display_startup_errors',1);
 ini_set('display_errors',1);
 error_reporting(-1);
+ session_start();
+
 
 require_once('controller/LocalidadController.php');
 require_once('model/PDORepository.php');
 require_once('model/PDOLocalidad.php');
 require_once('model/PDOPaciente.php');
+require_once('model/PDOPartido.php');
 require_once('model/Paciente.php');
+require_once('model/Partido.php');
 require_once('model/Localidad.php');
+require_once('model/RegionSanitaria.php');
+require_once('model/ObraSocial.php');
+require_once('model/Genero.php');
+require_once('model/TipoDoc.php');
 require_once('view/TwigView.php');
 require_once('view/ListarRoles.php');
 require_once('view/Registrarse.php');
@@ -28,6 +36,10 @@ require_once('controller/RolController.php');
 require_once('controller/PermisoController.php');
 require_once('model/PDOUsuario.php');
 require_once('model/PDORol.php');
+require_once('model/PDORegionSanitaria.php');
+require_once('model/PDOObraSocial.php');
+require_once('model/PDOGenero.php');
+require_once('model/PDOTipoDoc.php');
 require_once('model/Usuario.php');
 require_once('controller/ConfiguracionController.php');
 require_once('model/Configuracion.php');
@@ -46,6 +58,7 @@ require_once('view/MisPermisos.php');
 
 if(isset($_GET["action"])){
 	if ($_GET["action"] == 'listResources'){
+		//if(UsuarioController::checkPermissions('paciente_show', $_SESSION('id'))
 	    UsuarioController::getInstance()->listResources();
 	}
 	else if ($_GET["action"] == 'agregarUsuario'){

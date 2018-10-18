@@ -108,7 +108,7 @@ class UsuarioController {
 
     public function agregar_rol($id){
         $usuario = PDOUsuario::getInstance()->traer_usuario($id);
-        $resources = PDORol::getInstance()->traer_roles();
+        $resources = PDORol::getInstance()->traer_roles_noUsuario($id);
         $misRoles = PDORol::getInstance()->traer_roles_usuario($id);
         $view = new AgregarRol();
         $view->show($usuario, $resources, $misRoles); 
@@ -148,26 +148,21 @@ class UsuarioController {
     // ARREGLAR LA PARTE DE VERIFICAR SI YA TIENE ROL
     public function asignar_rol($id){
         $idRol= $_POST['idRol']; 
-     
-      //  if( PDOUsuario::getInstance()->verificar_rol($id, $idRol)){
-            $consulta = PDOUsuario::getInstance()->asignar_rol($id, $idRol);
+ 
+        $consulta = PDOUsuario::getInstance()->asignar_rol($id, $idRol);
 
-            $usuario = PDOUsuario::getInstance()->traer_usuario($id);
-            $resources = PDORol::getInstance()->traer_roles();
-            $misRoles = PDORol::getInstance()->traer_roles_usuario($id);
-            $view = new AgregarRol();
-            $view->show($usuario, $resources, $misRoles); 
-     /*   }
-        else{
-        
-        }   */
+        $usuario = PDOUsuario::getInstance()->traer_usuario($id);
+        $resources = PDORol::getInstance()->traer_roles_noUsuario($id);
+        $misRoles = PDORol::getInstance()->traer_roles_usuario($id);
+        $view = new AgregarRol();
+        $view->show($usuario, $resources, $misRoles); 
     }
 
     public function desasignar_rol($idU, $idR){
         $consulta = PDOUsuario::getInstance()->desasignar_rol($idU, $idR);
 
         $usuario = PDOUsuario::getInstance()->traer_usuario($idU);
-        $resources = PDORol::getInstance()->traer_roles();
+        $resources = PDORol::getInstance()->traer_roles_noUsuario($idU);
         $misRoles = PDORol::getInstance()->traer_roles_usuario($idU);
         $view = new AgregarRol();
         $view->show($usuario, $resources, $misRoles); 
