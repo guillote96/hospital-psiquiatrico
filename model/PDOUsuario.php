@@ -123,4 +123,19 @@ class PDOUsuario extends PDORepository {
         $answer = $this->addObj("UPDATE usuario SET activo='$activo' WHERE id='$id'");
     }
 
+     public function listarCantidad($pagina,$cantidad) {
+        $answer = $this->queryList("select * from usuario limit ". (($pagina - 1) * $cantidad).",". $cantidad);
+        $final_answer = [];
+        foreach ($answer as &$element) {
+            $final_answer[] = new Usuario($element['id'],$element['email'],$element['username'],$element['activo'],$element['password'],$element['updated_at'],$element['created_at'],$element['first_name'],$element['last_name']);
+        }
+        return $final_answer;
+
+                         
+    }
+
+     public function cantidad() {
+        $answer = $this->queryList("select count(*) from usuario");
+        return $answer;
+    }
 }

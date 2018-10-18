@@ -36,8 +36,6 @@ class PDOConfiguracion extends PDORepository {
 
     public function cantidadDeElementos(){
         $answer = $this->queryList("select valor from configuracion where id = 4");
-        $final_answer = [];
-        //$final_answer[] = new Configuracion($answer);
         return $answer;
     }
 }
