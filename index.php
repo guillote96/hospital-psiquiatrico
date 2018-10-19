@@ -151,6 +151,9 @@ if(isset($_GET["action"])){
 	}
 	else if ($_GET["action"] == 'listarUsuarios'){
 		UsuarioController::getInstance()->listarUsuarios();
+	}
+	else if ($_GET["action"] == 'checkPermiso'){
+		UsuarioController::getInstance()->checkPermiso('paciente_show','14');
 	}																					
 }	
 else{

@@ -122,9 +122,10 @@ class UsuarioController {
         $password = $_POST['contraseña'];
 
         if( PDOUsuario::getInstance()->existe_usuario($usuario)){
-             
+            $usuarioObj = PDOUsuario::getInstance()->traer_usuario_por_username($usuario);
+            $id = $usuarioObj->getId();
             if(PDOUsuario::getInstance()->verificar_password($usuario,$password)){
-                    self::getInstance()->alta_sesion($usuario);
+                    self::getInstance()->alta_sesion($usuario,$id);
                     self::getInstance()->setUsuario(PDOUsuario::getInstance()->traer_usuario_por_username($usuario));
                      $_SESSION['usuario'] =self::getInstance()->getUsuario()->getUsername();
 
@@ -142,14 +143,14 @@ class UsuarioController {
         echo "Usuario o Contraseña Incorrecta";
         return false;
     }
-    public function alta_sesion($usuario){
+    public function alta_sesion($usuario,$id){
         if(!isset($_SESSION)){
             session_start();
          }else{
              session_destroy();
              session_start(); 
          }
-         
+        $_SESSION['id'] = $id;
         $_SESSION['usuario']= $usuario;
 
     }
@@ -192,7 +193,6 @@ class UsuarioController {
 
     }
 
-    // ARREGLAR LA PARTE DE VERIFICAR SI YA TIENE ROL
     public function asignar_rol($id){
         $idRol= $_POST['idRol']; 
         $consulta = PDOUsuario::getInstance()->asignar_rol($id, $idRol);
@@ -206,6 +206,7 @@ class UsuarioController {
     }
 
     public function cambiar_estado($id, $estado){
+       echo $_SESSION['id'];
         $consulta = PDOUsuario::getInstance()->cambiar_estado($id, $estado);
         $this->getInstance()->listResources();
     }
@@ -213,12 +214,23 @@ class UsuarioController {
     public function traer_mis_permisos($u){
         $datos= PDOUsuario:: getInstance()->buscarPorUsername($u);
         $id= $datos[0]->getId();
-        $misRoles = PDORol::getInstance()->traer_roles_usuario($id);
-        $consulta = PDOPermiso::getInstance()->traer_permisos_usuario($id,$misRoles);
+        $consulta = PDOPermiso::getInstance()->traer_permisos_usuario($id);
         $view = new MisPermisos();
         $view->show($consulta);
 
     }
+    public function checkPermiso($permiso, $id){
+        echo $_SESSION['id'];
+        $consulta = PDOPermiso::getInstance()->traer_permisos_usuario($id);
+        $tengoPermiso = false;
+        foreach ($consulta as &$element) {
+            if($permiso == $element->getNombre()){
+                $tengoPermiso = true;
+            }
+        }
+        return $tengoPermiso;
+    }
+
 
 
 }
