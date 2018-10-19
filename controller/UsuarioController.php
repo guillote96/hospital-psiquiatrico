@@ -36,7 +36,7 @@ class UsuarioController {
         $cantidadDePaginas = round(($cantRegistros / $cantElementos),0,PHP_ROUND_HALF_UP);
         $resources =array('resources'=> PDOUsuario::getInstance()->listarCantidad(1,$cantElementos),
                           'cantidad' => $cantidadDePaginas,
-                          'usuario' => $_GET['username']);
+                          'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());
         $view = new SimpleResourceList();
         $view->show($resources);
 

@@ -19,7 +19,8 @@ class ConfiguracionController {
     
     
     public function listarVariables(){
-        $resources = PDOConfiguracion::getInstance()->listAll();
+        $resources = array('resources' =>PDOConfiguracion::getInstance()->listAll(),
+                           'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());
         $view = new ModuloDeConfiguracion();
         $view->show($resources);
     }
@@ -40,8 +41,11 @@ class ConfiguracionController {
         $email = $_POST['email'];
         $cantidad = $_POST['cantidadDeElementos'];
         $resources = PDOConfiguracion::getInstance()->modificarConfiguracion($titulo,$descripcion,$email,$cantidad);
+
+
+         $resources = array('usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());
         $view = new Home();
-        $view->show();
+        $view->inicio($resources);
 
     }
     

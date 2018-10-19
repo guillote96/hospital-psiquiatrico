@@ -89,26 +89,34 @@ class PacienteController{
 
     public function buscarPaciente (){
         $view = new BuscarPaciente();
-        $view->show();
+        $datos=array('usuario' => (PDOUsuario::getInstance()->traer_usuario($_SESSION['id']))[0]->getUsername());
+        $view->show($datos);
 
 
     }
      public function buscar_paciente(){
 
         if(!empty($_POST['apellido']) && !empty($_POST['nombre']) && !empty($_POST['numero_documento']) && !empty($_POST['tipo_doc'])){
-                $datos=PDOPaciente::getInstance()->buscarPacientePorDatosPersonales($_POST['apellido'],$_POST['nombre'],$_POST['numero_documento'],$_POST['tipo_doc']);
-                 $view = new ListarPaciente();
-                 $view->show($datos);
-                 return true;
-        }else if( !empty($_POST['numero_historia_clinica'])){
-             $datos=PDOPaciente::getInstance()->buscarPacienteHistoriaClinica($_POST['numero_historia_clinica']);
-             $view = new ListarPaciente();
-             $view->show($datos);
-             return true;
-        }else{
+                
+           $datos=array('resources' => PDOPaciente::getInstance()->buscarPacientePorDatosPersonales($_POST['apellido'],$_POST['nombre'],$_POST['numero_documento'],$_POST['tipo_doc']),
+             'usuario' => (PDOUsuario::getInstance()->traer_usuario($_SESSION['id']))[0]->getUsername());
+           $view = new ListarPaciente();
+           $view->show($datos);
+           return true;
+        }else 
+
+           if( !empty($_POST['numero_historia_clinica'])){
+               $datos=array('resources' => PDOPaciente::getInstance()->buscarPacienteHistoriaClinica($_POST['numero_historia_clinica']),
+                          'usuario' => (PDOUsuario::getInstance()->traer_usuario($_SESSION['id']))[0]->getUsername());
+                $view = new ListarPaciente();
+                $view->show($datos);
+                return true;
+        }else
+             {
+
             echo "Falta completar campos de Datos de paciente o Numero de Historia clinica";
             return false;
-        }
+             }
 
 
      }

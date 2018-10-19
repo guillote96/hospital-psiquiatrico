@@ -3,9 +3,9 @@
 
 class BuscarPaciente extends TwigView {
     
-    public function show() {
+    public function show($resources) {
         
-        echo self::getTwig()->render('buscarPaciente.html.twig');
+        echo self::getTwig()->render('buscarPaciente.html.twig',array('resources' => $resources));
         
         
     }
