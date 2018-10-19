@@ -76,16 +76,12 @@ class UsuarioController {
         $apellido = $_POST['apellido'];
         $activo = $_POST['activo']; 
         $resources = PDOUsuario::getInstance()->actualizar_usuario($usuario, $email, $nombre, $apellido, $activo,$id);
-        $resources = PDOUsuario::getInstance()->listAll();
-        $view = new SimpleResourceList();
-        $view->show($resources);       
+        $this->getInstance()->listResources();   
     }
     public function eliminarUsuario(){
         $id = $_GET["id"];
         $resources = PDOUsuario::getInstance()->eliminar_usuario($id);
-        $resources = PDOUsuario::getInstance()->listAll();
-        $view = new SimpleResourceList();
-        $view->show($resources); 
+        $this->getInstance()->listResources(); 
     }
     public function editarUsuario($id){
         $resources = PDOUsuario::getInstance()->traer_usuario($id);
@@ -171,33 +167,19 @@ class UsuarioController {
     // ARREGLAR LA PARTE DE VERIFICAR SI YA TIENE ROL
     public function asignar_rol($id){
         $idRol= $_POST['idRol']; 
- 
         $consulta = PDOUsuario::getInstance()->asignar_rol($id, $idRol);
-
-        $usuario = PDOUsuario::getInstance()->traer_usuario($id);
-        $resources = PDORol::getInstance()->traer_roles_noUsuario($id);
-        $misRoles = PDORol::getInstance()->traer_roles_usuario($id);
-        $view = new AgregarRol();
-        $view->show($usuario, $resources, $misRoles); 
+        $this->getInstance()->agregar_rol($id); 
     }
 
     public function desasignar_rol($idU, $idR){
         $consulta = PDOUsuario::getInstance()->desasignar_rol($idU, $idR);
 
-        $usuario = PDOUsuario::getInstance()->traer_usuario($idU);
-        $resources = PDORol::getInstance()->traer_roles_noUsuario($idU);
-        $misRoles = PDORol::getInstance()->traer_roles_usuario($idU);
-        $view = new AgregarRol();
-        $view->show($usuario, $resources, $misRoles); 
+        $this->getInstance()->agregar_rol($idU);  
     }
 
     public function cambiar_estado($id, $estado){
         $consulta = PDOUsuario::getInstance()->cambiar_estado($id, $estado);
-
-        //CONSULTAR PARA LLAMAR A LA FUNCTION LISTRESOURCES
-        $resources = PDOUsuario::getInstance()->listAll();
-        $view = new SimpleResourceList();
-        $view->show($resources);
+        $this->getInstance()->listResources();
     }
 
     public function traer_mis_permisos($u){

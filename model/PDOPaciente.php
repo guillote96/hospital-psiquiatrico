@@ -54,23 +54,10 @@ class PDOPaciente extends PDORepository {
 
   }
 
-    public function agregar_paciente($datos){
-      //falta hacer los cruces de tablas para cierta info y usar ajax para partidos, localidades ,etc
-    /*        $sqlLocalidadId= $this->queryList("SELECT id FROM localidad WHERE nombre = '$datos[localidad]'");
-            $sqlRegionSanitariaId= $this->queryList("SELECT id FROM region_sanitaria WHERE nombre = '$datos[region_sanitaria]'");
-             $sqlGeneroId= $this->queryList("SELECT id FROM genero WHERE nombre = '$datos[genero]'");
-             $sqlTipoDocumentoId= $this->queryList("SELECT id FROM tipo_documento WHERE nombre = '$datos[tipo_doc]'");
-             $sqlObraSocialId= $this->queryList("SELECT id FROM obra_social WHERE nombre = '$datos[obra_social]'");
-
-
-             $idLocalidad= $sqlLocalidadId[0]["id"];
-             $idRegionSanitaria= $sqlRegionSanitariaId[0]["id"];
-             $idGenero= $sqlGeneroId[0]["id"];
-             $idTipoDocumentoId=$sqlTipoDocumentoId[0]["id"];
-             $idObraSocial=$sqlObraSocialId[0]["id"];*/
+    public function agregar_paciente($apellido,$nombre, $fecha_nac, $lugar_nac, $partido,$localidad,$genero,$tiene_doc,$tipo_doc,$numero_documento,$telefono,$region_sanitaria,$domicilio,$numero_historia_clinica,$numero_carpeta,$obra_social){
 
             $answer = $this->addObj("INSERT INTO paciente (apellido, 
-            nombre, fecha_nac, lugar_nac, localidad_id, region_sanitaria_id, domicilio, genero_id ,tiene_documento, tipo_doc_id, numero, nro_historia_clinica,nro_carpeta, obra_social_id) VALUES ('$datos[apellido]','$datos[nombre]','$datos[fecha_nac]','$datos[lugar_nac]',$datos[localidad],'$datos[region_sanitaria]','$datos[domicilio]',$datos[genero],'$datos[tiene_doc]''$datos[tipo_doc]','$datos[numero_documento]','$datos[numero_historia_clinica]','$datos[numero_carpeta]','$datos[obra_social]')");
+            nombre, fecha_nac, lugar_nac, localidad_id, region_sanitaria_id, domicilio, genero_id, tiene_documento, tipo_doc_id, numero, tel, nro_historia_clinica, nro_carpeta, obra_social_id) VALUES('$apellido','$nombre','$fecha_nac','$lugar_nac','$localidad','$region_sanitaria','$domicilio','$genero','$tiene_doc','$tipo_doc','$numero_documento','$telefono','$numero_historia_clinica','$numero_carpeta','$obra_social')");
 
     }
 

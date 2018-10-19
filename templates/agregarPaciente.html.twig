@@ -152,10 +152,9 @@
     <div class="form-group col-md-2">
       <label for="tipo_doc">Tipo de Documento:</label>
       <select class="form-control" name="tipo_doc" id="tipo_doc" required>
-      <option value="DNI">DNI</option>
-      <option value="LC">LC</option>
-      <option value="CI">CI</option>
-      <option value="LE">LE</option>
+        {% for tipo in tiposDoc %}
+        <option value="{{tipo.id}}">{{tipo.name}}</option>
+        {% endfor %} 
       </select>
     </div>
     <div class="form-group col-md-4">
