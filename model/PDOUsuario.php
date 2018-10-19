@@ -51,6 +51,16 @@ class PDOUsuario extends PDORepository {
 
   }
 
+      public function traer_usuario_por_username($username){
+        $answer = $this->queryList("select * from usuario WHERE username='$username'");
+        $final_answer = [];
+        foreach ($answer as &$element) {
+            $final_answer[] = new Usuario($element['id'],$element['email'],$element['username'],$element['activo'],$element['password'],$element['updated_at'],$element['created_at'],$element['first_name'],$element['last_name']);
+        }
+        return $final_answer[0];
+
+  }
+
     public function agregar_usuario($usuario,$email,$password,$nombre,$apellido,$activo){
         $answer = $this->addObj("INSERT INTO usuario (email, username, password, activo, updated_at, created_at, first_name, last_name) VALUES ('$email', '$usuario', '$password', '$activo','updated_at','created_at','$nombre','$apellido')");
         

@@ -1,40 +1,44 @@
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #006080;">
-  <a class="navbar-brand" href="./index.php">Hospital Dr. Alejandro Korn</a>
+  <a class="navbar-brand" href="./index.php?username={{ resources.usuario }}">Hospital Dr. Alejandro Korn</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
+
       {% if resources is empty %}
       </ul>
     <form class="form-inline">
       <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
     </form>
-        <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" href="./?action=iniciarSesion">Login <span class="sr-only">(current)</span></a>
-        </li>
-      </ul>
+
+
+           <ul class="navbar-nav">
+             <li class="nav-item active">
+             <a class="nav-link" href="./?action=iniciarSesion">Login <span class="sr-only">(current)</span></a>
+            </li>
+           </ul>
+
     {% else%}
       <li class="nav-item active">
-        <a class="nav-link" href="./index.php">Inicio <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="./index.php?username={{ resources.usuario }}">Inicio <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Consultas</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="?action=listarPacientes">Pacientes</a>
+        <a class="nav-link" href="?action=listarPacientes&username={{ resources.usuario }}">Pacientes</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Administración
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="?action=listResources">Usuarios</a>
-          <a class="dropdown-item" href="?action=listarRoles">Roles</a>
-          <a class="dropdown-item" href="?action=listarPermisos">Permisos</a>
+          <a class="dropdown-item" href="?action=listResources&username={{ resources.usuario }}">Usuarios</a>
+          <a class="dropdown-item" href="?action=listarRoles&username={{ resources.usuario }}">Roles</a>
+          <a class="dropdown-item" href="?action=listarPermisos&username={{ resources.usuario }}">Permisos</a>
         </div>
       </li>
     </ul>

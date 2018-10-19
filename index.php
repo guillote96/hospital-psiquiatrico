@@ -78,7 +78,7 @@ if(isset($_GET["action"])){
 		UsuarioController::getInstance()->actualizarUsuario($id);
 	}
 	else if ($_GET["action"] == 'iniciarSesion'){
-		UsuarioController::getInstance()->iniciarSesion();
+		$_SESSION['usuario']=UsuarioController::getInstance()->iniciarSesion();
 	}
 	else if ($_GET["action"] == 'verificarDatos'){
 		UsuarioController::getInstance()->verificarDatos();
@@ -154,5 +154,12 @@ if(isset($_GET["action"])){
 	}																					
 }	
 else{
-	    UsuarioController::getInstance()->home();
+	if(empty($_GET['username'])){
+	    UsuarioController::getInstance()->home(null);
 	}
+	else{
+       UsuarioController::getInstance()->home($_GET['username']);
+
+	}
+
+}

@@ -23,7 +23,8 @@ class RolController {
         return $resources;
     }
     public function listar_roles(){
-        $resources = PDORol::getInstance()->traer_roles();
+        $resources = array('resources'=> PDORol::getInstance()->traer_roles(),
+                           'usuario' => $_GET['username']);
         $view = new ListarRoles();
         $view->show($resources);
     }

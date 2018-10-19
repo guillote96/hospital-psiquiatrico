@@ -3,6 +3,7 @@
 class UsuarioController {
     
     private static $instance;
+    public static $usuario;  //clase Usuario
 
     public static function getInstance() {
 
@@ -17,6 +18,15 @@ class UsuarioController {
         
     }
     
+    public function setUsuario($usuario){
+
+       self::$usuario =$usuario;
+    }
+
+     public function getUsuario(){
+
+       return self::$usuario;
+    }
     
     public function listResources(){
         $cantidadDeElementosPorPagina = PDOConfiguracion::getInstance()->cantidadDeElementos();
@@ -24,9 +34,16 @@ class UsuarioController {
         $cantElementos=$cantidadDeElementosPorPagina[0][0];
         $cantRegistros =$cantidadDeRegistros[0][0];
         $cantidadDePaginas = round(($cantRegistros / $cantElementos),0,PHP_ROUND_HALF_UP);
-        $resources = PDOUsuario::getInstance()->listarCantidad(1,$cantElementos);
+        $resources =array('resources'=> PDOUsuario::getInstance()->listarCantidad(1,$cantElementos),
+                          'cantidad' => $cantidadDePaginas,
+                          'usuario' => $_GET['username']);
         $view = new SimpleResourceList();
-        $view->show($resources,$cantidadDePaginas);
+        $view->show($resources);
+
+        //$view->show($resources,$cantidadDePaginas,$_GET['username']);
+
+
+
     }
 
     public function listarUsuarios(){
@@ -48,9 +65,12 @@ class UsuarioController {
         $view->show($resources,$cantidadDePaginas);
     }
     
-    public function home(){
+    public function home($username){
         $view = new Home();
-        $view->show();
+        if(empty($username))
+            $view->show();
+        else
+           $view->inicio(array('usuario' => $username));
     }
     public function registrarse(){
         $view = new Registrarse();
@@ -105,9 +125,13 @@ class UsuarioController {
              
             if(PDOUsuario::getInstance()->verificar_password($usuario,$password)){
                     self::getInstance()->alta_sesion($usuario);
+                    self::getInstance()->setUsuario(PDOUsuario::getInstance()->traer_usuario_por_username($usuario));
+                     $_SESSION['usuario'] =self::getInstance()->getUsuario()->getUsername();
+
+                     $resources= array('usuario' => self::getInstance()->getUsuario()->getUsername());
                     //redireccionar a Home
                     $view = new Home();
-                    $view->inicio($_SESSION);
+                    $view->inicio($resources);
                     return true;
             }else{
                 echo "Contraseña incorrecta";
@@ -119,8 +143,13 @@ class UsuarioController {
         return false;
     }
     public function alta_sesion($usuario){
-        session_start();
-        $_SESSION['sesion']= true;
+        if(!isset($_SESSION)){
+            session_start();
+         }else{
+             session_destroy();
+             session_start(); 
+         }
+         
         $_SESSION['usuario']= $usuario;
 
     }
@@ -136,8 +165,7 @@ class UsuarioController {
     public function cerrarSesion(){
         session_destroy();
         $view = new Home();
-        $_SESSION['sesion']=false;
-        $view->inicio($_SESSION);
+         $view->show();
     }
    public function buscarPorUsername(){
          if(empty($_POST['buscar'])){

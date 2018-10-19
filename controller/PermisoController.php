@@ -23,7 +23,8 @@ class PermisoController {
         return $resources;
     }
     public function listar_permisos(){
-        $resources = PDOPermiso::getInstance()->traer_permisos();
+        $resources = array('resources'=>PDOPermiso::getInstance()->traer_permisos(),
+                           'usuario' => $_GET['username']);
         $view = new ListarPermisos();
         $view->show($resources);
     }
