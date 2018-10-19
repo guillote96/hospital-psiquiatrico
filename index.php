@@ -56,8 +56,12 @@ require_once('view/MisPermisos.php');
 
 if(isset($_GET["action"])){
 	if ($_GET["action"] == 'listResources'){
-		//if(UsuarioController::checkPermissions('paciente_show', $_SESSION('id'))
-	    UsuarioController::getInstance()->listResources();
+		// ESTE LLAMADO ES EL QUE HAY QUE HACER, CUANDO HACE SIEMPRE EN SESSION id !!
+		// DEPENDE A QUE 'ACTION' VAYA, PASARLE EL PERMISO QUE CORRESPONDA
+
+		//if(UsuarioController::getInstance()->checkPermiso('paciente_show', $_SESSION['id'])){
+	    	UsuarioController::getInstance()->listResources();
+		//}
 	}
 	else if ($_GET["action"] == 'agregarUsuario'){
 		UsuarioController::getInstance()->agregarUsuario();		
@@ -151,9 +155,6 @@ if(isset($_GET["action"])){
 	}
 	else if ($_GET["action"] == 'listarUsuarios'){
 		UsuarioController::getInstance()->listarUsuarios();
-	}
-	else if ($_GET["action"] == 'checkPermiso'){
-		UsuarioController::getInstance()->checkPermiso('paciente_show','14');
 	}																					
 }	
 else{

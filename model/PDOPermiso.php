@@ -41,6 +41,7 @@ class PDOPermiso extends PDORepository {
             $final_answer[] = new Permiso($element['nombre'],$element['id']);
             
         }
+        
         return $final_answer;
     }
 

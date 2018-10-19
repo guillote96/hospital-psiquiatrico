@@ -220,7 +220,6 @@ class UsuarioController {
 
     }
     public function checkPermiso($permiso, $id){
-        echo $_SESSION['id'];
         $consulta = PDOPermiso::getInstance()->traer_permisos_usuario($id);
         $tengoPermiso = false;
         foreach ($consulta as &$element) {
