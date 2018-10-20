@@ -74,6 +74,10 @@ class UsuarioController {
     }
 
     public function agregarUsuario(){
+        if(PDOUsuario::getInstance()->existe_usuario($_POST['usuario'])){
+            echo "Ya existe ese Nombre de Usuario";
+            return false;
+        }
         $usuario = $_POST['usuario'];
         $email = $_POST['email'];
         if(isset($_POST['password']))
