@@ -158,11 +158,11 @@ if(isset($_GET["action"])){
 	}																					
 }	
 else{
-	if(empty($_GET['username'])){
+	if(empty($_SESSION['id'])){
 	    UsuarioController::getInstance()->home(null);
 	}
 	else{
-       UsuarioController::getInstance()->home($_GET['username']);
+       UsuarioController::getInstance()->home($_SESSION['id']);
 
 	}
 

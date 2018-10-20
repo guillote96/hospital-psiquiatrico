@@ -20,7 +20,7 @@ class PacienteController{
 
     public function listarTodosLosPacientes(){
         $resources = array('resources' => PDOPaciente:: getInstance()->listAll(),
-                            'usuario' => $_GET['username']);
+                            'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());
         $view = new ListarPaciente();
         $view->show($resources);
 
@@ -33,14 +33,15 @@ class PacienteController{
         $generos = PDOGenero:: getInstance()->listAll();
         $tiposDoc = PDOTipoDoc:: getInstance()->listAll();
         $view = new AgregarPaciente();
-        $view->show($partidos, $localidades,$obraSociales,$regionSanitaria,$generos,$tiposDoc,$_GET['username']);
+        $usuario = PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername();
+        $view->show($partidos, $localidades,$obraSociales,$regionSanitaria,$generos,$tiposDoc,$usuario);
     }
 
     public function agregar_paciente(){
         $resources = PDOPaciente:: getInstance()->agregar_paciente($_POST['apellido'],$_POST['nombre'], $_POST['fecha_nac'],$_POST['lugar_nac'],$_POST['partido'],$_POST['localidad'],$_POST['genero'],$_POST['tiene_doc'],$_POST['tipo_doc'],$_POST['numero_documento'],$_POST['telefono'],$_POST['region_sanitaria'],$_POST['domicilio'],$_POST['numero_historia_clinica'],$_POST['numero_carpeta'],$_POST['obra_social']);
         $view = new ListarPaciente();
         $resources= array('resources' =>PDOPaciente:: getInstance()->listAll() ,
-                           'usuario' => $_GET['username'] );
+                           'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername() );
         $view->show($resources);
 
     }
@@ -67,7 +68,7 @@ class PacienteController{
 
         PDOPaciente:: getInstance()->actualizar_paciente($datos);
         $resources= array('resources' => PDOPaciente:: getInstance()->listAll(), 
-                          'usuario' => $_GET['username']);
+                          'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());
         $view = new ListarPaciente();
         $view->show($resources);
 
@@ -76,7 +77,7 @@ class PacienteController{
      public function editarPaciente($id){
         $resources = array('resources' => (PDOPaciente::getInstance()->traer_paciente($id))[0],
                            'datos' =>  PDOPaciente::getInstance()->traer_datosVarios($id),
-                            'usuario' => $_GET['username']);
+                           'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());
 
         $view = new EditarPaciente();
         $view->show($resources);

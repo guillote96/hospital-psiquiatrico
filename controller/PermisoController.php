@@ -24,7 +24,7 @@ class PermisoController {
     }
     public function listar_permisos(){
         $resources = array('resources'=>PDOPermiso::getInstance()->traer_permisos(),
-                           'usuario' => $_GET['username']);
+                           'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());
         $view = new ListarPermisos();
         $view->show($resources);
     }

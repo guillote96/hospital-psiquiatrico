@@ -7,8 +7,8 @@
         <h1>Pacientes</h1>
         <ul>
         {% for item in resources.resources %}
-           <li>{{item.apellido}} {{item.nombre}} {{item.domicilio}} </li> <a href="./?action=editarPaciente&username={{ resources.usuario }}&id={{ item.id }}"> Editar Paciente</a>
-           <a href="./?action=eliminarPaciente&username={{ resources.usuario }}&id={{ item.id }}"> Eliminar Paciente</a>
+           <li>{{item.apellido}} {{item.nombre}} {{item.domicilio}} </li> <a href="./?action=editarPaciente&id={{ item.id }}"> Editar Paciente</a>
+           <a href="./?action=eliminarPaciente&id={{ item.id }}"> Eliminar Paciente</a>
         {% endfor %}
         </ul>
 {% include 'footer.html'%}

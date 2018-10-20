@@ -8,13 +8,13 @@
 <br>
 <center>
   <div class="form-group col-md-4">
-  	{% for us in usuario %}
+  	{% for us in resources.user %}
     <label for="usuario">Usuario : {{us.username}} </label><br>
     {% endfor %} 
-    {% if(misRoles!=null) %}
+    {% if(resources.misRoles != null) %}
     <span>Tiene asignado los roles: </span><br>
     {% endif %}
-    {% for rol in misRoles %}
+    {% for rol in resources.misRoles %}
     <span>{{rol.nombre}} </span>&nbsp;<a href="./index.php?action=desasignarRol&idU={{usuario[0].id}}&idR={{rol.id}}">Desasignar</a><br>
     {% endfor %} 
   </div>
@@ -22,12 +22,12 @@
   <div class="form-group col-md-4">
 
   	<center><h4><u>Asignarle un nuevo rol</u></h4></center>
-    {% if(resources==null) %}
+    {% if(resources.resources == null) %}
       <span>El usuario ya tiena asignado todos los roles</span><br>
     {% else %}
      <label for="rol">Rol</label>
       <select name="idRol" class="form-control col-md-6">
-	      {% for item in resources %}
+	      {% for item in resources.resources %}
 	     	<option value="{{item.id}}">{{item.nombre}}</option>
 	      {% endfor %}   	
      </select>

@@ -28,14 +28,14 @@ class PDOConfiguracion extends PDORepository {
     }
 
     public function modificarConfiguracion($titulo,$descripcion,$email,$cantidad){
-         $answer = $this->addObj("UPDATE configuracion SET valor='$titulo' WHERE id=1");
-         $answer = $this->addObj("UPDATE configuracion SET valor='$descripcion' WHERE id=2");
-         $answer = $this->addObj("UPDATE configuracion SET valor='$email' WHERE id=3");
-         $answer = $this->addObj("UPDATE configuracion SET valor='$cantidad' WHERE id=4");
+         $answer = $this->addObj("UPDATE configuracion SET valor='$titulo' WHERE variable= 'titulo'");
+         $answer = $this->addObj("UPDATE configuracion SET valor='$descripcion' WHERE variable='descripcion'");
+         $answer = $this->addObj("UPDATE configuracion SET valor='$email' WHERE variable='email'");
+         $answer = $this->addObj("UPDATE configuracion SET valor='$cantidad' WHERE variable='cantidadDeElementos'");
     }
 
     public function cantidadDeElementos(){
-        $answer = $this->queryList("select valor from configuracion where id = 4");
+        $answer = $this->queryList("select valor from configuracion where variable = 'cantidadDeElementos'");
         return $answer;
     }
 }

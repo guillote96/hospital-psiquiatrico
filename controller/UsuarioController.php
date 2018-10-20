@@ -61,12 +61,12 @@ class UsuarioController {
         $view->show($resources,$cantidadDePaginas);
     }
     
-    public function home($username){
+    public function home($id){
         $view = new Home();
-        if(empty($username))
+        if(empty($id))
             $view->show();
         else
-           $view->inicio(array('usuario' => $username));
+           $view->inicio(array('usuario' => PDOUsuario::getInstance()->traer_usuario($id)[0]->getUsername()));
     }
     public function registrarse(){
         $view = new Registrarse();
@@ -102,7 +102,7 @@ class UsuarioController {
     public function editarUsuario($id){
         $resources = PDOUsuario::getInstance()->traer_usuario($id);
         $view = new EditarUsuario();
-        $view->show($resources[0]);
+        $view->show(array('resources' => $resources[0],'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername()));
     }
 
      public function iniciarSesion(){
@@ -152,11 +152,17 @@ class UsuarioController {
     }
 
     public function agregar_rol($id){
-        $usuario = PDOUsuario::getInstance()->traer_usuario($id);
-        $resources = PDORol::getInstance()->traer_roles_noUsuario($id);
-        $misRoles = PDORol::getInstance()->traer_roles_usuario($id);
+        //$user = PDOUsuario::getInstance()->traer_usuario($id);
+        //$resources = PDORol::getInstance()->traer_roles_noUsuario($id);
+        //$misRoles = PDORol::getInstance()->traer_roles_usuario($id);
         $view = new AgregarRol();
-        $view->show($usuario, $resources, $misRoles); 
+
+        $resources= array('resources' => PDORol::getInstance()->traer_roles_noUsuario($id),
+                           'misRoles' => PDORol::getInstance()->traer_roles_usuario($id),
+                           'user' => PDOUsuario::getInstance()->traer_usuario($id),
+                           'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());
+        //$view->show($user, $resources, $misRoles); 
+        $view->show($resources); 
     }
 
     public function cerrarSesion(){
@@ -185,7 +191,7 @@ class UsuarioController {
             $datos= PDOUsuario:: getInstance()->buscarPorUsername($_POST['buscar']);
         }
          $view= new BuscarUsuario();
-         $view->show($datos);
+         $view->show(array('resources' => $datos, 'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername()));
 
     }
 
@@ -202,7 +208,6 @@ class UsuarioController {
     }
 
     public function cambiar_estado($id, $estado){
-       echo $_SESSION['id'];
         $consulta = PDOUsuario::getInstance()->cambiar_estado($id, $estado);
         $this->getInstance()->listResources();
     }
@@ -212,7 +217,7 @@ class UsuarioController {
         $id= $datos[0]->getId();
         $consulta = PDOPermiso::getInstance()->traer_permisos_usuario($id);
         $view = new MisPermisos();
-        $view->show($consulta);
+        $view->show(array('resources' => $consulta, 'usuario' =>PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername()));
 
     }
     public function checkPermiso($permiso, $id){
