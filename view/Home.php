@@ -16,5 +16,10 @@ class Home extends TwigView {
 
         
     }
+
+    public function sitioDeshabilitado(){
+
+    	echo self::getTwig()->render('mantenimiento.html.twig');
+    }
     
 }

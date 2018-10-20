@@ -52,6 +52,10 @@ require_once('view/AgregarRol.php');
 require_once('view/ListarPermisos.php');
 require_once('view/MisPermisos.php');
 
+if(ConfiguracionController::getInstance()->estadoSitio() == false){
+	return false;
+}
+
 
 
 if(isset($_GET["action"])){

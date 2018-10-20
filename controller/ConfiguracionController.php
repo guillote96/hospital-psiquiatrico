@@ -40,7 +40,8 @@ class ConfiguracionController {
         $descripcion = $_POST['descripcion'];
         $email = $_POST['email'];
         $cantidad = $_POST['cantidadDeElementos'];
-        $resources = PDOConfiguracion::getInstance()->modificarConfiguracion($titulo,$descripcion,$email,$cantidad);
+        $estado = $_POST['estado'];
+        $resources = PDOConfiguracion::getInstance()->modificarConfiguracion($titulo,$descripcion,$email,$cantidad,$estado);
 
 
          $resources = array('usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());
@@ -48,5 +49,17 @@ class ConfiguracionController {
         $view->inicio($resources);
 
     }
+
+        public function estadoSitio(){
+          $resources = PDOConfiguracion::getInstance()->listAll();
+          foreach ($resources as &$var) {
+              if(($var->getVariable() == 'estado') && ($var->getValor() == 0)){
+                   $view = new Home();
+                   $view->sitioDeshabilitado();
+                   return false;
+                }
+            }
+            return true;
+        }
     
 }
