@@ -66,20 +66,29 @@ class PDOPaciente extends PDORepository {
     }
 
     public function actualizar_paciente($datos){
-            $sqlLocalidadId= $this->queryList("SELECT id FROM localidad WHERE nombre = '$datos[localidad]'");
+            /*$sqlLocalidadId= $this->queryList("SELECT id FROM localidad WHERE nombre = '$datos[localidad]'");
             $sqlRegionSanitariaId= $this->queryList("SELECT id FROM region_sanitaria WHERE nombre = '$datos[region_sanitaria]'");
             $sqlGeneroId= $this->queryList("SELECT id FROM genero WHERE nombre = '$datos[genero]'");
             $sqlTipoDocumentoId= $this->queryList("SELECT id FROM tipo_documento WHERE nombre = '$datos[tipo_doc]'");
             $sqlObraSocialId= $this->queryList("SELECT id FROM obra_social WHERE nombre = '$datos[obra_social]'");
-
+             
 
              $idLocalidad= $sqlLocalidadId[0]["id"];
              $idRegionSanitaria= $sqlRegionSanitariaId[0]["id"];
              $idGenero= $sqlGeneroId[0]["id"];
              $idTipoDocumentoId=$sqlTipoDocumentoId[0]["id"];
-             $idObraSocial=$sqlObraSocialId[0]["id"];
+             $idObraSocial=$sqlObraSocialId[0]["id"];*/
 
-             $answer = $this->addObj("UPDATE paciente SET apellido = '$datos[apellido]', nombre = '$datos[nombre]', fecha_nac = '$datos[fecha_nac]', lugar_nac ='$datos[lugar_nac]', localidad_id = $idLocalidad, region_sanitaria_id = $idRegionSanitaria, domicilio ='$datos[domicilio]', genero_id=$idGenero ,tiene_documento ='$datos[tiene_doc]', tipo_doc_id = $idTipoDocumentoId, numero ='$datos[numero_documento]', nro_historia_clinica = '$datos[numero_historia_clinica]',nro_carpeta ='$datos[numero_carpeta]', obra_social_id =$idObraSocial WHERE id='$_GET[id]'");
+             
+
+             $idLocalidad= $datos['localidad'];
+             $idRegionSanitaria= $datos['region_sanitaria'];
+             $idGenero= $datos['genero'];
+             $idTipoDocumentoId=$datos['tipo_doc'];
+             $idObraSocial=$datos['obra_social'];
+
+            $answer = $this->addObj("UPDATE paciente SET apellido = '$datos[apellido]', nombre = '$datos[nombre]', fecha_nac = '$datos[fecha_nac]', lugar_nac ='$datos[lugar_nac]', localidad_id = $idLocalidad, region_sanitaria_id = $idRegionSanitaria, domicilio ='$datos[domicilio]', genero_id=$idGenero ,tiene_documento ='$datos[tiene_doc]', tipo_doc_id = $idTipoDocumentoId, numero ='$datos[numero_documento]', nro_historia_clinica = '$datos[numero_historia_clinica]',nro_carpeta ='$datos[numero_carpeta]', obra_social_id =$idObraSocial WHERE id='$_GET[id]'");
+             
     }
 
     public function traer_datosVarios($id){

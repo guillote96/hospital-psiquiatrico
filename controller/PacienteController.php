@@ -48,6 +48,7 @@ class PacienteController{
 
 
     public function actualizar_paciente(){
+                            //"tel" => $_POST['telefono'],
 
         $datos=array("apellido" => $_POST['apellido'],
                     "nombre"  => $_POST['nombre'],
@@ -61,12 +62,11 @@ class PacienteController{
                     "tipo_doc" => $_POST['tipo_doc'],
                     "numero_documento" => $_POST['numero_documento'],
                     "region_sanitaria" => $_POST['region_sanitaria'],
-                    "tel" => $_POST['telefono'],
                     "numero_historia_clinica" => $_POST['numero_historia_clinica'],
                     "numero_carpeta" => $_POST['numero_carpeta'],
                     "obra_social" => $_POST['obra_social']);
 
-        PDOPaciente:: getInstance()->actualizar_paciente($datos);
+        PDOPaciente::getInstance()->actualizar_paciente($datos);
         $resources= array('resources' => PDOPaciente:: getInstance()->listAll(), 
                           'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());
         $view = new ListarPaciente();
@@ -77,7 +77,13 @@ class PacienteController{
      public function editarPaciente($id){
         $resources = array('resources' => (PDOPaciente::getInstance()->traer_paciente($id))[0],
                            'datos' =>  PDOPaciente::getInstance()->traer_datosVarios($id),
-                           'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());
+                           'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),
+                           'partidos' => PDOPartido::getInstance()->listAll(),
+                           'localidades' => PDOLocalidad::getInstance()->listAll(),
+                           'region_sanitaria' => PDORegionSanitaria::getInstance()->listAll(),
+                           'tipodoc' => PDOTipoDoc::getInstance()->listAll(),
+                           'genero' => PDOGenero::getInstance()->listAll(),
+                           'obrasocial' => PDOObraSocial::getInstance()->listAll());
 
         $view = new EditarPaciente();
         $view->show($resources);
