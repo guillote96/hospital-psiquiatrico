@@ -34,15 +34,21 @@ class UsuarioController {
             $view->show();
         }
         else{
-            $cantidadDeElementosPorPagina = PDOConfiguracion::getInstance()->cantidadDeElementos();
-            $cantidadDeRegistros = PDOUsuario::getInstance()->cantidad();
-            $cantElementos=$cantidadDeElementosPorPagina[0][0];
-            $cantRegistros =$cantidadDeRegistros[0][0];
-            $cantidadDePaginas = round(($cantRegistros / $cantElementos),0,PHP_ROUND_HALF_UP);
-            $resources =array('resources'=> PDOUsuario::getInstance()->listarCantidad(1,$cantElementos),
-                              'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());
-            $view = new SimpleResourceList();
-            $view->show($resources,$cantidadDePaginas);
+            if($_SESSION["usuario"] == NULL){
+                $view = new IniciarSesion();
+                $view->show();
+            }
+            else{
+                $cantidadDeElementosPorPagina = PDOConfiguracion::getInstance()->cantidadDeElementos();
+                $cantidadDeRegistros = PDOUsuario::getInstance()->cantidad();
+                $cantElementos=$cantidadDeElementosPorPagina[0][0];
+                $cantRegistros =$cantidadDeRegistros[0][0];
+                $cantidadDePaginas = round(($cantRegistros / $cantElementos),0,PHP_ROUND_HALF_UP);
+                $resources =array('resources'=> PDOUsuario::getInstance()->listarCantidad(1,$cantElementos),
+                                  'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());
+                $view = new SimpleResourceList();
+                $view->show($resources,$cantidadDePaginas);
+            }
         }
 
     }
@@ -221,16 +227,22 @@ class UsuarioController {
     }
 
     public function traer_mis_permisos($u){
-        if (sizeof($_SESSION) == 0){
+         if (sizeof($_SESSION) == 0){
             $view = new IniciarSesion();
             $view->show();
         }
         else{
-            $datos= PDOUsuario:: getInstance()->buscarPorUsername($u);
-            $id= $datos[0]->getId();
-            $consulta = PDOPermiso::getInstance()->traer_permisos_usuario($id);
-            $view = new MisPermisos();
-            $view->show(array('resources' => $consulta, 'usuario' =>PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername()));
+            if($_SESSION["usuario"] == NULL){
+                $view = new IniciarSesion();
+                $view->show();
+            }
+            else{
+                $datos= PDOUsuario:: getInstance()->buscarPorUsername($u);
+                $id= $datos[0]->getId();
+                $consulta = PDOPermiso::getInstance()->traer_permisos_usuario($id);
+                $view = new MisPermisos();
+                $view->show(array('resources' => $consulta, 'usuario' =>PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername()));
+            }
         }
     }
     public function checkPermiso($permiso, $id){

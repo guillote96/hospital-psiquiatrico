@@ -24,10 +24,16 @@ class ConfiguracionController {
             $view->show();
         }
         else{
-            $resources = array('resources' =>PDOConfiguracion::getInstance()->listAll(),
-                               'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());
-            $view = new ModuloDeConfiguracion();
-            $view->show($resources);
+            if($_SESSION["usuario"] == NULL){
+                $view = new IniciarSesion();
+                $view->show();
+            }
+            else{
+                $resources = array('resources' =>PDOConfiguracion::getInstance()->listAll(),
+                                   'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());
+                $view = new ModuloDeConfiguracion();
+                $view->show($resources);
+            }
         }
     }
 

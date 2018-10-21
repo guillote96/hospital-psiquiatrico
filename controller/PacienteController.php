@@ -19,27 +19,44 @@ class PacienteController{
     
 
     public function listarTodosLosPacientes(){
-        $resources = array('resources' => PDOPaciente:: getInstance()->listAll(),
-                            'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());
-        $view = new ListarPaciente();
-        $view->show($resources);
-
+         if (sizeof($_SESSION) == 0){
+            $view = new IniciarSesion();
+            $view->show();
+        }
+        else{
+            if($_SESSION["usuario"] == NULL){
+                $view = new IniciarSesion();
+                $view->show();
+            }
+            else{
+              $resources = array('resources' => PDOPaciente:: getInstance()->listAll(),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());
+              $view = new ListarPaciente();
+              $view->show($resources);
+            }
+        }
     }
+
     public function agregarPaciente(){
         if (sizeof($_SESSION) == 0){
             $view = new IniciarSesion();
             $view->show();
         }
         else{
-          $partidos = PDOPartido:: getInstance()->listAll();
-          $localidades = PDOLocalidad:: getInstance()->listAll();
-          $obraSociales = PDOObraSocial:: getInstance()->listAll();
-          $regionSanitaria = PDORegionSanitaria:: getInstance()->listAll();
-          $generos = PDOGenero:: getInstance()->listAll();
-          $tiposDoc = PDOTipoDoc:: getInstance()->listAll();
-          $view = new AgregarPaciente();
-          $usuario = PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername();
-          $view->show($partidos, $localidades,$obraSociales,$regionSanitaria,$generos,$tiposDoc,$usuario);
+            if($_SESSION["usuario"] == NULL){
+                $view = new IniciarSesion();
+                $view->show();
+            }
+            else{
+              $partidos = PDOPartido:: getInstance()->listAll();
+              $localidades = PDOLocalidad:: getInstance()->listAll();
+              $obraSociales = PDOObraSocial:: getInstance()->listAll();
+              $regionSanitaria = PDORegionSanitaria:: getInstance()->listAll();
+              $generos = PDOGenero:: getInstance()->listAll();
+              $tiposDoc = PDOTipoDoc:: getInstance()->listAll();
+              $view = new AgregarPaciente();
+              $usuario = PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername();
+              $view->show($partidos, $localidades,$obraSociales,$regionSanitaria,$generos,$tiposDoc,$usuario);
+            }
         }
     }
 
@@ -102,17 +119,23 @@ class PacienteController{
     }
 
     public function buscarPaciente (){
-        if (sizeof($_SESSION) == 0){
+         if (sizeof($_SESSION) == 0){
             $view = new IniciarSesion();
             $view->show();
         }
         else{
-            $view = new BuscarPaciente();
-            $datos=array('usuario' => (PDOUsuario::getInstance()->traer_usuario($_SESSION['id']))[0]->getUsername());
-            $view->show($datos);
+            if($_SESSION["usuario"] == NULL){
+                $view = new IniciarSesion();
+                $view->show();
+            }
+            else{
+              $view = new BuscarPaciente();
+              $datos=array('usuario' => (PDOUsuario::getInstance()->traer_usuario($_SESSION['id']))[0]->getUsername());
+              $view->show($datos);
+            }
         }
-
     }
+    
      public function buscar_paciente(){
 
         if(!empty($_POST['apellido']) && !empty($_POST['nombre']) && !empty($_POST['numero_documento']) && !empty($_POST['tipo_doc'])){
