@@ -11,29 +11,29 @@
   <div class="form-group col-md-4">
   <form action="./index.php?action=actualizarUsuario&id={{resources.id}}" method="POST">
       <label for="usuario">Usuario:</label>
-      <input type="text" class="form-control" id="usuario" placeholder="Usuario" name="usuario" value="{{resources.username}}" required>
+      <input type="text" class="form-control" id="usuario" placeholder="Usuario" name="usuario" value="{{resources.resources.username}}" required>
     </div>
     <div class="form-group col-md-4">
       <label for="email">E-mail:</label>
-      <input type="text" class="form-control" id="email" placeholder="E-mail" name="email" value="{{resources.email}}" required>
+      <input type="text" class="form-control" id="email" placeholder="E-mail" name="email" value="{{resources.resources.email}}" required>
     </div>
   </div>
   <div class="form-row">
     <div class="form-group col-md-4">
       <label for="apellido">Apellido:</label>
-      <input type="text" class="form-control" id="apellido" placeholder="Apellido" name="apellido" value="{{resources.lastname}}" required>
+      <input type="text" class="form-control" id="apellido" placeholder="Apellido" name="apellido" value="{{resources.resources.lastname}}" required>
     </div>
     <div class="form-group col-md-4">
       <label for="nombre">Nombre:</label>
-      <input type="text" class="form-control" id="nombre" placeholder="Nombre" name="nombre" value="{{resources.firstname}}" required>
+      <input type="text" class="form-control" id="nombre" placeholder="Nombre" name="nombre" value="{{resources.resources.firstname}}" required>
     </div>
   </div>
   <div class="form-row">
    <div class="form-group col-md-4">
       <label for="estado">Estado:</label>
       <select class="form-control" name="activo" id="estado">
-      <option value="0" {% if resources.activo == 0 %} selected {% endif %}>Activo</option>
-      <option value="1" {% if resources.activo == 1 %} selected {% endif %}>Inactivo</option>
+      <option value="0" {% if resources.resources.activo == 0 %} selected {% endif %}>Activo</option>
+      <option value="1" {% if resources.resources.activo == 1 %} selected {% endif %}>Inactivo</option>
       </select>
     </div>
   </div>
