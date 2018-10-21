@@ -1,120 +1,117 @@
-
 {% include 'encabezado.html'%}
     <head>
-        <title>Home</title>
+        <title>Editar Paciente</title>
     </head>
-    {% include 'barra.html'%}
     <body>
-    		<br>
-  <div class="container">
-    <div class="form-row">
-      <div class="form-group col-md-6">
-  <h2><u>Editar Paciente</u></h2>
-
-  </div>
-		<form action="./index.php?action=actualizarPaciente&id={{resources.resources.id}}" method="POST">
-
-	  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="apellido">Apellido:</label>
-      <input type="text" class="form-control" id="apellido" value="{{resources.resources.apellido}}"" name="apellido" placeholder="Apellido" required>
-    </div>
-    <div class="form-group col-md-6">
-      <label for="nombre">Nombre:</label>
-      <input type="text" class="form-control" id="nombre" value="{{resources.resources.nombre}}" name="nombre" placeholder="Nombre" required>
-    </div>
-  </div>
-   <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="fecha_nac">Fecha de Nacimiento:</label>
-      <input type="date" class="form-control" id="fecha_nac" value="{{resources.resources.fechanac}}" name="fecha_nac" required>
-    </div>
-    <div class="form-group col-md-6">
-      <label for="lugar_nac">Lugar de Nacimiento:</label>
-      <input type="text" class="form-control" id="lugar_nac" value="{{resources.resources.lugarnac}}" name="lugar_nac" placeholder="Lugar de Nacimiento" required>
-    </div>
-  </div>
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="partido">Partido:</label>
-      <select class="form-control" name="partido" id="partido" required>
-        {% for item in resources.partidos %}
-			<option value={{ item.getId }} {% if item.getName == resources.datos.partido %} selected {% endif %}>{{ item.getName }}</option>
-		{% endfor %}
-      </select>
-    </div>
-    <div class="form-group col-md-6">
-      <label for="localidad">Localidad:</label>
-      <select class="form-control" name="localidad" id="localidad" required>
-       {% for item in resources.localidades %}
-		   <option value={{ item.getId }} {% if item.getName == resources.datos.localidad %} selected {% endif %}>{{ item.getName }}</option>
-       {% endfor %}    
-  	  </select>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="domicilio">Domicilio:</label>
-    <input type="text" class="form-control" value="{{resources.resources.domicilio}}" id="domicilio" name="domicilio" placeholder="Domicilio" required>
-  </div>
-  <div class="form-row">
-    <div class="form-group col-md-2">
-      <label for="genero">Genero:</label>
-      <select class="form-control" name="genero" id="genero" required>
-        {% for item in resources.genero %}
-			<option value={{ item.getId }} {% if item.getNombre == resources.datos.genero %} selected {% endif %}>{{ item.getNombre }}</option>
-		{% endfor %} 
-  	  </select>
-    </div>
-    <div class="form-group col-md-2">
-      <label for="region_sanitaria">Región Sanitaria:</label>
-      <input class="form-control" value="{{resources.datos.region}}"  name="region_sanitaria" id="region_sanitaria" readonly onmousedown="return false;" />
-  	  </select>
-    </div>
-    <div class="form-group col-md-8">
-      <label for="obra_social">Obra Social:</label>
-      <select class="form-control" name="obra_social" id="obra_social" required>
-        {% for item in resources.obrasocial %}
-			<option value={{ item.getId }} {% if item.getNombre == resources.datos.obrasocial %} selected {% endif %}>{{ item.getNombre }}</option>
-		 {% endfor %}
-      </select>
-    </div>
-  </div>
-  <div class="form-row">
-    <div class="form-group col-md-2">
-      <label for="tiene_doc">¿Tiene Documento?</label>
-     <select class="form-control"  value="{{resources.resources.tienedocumento}}" name="tiene_doc" id="tiene_doc" required>
-      <option value="1" {% if resources.resources.tienedocumento == 1 %} selected {% endif %}>SI</option>
-	  <option value="0" {% if resources.resources.tienedocumento == 0 %} selected {% endif %}>NO</option>
-      </select>
-    </div>
-    <div class="form-group col-md-2">
-      <label for="tipo_doc">Tipo de Documento:</label>
-      <select class="form-control" name="tipo_doc" id="tipo_doc" required>
-        { {% for item in resources.tipodoc %}
-		  <option value={{ item.getId }} {% if item.getName == resources.datos.tipodocumento %} selected {% endif %}>{{ item.getName }}</option>
-		{% endfor %}
-      </select>
-    </div>
-    <div class="form-group col-md-4">
-      <label for="numero_documento">Número de Documento:</label>
-       <input type="number" class="form-control" id="numero_documento" value={{resources.resources.numero}} name="numero_documento" placeholder="Número de Documento" required>
-    </div>
-    <div class="form-group col-md-4">
-      <label for="telefono">Teléfono:</label>
-       <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Teléfono" required>
-    </div>
-  </div>
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="numero_historia_clinica">Número de Historia Clínica:</label>
-      <input type="number" class="form-control" id="numero_historia_clinica" min="0" max= "99999" value= {{resources.resources.nrohistoriaclinica}} name="numero_historia_clinica" placeholder="Número de Historia Clíica" required>
-    </div>
-    <div class="form-group col-md-6">
-      <label for="numero_carpeta">Número de Carpeta:</label>
-      <input type="number" class="form-control" id="numero_carpeta" min="0" max= "99999" value={{resources.resources.nrocarpeta}} name="numero_carpeta" placeholder="Número de Carpeta" required>
-    </div>
-  </div>
-  <button type="submit" class="btn btn-primary">Aceptar</button>
+      {% include 'barra.html'%}
+    	<br>
+      <div class="container">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <h2><u>Editar Paciente</u></h2>
+          </div>
+        </div>
+		    <form action="./index.php?action=actualizarPaciente&id={{resources.resources.id}}" method="POST">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="apellido">Apellido:</label>
+            <input type="text" class="form-control" id="apellido" value="{{resources.resources.apellido}}"" name="apellido" placeholder="Apellido" required>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="nombre">Nombre:</label>
+            <input type="text" class="form-control" id="nombre" value="{{resources.resources.nombre}}" name="nombre" placeholder="Nombre" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="fecha_nac">Fecha de Nacimiento:</label>
+            <input type="date" class="form-control" id="fecha_nac" value="{{resources.resources.fechanac}}" name="fecha_nac" required>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="lugar_nac">Lugar de Nacimiento:</label>
+            <input type="text" class="form-control" id="lugar_nac" value="{{resources.resources.lugarnac}}" name="lugar_nac" placeholder="Lugar de Nacimiento" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="partido">Partido:</label>
+              <select class="form-control" name="partido" id="partido" required>
+              {% for item in resources.partidos %}
+			         <option value={{ item.getId }} {% if item.getName == resources.datos.partido %} selected {% endif %}>{{ item.getName }}</option>
+		          {% endfor %}
+              </select>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="localidad">Localidad:</label>
+            <select class="form-control" name="localidad" id="localidad" required>
+            {% for item in resources.localidades %}
+		          <option value={{ item.getId }} {% if item.getName == resources.datos.localidad %} selected {% endif %}>{{ item.getName }}</option>
+            {% endfor %}    
+  	       </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="domicilio">Domicilio:</label>
+          <input type="text" class="form-control" value="{{resources.resources.domicilio}}" id="domicilio" name="domicilio" placeholder="Domicilio" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-2">
+            <label for="genero">Genero:</label>
+            <select class="form-control" name="genero" id="genero" required>
+            {% for item in resources.genero %}
+  			     <option value={{ item.getId }} {% if item.getNombre == resources.datos.genero %} selected {% endif %}>{{ item.getNombre }}</option>
+  		      {% endfor %} 
+    	      </select>
+          </div>
+          <div class="form-group col-md-2">
+            <label for="region_sanitaria">Región Sanitaria:</label>
+            <input class="form-control" value="{{resources.datos.region}}"  name="region_sanitaria" id="region_sanitaria" readonly onmousedown="return false;" />
+          </div>
+          <div class="form-group col-md-8">
+            <label for="obra_social">Obra Social:</label>
+            <select class="form-control" name="obra_social" id="obra_social" required>
+            {% for item in resources.obrasocial %}
+			       <option value={{ item.getId }} {% if item.getNombre == resources.datos.obrasocial %} selected {% endif %}>{{ item.getNombre }}</option>
+		        {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-2">
+            <label for="tiene_doc">¿Tiene Documento?</label>
+            <select class="form-control"  value="{{resources.resources.tienedocumento}}" name="tiene_doc" id="tiene_doc" required>
+              <option value="1" {% if resources.resources.tienedocumento == 1 %} selected {% endif %}>SI</option>
+	            <option value="0" {% if resources.resources.tienedocumento == 0 %} selected {% endif %}>NO</option>
+            </select>
+          </div>
+          <div class="form-group col-md-2">
+            <label for="tipo_doc">Tipo de Documento:</label>
+            <select class="form-control" name="tipo_doc" id="tipo_doc" required>
+            {% for item in resources.tipodoc %}
+		          <option value={{ item.getId }} {% if item.getName == resources.datos.tipodocumento %} selected {% endif %}>{{ item.getName }}</option>
+		        {% endfor %}
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="numero_documento">Número de Documento:</label>
+            <input type="number" class="form-control" id="numero_documento" value={{resources.resources.numero}} name="numero_documento" placeholder="Número de Documento" required>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="telefono">Teléfono:</label>
+            <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Teléfono" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="numero_historia_clinica">Número de Historia Clínica:</label>
+            <input type="number" class="form-control" id="numero_historia_clinica" min="0" max= "99999" value= {{resources.resources.nrohistoriaclinica}} name="numero_historia_clinica" placeholder="Número de Historia Clíica" required>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="numero_carpeta">Número de Carpeta:</label>
+            <input type="number" class="form-control" id="numero_carpeta" min="0" max= "99999" value={{resources.resources.nrocarpeta}} name="numero_carpeta" placeholder="Número de Carpeta" required>
+          </div>
+        </div>
+    <button type="submit" class="btn btn-primary">Aceptar</button>
 </form>
 </div>
  {% include 'footer.html'%}
