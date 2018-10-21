@@ -27,6 +27,20 @@
         {% endfor %}
       </tbody>
         </table>
+        <br>
+        {% if cantidad > 1 %}
+          <nav aria-label="Page navigation example">
+          <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+          <!--<li class="page-item"><a class="page-link" href="./?action=listarUsuarios&pagina={{i - 1}}" tabindex="-1">Anterior</a></li>-->
+          {% for i in 1..cantidad %}
+            <li class="page-item"><a class="page-link" href="./?action=listar_pacientes&pagina={{i}}">{{i}}</a></li>
+          {% endfor %}
+          <!--<li class="page-item"><a class="page-link" href="./?action=listarUsuarios&pagina={{i + 1}}">Siguiente</a></li>-->
+          </ul>
+          </nav>
+          </nav>
+{% endif %}
 {% include 'footer.html'%}
     </body>
 </html>

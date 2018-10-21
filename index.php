@@ -159,6 +159,9 @@ if(isset($_GET["action"])){
 	}
 	else if ($_GET["action"] == 'listarUsuarios'){
 		UsuarioController::getInstance()->listarUsuarios();
+	}
+	else if ($_GET["action"] == 'listar_pacientes'){
+		PacienteController::getInstance()->listarPacientes();
 	}																					
 }	
 else{

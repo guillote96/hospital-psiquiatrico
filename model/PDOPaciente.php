@@ -142,5 +142,21 @@ class PDOPaciente extends PDORepository {
         return $final_answer;
     }
 
+     public function listarCantidad($pagina,$cantidad) {
+        $answer = $this->queryList("select * from paciente limit ". (($pagina - 1) * $cantidad).",". $cantidad);
+        $final_answer = [];
+        foreach ($answer as &$element) {
+            $final_answer[] = new Paciente($element['apellido'],$element['domicilio'],$element['fecha_nac'],$element['genero_id'],$element['id'],$element['localidad_id'],$element['lugar_nac'],$element['nombre'],$element['nro_carpeta'],$element['nro_historia_clinica'],$element['numero'],$element['obra_social_id'],$element['region_sanitaria_id'],$element['tel'],$element['tiene_documento'],$element['tipo_doc_id']);
+        }
+        return $final_answer;
+
+                         
+    }
+
+    public function cantidad() {
+        $answer = $this->queryList("select count(*) from paciente");
+        return $answer;
+    }
+
 
 }

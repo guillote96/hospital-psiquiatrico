@@ -29,11 +29,34 @@ class PacienteController{
                 $view->show();
             }
             else{
-              $resources = array('resources' => PDOPaciente:: getInstance()->listAll(),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());
+              $cantidadDeElementosPorPagina = PDOConfiguracion::getInstance()->cantidadDeElementos();
+              $cantidadDeRegistros = PDOPaciente::getInstance()->cantidad();
+              $cantElementos=$cantidadDeElementosPorPagina[0][0];
+              $cantRegistros =$cantidadDeRegistros[0][0];
+               $cantidadDePaginas = round(($cantRegistros / $cantElementos),0,PHP_ROUND_HALF_UP);
+              $resources = array('resources' => PDOPaciente:: getInstance()->listarCantidad(1,$cantElementos),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());
               $view = new ListarPaciente();
-              $view->show($resources);
+              $view->show($resources,$cantidadDePaginas);
             }
         }
+    }
+
+    public function listarPacientes(){
+        if (empty($_GET['pagina'])){
+            return false;
+        }
+        $pagina = $_GET['pagina'];
+        $cantidadDeElementosPorPagina = PDOConfiguracion::getInstance()->cantidadDeElementos();
+        $cantidadDeRegistros = PDOPaciente::getInstance()->cantidad();
+        $cantElementos=$cantidadDeElementosPorPagina[0][0];
+        $cantRegistros =$cantidadDeRegistros[0][0];
+        $cantidadDePaginas = round(($cantRegistros / $cantElementos),0,PHP_ROUND_HALF_UP);
+        $cantidad = PDOConfiguracion::getInstance()->cantidadDeElementos();
+        $resources =array('resources'=> PDOPaciente::getInstance()->listarCantidad($pagina,$cantElementos),
+                          'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());
+        $view = new ListarPaciente();
+        $cantElementos=$cantidad[0][0];
+        $view->show($resources,$cantidadDePaginas);
     }
 
     public function agregarPaciente(){
@@ -135,7 +158,7 @@ class PacienteController{
             }
         }
     }
-    
+
      public function buscar_paciente(){
 
         if(!empty($_POST['apellido']) && !empty($_POST['nombre']) && !empty($_POST['numero_documento']) && !empty($_POST['tipo_doc'])){
