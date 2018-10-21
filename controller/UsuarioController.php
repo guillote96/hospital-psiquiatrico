@@ -91,9 +91,18 @@ class UsuarioController {
            $view->inicio(array('usuario' => PDOUsuario::getInstance()->traer_usuario($id)[0]->getUsername()));
     }
     public function registrarse(){
-        
+        if (sizeof($_SESSION) == 0){
+            $view = new IniciarSesion();
+            $view->show();
+        }
+        else{
+            if($_SESSION["usuario"] == NULL){
+                $view = new IniciarSesion();
+                $view->show();
+             }
         $view = new Registrarse();
         $view->show(array('usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername()));
+       }
     }
 
     public function agregarUsuario(){
