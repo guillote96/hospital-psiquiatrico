@@ -68,6 +68,7 @@ class PDOUsuario extends PDORepository {
     }
 
     public function eliminar_usuario($id){
+        $answer = $this->addObj("DELETE FROM usuario_tiene_rol WHERE usuario_id='$id'");
         $answer = $this->addObj("DELETE FROM usuario WHERE id='$id'");
     }
 

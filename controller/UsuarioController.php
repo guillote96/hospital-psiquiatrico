@@ -34,7 +34,7 @@ class UsuarioController {
             $view->show();
         }
         else{
-            if($_SESSION["usuario"] == NULL){
+            if($_SESSION["id"] == NULL){
                 $view = new IniciarSesion();
                 $view->show();
             }
@@ -96,7 +96,7 @@ class UsuarioController {
             $view->show();
         }
         else{
-            if($_SESSION["usuario"] == NULL){
+            if($_SESSION["id"] == NULL){
                 $view = new IniciarSesion();
                 $view->show();
              }
@@ -132,7 +132,9 @@ class UsuarioController {
     }
     public function eliminarUsuario(){
         $id = $_GET["id"];
-        $resources = PDOUsuario::getInstance()->eliminar_usuario($id);
+        if( $id != $_SESSION['id']){
+            $resources = PDOUsuario::getInstance()->eliminar_usuario($id);
+        }
         $this->getInstance()->listResources(); 
     }
     public function editarUsuario($id){
@@ -254,7 +256,7 @@ class UsuarioController {
             $view->show();
         }
         else{
-            if($_SESSION["usuario"] == NULL){
+            if($_SESSION["id"] == NULL){
                 $view = new IniciarSesion();
                 $view->show();
             }

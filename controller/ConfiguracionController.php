@@ -24,7 +24,7 @@ class ConfiguracionController {
             $view->show();
         }
         else{
-            if($_SESSION["usuario"] == NULL){
+            if($_SESSION["id"] == NULL){
                 $view = new IniciarSesion();
                 $view->show();
             }

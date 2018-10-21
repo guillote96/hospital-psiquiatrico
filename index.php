@@ -67,32 +67,60 @@ if(isset($_GET["action"])){
 
 }else{
 
-
 if(isset($_GET["action"])){
 	if ($_GET["action"] == 'listResources'){
-		// ESTE LLAMADO ES EL QUE HAY QUE HACER, CUANDO HACE SIEMPRE EN SESSION id !!
-		// DEPENDE A QUE 'ACTION' VAYA, PASARLE EL PERMISO QUE CORRESPONDA
-
-		//if(UsuarioController::getInstance()->checkPermiso('paciente_show', $_SESSION['id'])){
-	    	UsuarioController::getInstance()->listResources();
-		//}
+		if(!isset($_SESSION['id'])){
+			UsuarioController::getInstance()->home(null);
+		}
+		else{
+		 	if (UsuarioController::getInstance()->checkPermiso('usuario_show', $_SESSION['id'])){
+	   			UsuarioController::getInstance()->listResources();
+	   		} 
+	   		else{
+	   			UsuarioController::getInstance()->home($_SESSION['id']);
+	   		}
+	   	}	
 	}
 	else if ($_GET["action"] == 'agregarUsuario'){
 		UsuarioController::getInstance()->agregarUsuario();		
 	}
 	else if ($_GET["action"] == 'eliminarUsuario'){
-		$id = $_GET["id"];
-		UsuarioController::getInstance()->eliminarUsuario($id);
-	}
-	else if ($_GET["action"] == 'registrarse'){
-		if(UsuarioController::getInstance()->checkPermiso('registrarse', $_SESSION['id'])){
-	    	UsuarioController::getInstance()->registrarse();
+		if(!isset($_SESSION['id'])){
+			UsuarioController::getInstance()->home(null);
 		}
-		
+		else if(UsuarioController::getInstance()->checkPermiso('usuario_delete', $_SESSION['id'])){
+			$id = $_GET["id"];
+			UsuarioController::getInstance()->eliminarUsuario($id);
+		}
+		else{
+			UsuarioController::getInstance()->home(null);
+		}
+	}
+
+	else if ($_GET["action"] == 'registrarse'){
+		if (!isset($_SESSION['id'])){
+			UsuarioController::getInstance()->home(null);
+		}
+		else{
+			if(UsuarioController::getInstance()->checkPermiso('usuario_new', $_SESSION['id'])){
+	    		UsuarioController::getInstance()->registrarse();
+			}
+			else{
+				UsuarioController::getInstance()->home($_SESSION['id']);
+			}	
+		}
 	}
 	else if ($_GET["action"] == 'editarUsuario'){
-		$id= $_GET["id"];
-		UsuarioController::getInstance()->editarUsuario($id);
+		if(!isset($_SESSION['id'])){
+			UsuarioController::getInstance()->home(null);
+		}
+		else if(UsuarioController::getInstance()->checkPermiso('usuario_update', $_SESSION['id'])){
+			$id= $_GET["id"];
+			UsuarioController::getInstance()->editarUsuario($id);
+		}
+		else{
+			UsuarioController::getInstance()->home($_SESSION['id']);
+		}	
 	}
 	else if ($_GET["action"] == 'actualizarUsuario'){
 		$id= $_GET["id"];
@@ -112,29 +140,79 @@ if(isset($_GET["action"])){
 		//UsuarioController::getInstance()->buscarPorUsername();
 	}
 	else if ($_GET["action"] == 'listarPacientes'){
-		PacienteController:: getInstance()->listarTodosLosPacientes();
+		if(!isset($_SESSION['id'])){
+			UsuarioController::getInstance()->home(null);
+		}
+		else if(UsuarioController::getInstance()->checkPermiso('paciente_index', $_SESSION['id'])){
+			PacienteController:: getInstance()->listarTodosLosPacientes();
+		}
+		else{
+			UsuarioController::getInstance()->home($_SESSION['id']);
+		}
 	}
     else if ($_GET["action"] == 'agregarPaciente'){
-		PacienteController:: getInstance()->agregarPaciente();
+		if(!isset($_SESSION['id'])){
+			UsuarioController::getInstance()->home(null);
+		}
+		else if(UsuarioController::getInstance()->checkPermiso('paciente_new', $_SESSION['id'])){
+			PacienteController:: getInstance()->agregarPaciente();
+		}
+		else{
+			UsuarioController::getInstance()->home($_SESSION['id']);
+		}
+		
 	}
 	else if ($_GET["action"] == 'agregar_paciente'){
 		PacienteController:: getInstance()->agregar_paciente();
 	}
 	else if ($_GET["action"] == 'editarPaciente'){
-		$id= $_GET["id"];
-		PacienteController:: getInstance()->editarPaciente($id);
+		if(!isset($_SESSION['id'])){
+			UsuarioController::getInstance()->home(null);
+		}
+		else if(UsuarioController::getInstance()->checkPermiso('paciente_update', $_SESSION['id'])){
+			$id= $_GET["id"];
+			PacienteController:: getInstance()->editarPaciente($id);
+		}
+		else{
+			UsuarioController::getInstance()->home($_SESSION['id']);
+		}
 	}
 	else if ($_GET["action"] == 'actualizarPaciente'){
 		PacienteController:: getInstance()->actualizar_paciente();
 	}
 	else if ($_GET["action"] == 'eliminarPaciente'){
-		PacienteController:: getInstance()->eliminarPaciente($_GET["id"]);
+		if(!isset($_SESSION['id'])){
+			UsuarioController::getInstance()->home(null);
+		}
+		else if(UsuarioController::getInstance()->checkPermiso('paciente_destroy', $_SESSION['id'])){
+			PacienteController:: getInstance()->eliminarPaciente($_GET["id"]);
+		}
+		else{
+			UsuarioController::getInstance()->home($_SESSION['id']);
+		}
+		
 	}
 	else if ($_GET["action"] == 'moduloDeConfiguracion'){
-		ConfiguracionController:: getInstance()->listarVariables();
+		if(!isset($_SESSION['id'])){
+			UsuarioController::getInstance()->home(null);
+		}
+		else if(UsuarioController::getInstance()->checkPermiso('configuracion_show', $_SESSION['id'])){
+			ConfiguracionController:: getInstance()->listarVariables();
+		}
+		else{
+			UsuarioController::getInstance()->home($_SESSION['id']);
+		}
 	}
 	else if ($_GET["action"] == 'buscarPaciente'){
-		PacienteController:: getInstance()->buscarPaciente();
+		if(!isset($_SESSION['id'])){
+			UsuarioController::getInstance()->home(null);
+		}
+		else if(UsuarioController::getInstance()->checkPermiso('paciente_show', $_SESSION['id'])){
+			PacienteController:: getInstance()->buscarPaciente();
+		}
+		else{
+			UsuarioController::getInstance()->home($_SESSION['id']);
+		}
 	}
 	else if ($_GET["action"] == 'buscar_paciente'){
 		PacienteController:: getInstance()->buscar_paciente();
@@ -161,10 +239,27 @@ if(isset($_GET["action"])){
 		UsuarioController::getInstance()->cambiar_estado($id, $estado);
 	}
 	else if ($_GET["action"] == 'listarRoles'){
-		RolController::getInstance()->listar_roles();
+		if(!isset($_SESSION['id'])){
+			UsuarioController::getInstance()->home(null);
+		}
+		else if(UsuarioController::getInstance()->checkPermiso('paciente_show', $_SESSION['id'])){
+			RolController::getInstance()->listar_roles();
+		}
+		else{
+			UsuarioController::getInstance()->home($_SESSION['id']);
+		}
 	}
 	else if ($_GET["action"] == 'listarPermisos'){
-		PermisoController::getInstance()->listar_permisos();
+		if(!isset($_SESSION['id'])){
+			UsuarioController::getInstance()->home(null);
+		}
+		else if(UsuarioController::getInstance()->checkPermiso('paciente_show', $_SESSION['id'])){
+			PermisoController::getInstance()->listar_permisos();
+		}
+		else{
+			UsuarioController::getInstance()->home($_SESSION['id']);
+		}
+		
 	}
 	else if ($_GET["action"] == 'traerMisPermisos'){
 		$us= $_GET["us"];

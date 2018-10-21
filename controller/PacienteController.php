@@ -24,7 +24,7 @@ class PacienteController{
             $view->show();
         }
         else{
-            if($_SESSION["usuario"] == NULL){
+            if($_SESSION["id"] == NULL){
                 $view = new IniciarSesion();
                 $view->show();
             }
@@ -69,7 +69,7 @@ class PacienteController{
             $view->show();
         }
         else{
-            if($_SESSION["usuario"] == NULL){
+            if($_SESSION["id"] == NULL){
                 $view = new IniciarSesion();
                 $view->show();
             }
@@ -147,7 +147,7 @@ class PacienteController{
         $view->show($resources);
     }
 
-         public function eliminarPaciente($id){
+    public function eliminarPaciente($id){
         $resources = PDOPaciente::getInstance()->eliminar_paciente($id);
         PacienteController:: getInstance()->listarTodosLosPacientes();
     }
@@ -158,7 +158,7 @@ class PacienteController{
             $view->show();
         }
         else{
-            if($_SESSION["usuario"] == NULL){
+            if($_SESSION["id"] == NULL){
                 $view = new IniciarSesion();
                 $view->show();
             }
