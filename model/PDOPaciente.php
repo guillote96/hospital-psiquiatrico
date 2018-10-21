@@ -79,21 +79,40 @@ class PDOPaciente extends PDORepository {
              $idTipoDocumentoId=$sqlTipoDocumentoId[0]["id"];
              $idObraSocial=$sqlObraSocialId[0]["id"];*/
 
-             
 
              $idLocalidad= $datos['localidad'];
              $idRegionSanitaria= $datos['region_sanitaria'];
              $idGenero= $datos['genero'];
              $idTipoDocumentoId=$datos['tipo_doc'];
              $idObraSocial=$datos['obra_social'];
+             $apellido = $datos['apellido'];
+             $nombre = $datos['nombre'];
+             $fecha_nac = $datos['fecha_nac'];
+             $lugar_nac = $datos['lugar_nac'];
+             $partido = $datos['partido'];
+             $localidad = $datos['localidad'];
+             $domicilio = $datos['domicilio'];
+             $genero = $datos['genero'];
+             $tiene_doc = $datos['tiene_doc'];
+             $tipo_doc = $datos['tipo_doc'];
+             $numero_documento = $datos['numero_documento'];
+             $telefono = $datos['telefono'];
+             $region_sanitaria = $datos['region_sanitaria'];
+             $numero_historia_clinica = $datos['numero_historia_clinica'];
+             $numero_carpeta = $datos['numero_carpeta'];
+             $obra_social = $datos['obra_social'];
+             //var_dump($datos);
+             //echo "id: ".$_GET['id'];
 
-            $answer = $this->addObj("UPDATE paciente SET apellido = '$datos[apellido]', nombre = '$datos[nombre]', fecha_nac = '$datos[fecha_nac]', lugar_nac ='$datos[lugar_nac]', localidad_id = $idLocalidad, region_sanitaria_id = $idRegionSanitaria, domicilio ='$datos[domicilio]', genero_id=$idGenero ,tiene_documento ='$datos[tiene_doc]', tipo_doc_id = $idTipoDocumentoId, numero ='$datos[numero_documento]', nro_historia_clinica = '$datos[numero_historia_clinica]',nro_carpeta ='$datos[numero_carpeta]', obra_social_id =$idObraSocial WHERE id='$_GET[id]'");
+             $answer = $this->addObj("UPDATE paciente SET apellido = '$apellido', nombre = '$nombre', fecha_nac = '$fecha_nac', lugar_nac = '$lugar_nac', localidad_id = '$idLocalidad', region_sanitaria_id = '$region_sanitaria', domicilio = '$domicilio', genero_id = '$genero', tiene_documento = '$tiene_doc', tipo_doc_id = '$tipo_doc', numero = '$numero_documento', tel = '$telefono', nro_historia_clinica = '$numero_historia_clinica', nro_carpeta = '$numero_carpeta', obra_social_id = '$obra_social' WHERE id='$_GET[id]'");
+
+            /*$answer = $this->addObj("UPDATE paciente SET apellido = '$datos[apellido]', nombre = '$datos[nombre]', fecha_nac = '$datos[fecha_nac]', lugar_nac ='$datos[lugar_nac]', localidad_id = $idLocalidad, region_sanitaria_id = $idRegionSanitaria, domicilio ='$datos[domicilio]', genero_id=$idGenero ,tiene_documento =$datos[tiene_doc], tipo_doc_id = $idTipoDocumentoId, numero ='$datos[numero_documento]', nro_historia_clinica = '$datos[numero_historia_clinica]',nro_carpeta ='$datos[numero_carpeta]', obra_social_id =$idObraSocial WHERE id=$_GET[id]");*/
              
     }
 
     public function traer_datosVarios($id){
       // Trae Nombre de los siguientes campos: localidad, region sanitaria, genero, tipo de documento y obrasocial
-      $consulta= $this->queryList("SELECT l.nombre as localidad, pa.nombre as partido, rs.nombre as regionsanitaria, td.nombre as tipodocumento, g.nombre as genero, os.nombre as obrasocial FROM paciente p inner join localidad l on ( p.localidad_id = l. id) inner join partido pa on (pa.id = l.partido_id) inner join region_sanitaria rs on (rs.id=pa.region_sanitaria_id) inner join tipo_documento td on (td.id = p.tipo_doc_id) inner join genero g on ( g.id = p.genero_id) inner join obra_social os on (os.id=p.obra_social_id) WHERE p.id = $id");
+      $consulta= $this->queryList("SELECT l.nombre as localidad, pa.nombre as partido, rs.id as regionsanitaria, td.nombre as tipodocumento, g.nombre as genero, os.nombre as obrasocial FROM paciente p inner join localidad l on ( p.localidad_id = l. id) inner join partido pa on (pa.id = l.partido_id) inner join region_sanitaria rs on (rs.id=pa.region_sanitaria_id) inner join tipo_documento td on (td.id = p.tipo_doc_id) inner join genero g on ( g.id = p.genero_id) inner join obra_social os on (os.id=p.obra_social_id) WHERE p.id = $id");
          
         $datos = array(  "localidad" => $consulta [0]["localidad"],
                               "partido" =>   $consulta [0]["partido"],

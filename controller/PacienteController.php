@@ -31,15 +31,15 @@ class PacienteController{
             $view->show();
         }
         else{
-        $partidos = PDOPartido:: getInstance()->listAll();
-        $localidades = PDOLocalidad:: getInstance()->listAll();
-        $obraSociales = PDOObraSocial:: getInstance()->listAll();
-        $regionSanitaria = PDORegionSanitaria:: getInstance()->listAll();
-        $generos = PDOGenero:: getInstance()->listAll();
-        $tiposDoc = PDOTipoDoc:: getInstance()->listAll();
-        $view = new AgregarPaciente();
-        $usuario = PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername();
-        $view->show($partidos, $localidades,$obraSociales,$regionSanitaria,$generos,$tiposDoc,$usuario);
+          $partidos = PDOPartido:: getInstance()->listAll();
+          $localidades = PDOLocalidad:: getInstance()->listAll();
+          $obraSociales = PDOObraSocial:: getInstance()->listAll();
+          $regionSanitaria = PDORegionSanitaria:: getInstance()->listAll();
+          $generos = PDOGenero:: getInstance()->listAll();
+          $tiposDoc = PDOTipoDoc:: getInstance()->listAll();
+          $view = new AgregarPaciente();
+          $usuario = PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername();
+          $view->show($partidos, $localidades,$obraSociales,$regionSanitaria,$generos,$tiposDoc,$usuario);
         }
     }
 
@@ -67,11 +67,12 @@ class PacienteController{
                     "tiene_doc" => $_POST['tiene_doc'],
                     "tipo_doc" => $_POST['tipo_doc'],
                     "numero_documento" => $_POST['numero_documento'],
+                    "telefono" => $_POST['telefono'],
                     "region_sanitaria" => $_POST['region_sanitaria'],
                     "numero_historia_clinica" => $_POST['numero_historia_clinica'],
                     "numero_carpeta" => $_POST['numero_carpeta'],
                     "obra_social" => $_POST['obra_social']);
-
+        //var_dump($datos);
         PDOPaciente::getInstance()->actualizar_paciente($datos);
         $resources= array('resources' => PDOPaciente:: getInstance()->listAll(), 
                           'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());

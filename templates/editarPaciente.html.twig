@@ -65,7 +65,12 @@
           </div>
           <div class="form-group col-md-2">
             <label for="region_sanitaria">Región Sanitaria:</label>
-            <input class="form-control" value="{{resources.datos.region}}"  name="region_sanitaria" id="region_sanitaria" readonly onmousedown="return false;" />
+            <select class="form-control" name="region_sanitaria" id="region_sanitaria" required>
+            {% for item in resources.region_sanitaria %}
+             <option value={{ item.getId() }} {% if item.getNombre == resources.datos.obrasocial %} selected {% endif %}>{{ item.getNombre() }}</option>
+            {% endfor %}
+            </select>
+            <!--<input class="form-control" value="{{resources.datos.region}}"  name="region_sanitaria" id="region_sanitaria" />-->
           </div>
           <div class="form-group col-md-8">
             <label for="obra_social">Obra Social:</label>
@@ -98,7 +103,7 @@
           </div>
           <div class="form-group col-md-4">
             <label for="telefono">Teléfono:</label>
-            <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Teléfono" required>
+            <input type="text" class="form-control" id="telefono" value={{resources.resources.tel}} name="telefono" placeholder="Teléfono" required>
           </div>
         </div>
         <div class="form-row">
