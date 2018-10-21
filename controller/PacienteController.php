@@ -101,10 +101,15 @@ class PacienteController{
     }
 
     public function buscarPaciente (){
-        $view = new BuscarPaciente();
-        $datos=array('usuario' => (PDOUsuario::getInstance()->traer_usuario($_SESSION['id']))[0]->getUsername());
-        $view->show($datos);
-
+        if (sizeof($_SESSION) == 0){
+            $view = new IniciarSesion();
+            $view->show();
+        }
+        else{
+            $view = new BuscarPaciente();
+            $datos=array('usuario' => (PDOUsuario::getInstance()->traer_usuario($_SESSION['id']))[0]->getUsername());
+            $view->show($datos);
+        }
 
     }
      public function buscar_paciente(){

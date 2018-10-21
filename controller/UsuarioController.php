@@ -45,7 +45,6 @@ class UsuarioController {
             $view->show($resources,$cantidadDePaginas);
         }
 
-
     }
 
     public function listarUsuarios(){
@@ -222,12 +221,17 @@ class UsuarioController {
     }
 
     public function traer_mis_permisos($u){
-        $datos= PDOUsuario:: getInstance()->buscarPorUsername($u);
-        $id= $datos[0]->getId();
-        $consulta = PDOPermiso::getInstance()->traer_permisos_usuario($id);
-        $view = new MisPermisos();
-        $view->show(array('resources' => $consulta, 'usuario' =>PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername()));
-
+        if (sizeof($_SESSION) == 0){
+            $view = new IniciarSesion();
+            $view->show();
+        }
+        else{
+            $datos= PDOUsuario:: getInstance()->buscarPorUsername($u);
+            $id= $datos[0]->getId();
+            $consulta = PDOPermiso::getInstance()->traer_permisos_usuario($id);
+            $view = new MisPermisos();
+            $view->show(array('resources' => $consulta, 'usuario' =>PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername()));
+        }
     }
     public function checkPermiso($permiso, $id){
         $consulta = PDOPermiso::getInstance()->traer_permisos_usuario($id);
