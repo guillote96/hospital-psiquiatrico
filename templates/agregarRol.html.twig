@@ -15,10 +15,10 @@
     <span>Tiene asignado los roles: </span><br>
     {% endif %}
     {% for rol in resources.misRoles %}
-    <span>{{rol.nombre}} </span>&nbsp;<a href="./index.php?action=desasignarRol&idU={{usuario[0].id}}&idR={{rol.id}}">Desasignar</a><br>
+    <span>{{rol.nombre}} </span>&nbsp;<a href="./index.php?action=desasignarRol&idU={{ resources.user[0].id }}&idR={{ rol.id }}">Desasignar</a><br>
     {% endfor %} 
   </div>
-  <form action=./index.php?action=asignarRol&id={{usuario[0].id}} method="POST">
+  <form action="./index.php?action=asignarRol&id={{ resources.user[0].id }}" method="POST">
   <div class="form-group col-md-4">
 
   	<center><h4><u>Asignarle un nuevo rol</u></h4></center>
