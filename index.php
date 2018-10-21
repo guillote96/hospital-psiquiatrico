@@ -53,7 +53,7 @@ require_once('view/ListarPermisos.php');
 require_once('view/MisPermisos.php');
 
 if(ConfiguracionController::getInstance()->estadoSitio() == false){
-  if(isset($_GET["action"])){
+if(isset($_GET["action"])){
 	   if ($_GET["action"]== 'moduloDeConfiguracion'){
 		  ConfiguracionController:: getInstance()->listarVariables();
 	    }

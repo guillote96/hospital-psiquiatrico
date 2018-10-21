@@ -113,7 +113,7 @@ class UsuarioController {
         $nombre = $_POST['nombre'];
         $apellido = $_POST['apellido'];
         $activo = $_POST['activo']; 
-        $resources = PDOUsuario::getInstance()->actualizar_usuario($usuario, $email, $nombre, $apellido, $activo,$id);
+        $resources = PDOUsuario::getInstance()->actualizar_usuario($usuario, $email, $nombre, $apellido, $activo, $id);
         $this->getInstance()->listResources();   
     }
     public function eliminarUsuario(){
