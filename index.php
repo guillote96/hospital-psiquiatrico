@@ -85,7 +85,10 @@ if(isset($_GET["action"])){
 		UsuarioController::getInstance()->eliminarUsuario($id);
 	}
 	else if ($_GET["action"] == 'registrarse'){
-		UsuarioController::getInstance()->registrarse();
+		if(UsuarioController::getInstance()->checkPermiso('registrarse', $_SESSION['id'])){
+	    	UsuarioController::getInstance()->registrarse();
+		}
+		
 	}
 	else if ($_GET["action"] == 'editarUsuario'){
 		$id= $_GET["id"];
