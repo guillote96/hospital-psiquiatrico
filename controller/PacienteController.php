@@ -26,6 +26,11 @@ class PacienteController{
 
     }
     public function agregarPaciente(){
+        if (sizeof($_SESSION) == 0){
+            $view = new IniciarSesion();
+            $view->show();
+        }
+        else{
         $partidos = PDOPartido:: getInstance()->listAll();
         $localidades = PDOLocalidad:: getInstance()->listAll();
         $obraSociales = PDOObraSocial:: getInstance()->listAll();
@@ -35,6 +40,7 @@ class PacienteController{
         $view = new AgregarPaciente();
         $usuario = PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername();
         $view->show($partidos, $localidades,$obraSociales,$regionSanitaria,$generos,$tiposDoc,$usuario);
+        }
     }
 
     public function agregar_paciente(){

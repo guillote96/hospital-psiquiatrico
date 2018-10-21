@@ -29,16 +29,21 @@ class UsuarioController {
     }
     
     public function listResources(){
-        $cantidadDeElementosPorPagina = PDOConfiguracion::getInstance()->cantidadDeElementos();
-        $cantidadDeRegistros = PDOUsuario::getInstance()->cantidad();
-        $cantElementos=$cantidadDeElementosPorPagina[0][0];
-        $cantRegistros =$cantidadDeRegistros[0][0];
-        $cantidadDePaginas = round(($cantRegistros / $cantElementos),0,PHP_ROUND_HALF_UP);
-        $resources =array('resources'=> PDOUsuario::getInstance()->listarCantidad(1,$cantElementos),
-                          'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());
-        $view = new SimpleResourceList();
-        $view->show($resources,$cantidadDePaginas);
-
+        if (sizeof($_SESSION) == 0){
+            $view = new IniciarSesion();
+            $view->show();
+        }
+        else{
+            $cantidadDeElementosPorPagina = PDOConfiguracion::getInstance()->cantidadDeElementos();
+            $cantidadDeRegistros = PDOUsuario::getInstance()->cantidad();
+            $cantElementos=$cantidadDeElementosPorPagina[0][0];
+            $cantRegistros =$cantidadDeRegistros[0][0];
+            $cantidadDePaginas = round(($cantRegistros / $cantElementos),0,PHP_ROUND_HALF_UP);
+            $resources =array('resources'=> PDOUsuario::getInstance()->listarCantidad(1,$cantElementos),
+                              'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());
+            $view = new SimpleResourceList();
+            $view->show($resources,$cantidadDePaginas);
+        }
 
 
     }

@@ -19,10 +19,16 @@ class ConfiguracionController {
     
     
     public function listarVariables(){
-        $resources = array('resources' =>PDOConfiguracion::getInstance()->listAll(),
-                           'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());
-        $view = new ModuloDeConfiguracion();
-        $view->show($resources);
+         if (sizeof($_SESSION) == 0){
+            $view = new IniciarSesion();
+            $view->show();
+        }
+        else{
+            $resources = array('resources' =>PDOConfiguracion::getInstance()->listAll(),
+                               'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());
+            $view = new ModuloDeConfiguracion();
+            $view->show($resources);
+        }
     }
 
      public function moduloDeConfiguracion(){
