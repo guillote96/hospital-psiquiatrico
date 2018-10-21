@@ -47,8 +47,10 @@ class UsuarioController {
                 /*$resources =array('resources'=> PDOUsuario::getInstance()->listarCantidad(1,$cantElementos),
                                   'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());*/
                
-            $cantidad =PDOConfiguracion::getInstance()->cantDePaginas();
-            $resources = array('resources'=> PDOUsuario::getInstance()->listarCantidad(1,$cantidad['cantidadElementos']),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'cantidad' => $cantidad['cantidadPaginas']);
+            $cantidad =PDOConfiguracion::getInstance()->cantDePaginas(PDOUsuario::getInstance()->cantidad());
+            $resources = array('resources'=> PDOUsuario::getInstance()->listarCantidad(1,$cantidad['cantidadElementos']),
+                'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),
+                'cantidad' => $cantidad['cantidadPaginas']);
                 $view = new SimpleResourceList();
                 //$view->show($resources,$cantidadDePaginas);
                 $view->show($resources);
@@ -73,8 +75,10 @@ class UsuarioController {
         //$cantElementos=$cantidad[0][0];
         //$view->show($resources,$cantidadDePaginas);
                           
-        $cantidad =PDOConfiguracion::getInstance()->cantDePaginas();
-        $resources = array('resources'=> PDOUsuario::getInstance()->listarCantidad($pagina,$cantidad['cantidadElementos']),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'cantidad' => $cantidad['cantidadPaginas']);
+         $cantidad =PDOConfiguracion::getInstance()->cantDePaginas(PDOUsuario::getInstance()->cantidad());
+        $resources = array('resources'=> PDOUsuario::getInstance()->listarCantidad($pagina,$cantidad['cantidadElementos']),
+            'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),
+            'cantidad' => $cantidad['cantidadPaginas']);
         $view = new SimpleResourceList();
         $view->show($resources);
     }
@@ -87,8 +91,9 @@ class UsuarioController {
            $view->inicio(array('usuario' => PDOUsuario::getInstance()->traer_usuario($id)[0]->getUsername()));
     }
     public function registrarse(){
+        
         $view = new Registrarse();
-        $view->show();
+        $view->show(array('usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername()));
     }
 
     public function agregarUsuario(){

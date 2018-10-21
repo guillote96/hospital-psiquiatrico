@@ -40,11 +40,11 @@ class PDOConfiguracion extends PDORepository {
         return $answer;
     }
 
-    public function cantDePaginas(){
+    public function cantDePaginas($cantRegistros){
          //ATENCION: DEVUELVE CANT DE PAGINAS Y DE ELEMENTOS EN UN ARREGLO!!!! Llamarlo donde se necesite paginado
         
         $cantidadDeElementosPorPagina = PDOConfiguracion::getInstance()->cantidadDeElementos();
-        $cantidadDeRegistros = PDOPaciente::getInstance()->cantidad();
+        $cantidadDeRegistros = $cantRegistros;
         $cantElementos=$cantidadDeElementosPorPagina[0][0];
         $cantRegistros =$cantidadDeRegistros[0][0];
         $cantidadDePaginas = round(($cantRegistros / $cantElementos),0,PHP_ROUND_HALF_UP);

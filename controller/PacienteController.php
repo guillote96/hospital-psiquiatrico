@@ -37,7 +37,7 @@ class PacienteController{
               $resources = array('resources' => PDOPaciente:: getInstance()->listarCantidad(1,$cantElementos),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),
             'cantidad' => $cantidadDePaginas);*/
 
-            $cantidad = PDOConfiguracion::getInstance()->cantDePaginas();
+             $cantidad = PDOConfiguracion::getInstance()->cantDePaginas(PDOPaciente::getInstance()->cantidad());
             $resources =array('resources'=> PDOPaciente::getInstance()->listarCantidad(1,$cantidad['cantidadElementos']),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'cantidad' => $cantidad['cantidadPaginas']);
               $view = new ListarPaciente();
               $view->show($resources);
@@ -56,7 +56,7 @@ class PacienteController{
         $cantRegistros =$cantidadDeRegistros[0][0];
         $cantidadDePaginas = round(($cantRegistros / $cantElementos),0,PHP_ROUND_HALF_UP);*/
 
-        $cantidad = PDOConfiguracion::getInstance()->cantDePaginas();
+        $cantidad = PDOConfiguracion::getInstance()->cantDePaginas(PDOPaciente::getInstance()->cantidad());
         $resources =array('resources'=> PDOPaciente::getInstance()->listarCantidad($pagina,$cantidad['cantidadElementos']),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'cantidad' => $cantidad['cantidadPaginas']);
         $view = new ListarPaciente();
         //$cantElementos=$cantidad[0][0];
@@ -93,7 +93,7 @@ class PacienteController{
        /*$resources= array('resources' =>PDOPaciente:: getInstance()->listAll() ,
                            'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername() );*/
 
-       $cantidad = PDOConfiguracion::getInstance()->cantDePaginas();
+        $cantidad = PDOConfiguracion::getInstance()->cantDePaginas(PDOPaciente::getInstance()->cantidad());
        $resources =array('resources'=> PDOPaciente::getInstance()->listarCantidad(1,$cantidad['cantidadElementos']),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'cantidad' => $cantidad['cantidadPaginas']);
         $view = new ListarPaciente();
         $view->show($resources);
@@ -125,7 +125,7 @@ class PacienteController{
         /*$resources= array('resources' => PDOPaciente:: getInstance()->listAll(), 
                           'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());*/
         PDOPaciente::getInstance()->actualizar_paciente($datos);
-        $cantidad = PDOConfiguracion::getInstance()->cantDePaginas();
+         $cantidad = PDOConfiguracion::getInstance()->cantDePaginas(PDOPaciente::getInstance()->cantidad());
         $resources =array('resources'=> PDOPaciente::getInstance()->listarCantidad(1,$cantidad['cantidadElementos']),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'cantidad' => $cantidad['cantidadPaginas']);
         $view = new ListarPaciente();
         $view->show($resources);
