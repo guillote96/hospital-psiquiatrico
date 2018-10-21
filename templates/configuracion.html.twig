@@ -32,9 +32,9 @@
    <div class="form-row">
     <div class="form-group col-md-4">
       <label for="estado">Estado del sitio:</label>
-      <select class="form-control" name="estado" id="estado" required>
-      <option value="1">Habilitado</option>
-      <option value="0">Deshabilitado</option>
+      <select class="form-control" value="{{resources.resources[4].valor}}" name="estado" id="estado" required>
+      <option value="1" {% if resources.resources[4].valor == 1 %} selected {% endif %}>Habilitado</option>
+      <option value="0" {% if resources.resources[4].valor == 0 %} selected {% endif %}>Deshabilitado</option>
       </select>
     </div>
   </div>

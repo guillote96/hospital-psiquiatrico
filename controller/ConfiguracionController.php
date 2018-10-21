@@ -54,8 +54,7 @@ class ConfiguracionController {
         $cantidad = $_POST['cantidadDeElementos'];
         $estado = $_POST['estado'];
         $resources = PDOConfiguracion::getInstance()->modificarConfiguracion($titulo,$descripcion,$email,$cantidad,$estado);
-
-
+        
          $resources = array('usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());
         $view = new Home();
         $view->inicio($resources);

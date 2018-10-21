@@ -39,4 +39,15 @@ class PDOConfiguracion extends PDORepository {
         $answer = $this->queryList("select valor from configuracion where variable = 'cantidadDeElementos'");
         return $answer;
     }
+
+    public function cantDePaginas(){
+         //ATENCION: DEVUELVE CANT DE PAGINAS Y DE ELEMENTOS EN UN ARREGLO!!!! Llamarlo donde se necesite paginado
+        
+        $cantidadDeElementosPorPagina = PDOConfiguracion::getInstance()->cantidadDeElementos();
+        $cantidadDeRegistros = PDOPaciente::getInstance()->cantidad();
+        $cantElementos=$cantidadDeElementosPorPagina[0][0];
+        $cantRegistros =$cantidadDeRegistros[0][0];
+        $cantidadDePaginas = round(($cantRegistros / $cantElementos),0,PHP_ROUND_HALF_UP);
+        return array('cantidadPaginas' =>$cantidadDePaginas, 'cantidadElementos' => $cantElementos);
+    }
 }

@@ -53,9 +53,19 @@ require_once('view/ListarPermisos.php');
 require_once('view/MisPermisos.php');
 
 if(ConfiguracionController::getInstance()->estadoSitio() == false){
-	return false;
-}
+  if(isset($_GET["action"])){
+	   if ($_GET["action"]== 'moduloDeConfiguracion'){
+		  ConfiguracionController:: getInstance()->listarVariables();
+	    }
+	    else if ($_GET["action"] == 'modificarConfiguracion'){
+		   ConfiguracionController::getInstance()->modificarConfiguracion();
+	     }
+	    else{
+		   return false;
+	    }
+   }
 
+}else{
 
 
 if(isset($_GET["action"])){
@@ -172,5 +182,7 @@ else{
        UsuarioController::getInstance()->home($_SESSION['id']);
 
 	}
+
+}
 
 }

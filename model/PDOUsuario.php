@@ -38,7 +38,7 @@ class PDOUsuario extends PDORepository {
     }
 
     public function actualizar_usuario($usuario,$email,$nombre,$apellido,$activo,$id){
-         $answer = $this->addObj("UPDATE usuario SET email='$email', username='$usuario', activo='$activo', first_name='$nombre', last_name='$apellido' WHERE id='$id'");
+         $answer = $this->addObj("UPDATE usuario SET email= '$email', username= '$usuario', activo= '$activo', first_name= '$nombre', last_name= '$apellido' WHERE id='$id'");
     }
 
     public function traer_usuario($id){
