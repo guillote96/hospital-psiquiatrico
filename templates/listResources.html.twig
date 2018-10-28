@@ -12,8 +12,8 @@
       <div class="form-group col-md-6">
         <h2><u>Usuarios</u></h2>
       </div>
-      <div class="form-group col-md-6 float-md-right">
-      <a class="btn btn-primary btn-sm" href="./?action=registrarse"> Agregar usuario </a>
+      <div class="form-group col-md-6">
+      <a class="btn btn-primary btn-sm float-right" href="./?action=registrarse"> Agregar usuario </a>
       </div> 
       </div> 
         <table class="table">
@@ -58,11 +58,11 @@
           <nav aria-label="Page navigation example">
           <nav aria-label="Page navigation example">
           <ul class="pagination justify-content-center">
-          <!--<li class="page-item"><a class="page-link" href="./?action=listarUsuarios&pagina={{i - 1}}" tabindex="-1">Anterior</a></li>-->
+          <li class="page-item"><a class="page-link" href="./?action=listarUsuarios&pagina={% if resources.pagina > 1 %}{{resources.pagina - 1}}{% else %}1{% endif %}">Anterior</a></li>
           {% for i in 1..resources.cantidad %}
-            <li class="page-item"><a class="page-link" href="./?action=listarUsuarios&pagina={{i}}">{{i}}</a></li>
+            <li class="page-item {% if i == resources.pagina %} active {% endif %}"><a class="page-link" href="./?action=listarUsuarios&pagina={{i}}">{{i}}</a></li>
           {% endfor %}
-          <!--<li class="page-item"><a class="page-link" href="./?action=listarUsuarios&pagina={{i + 1}}">Siguiente</a></li>-->
+          <li class="page-item"><a class="page-link" href="./?action=listarUsuarios&pagina={% if resources.pagina < resources.cantidad %}{{resources.pagina + 1}}{% else %}{{ resources.cantidad }}{% endif %}">Siguiente</a></li>
           </ul>
           </nav>
           </nav>

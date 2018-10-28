@@ -4,18 +4,30 @@
     </head>
 {% include 'barra.html' %}
     <body>
-        <h1>Home</h1>
-<div class="containter">
-        <ul>
-            <li><a href="./?action=listResources"> Listar Usuarios </a></li>
-            <li><a href="./?action=registrarse"> Registrarse </a></li>
-            <li><a href="./?action=listarPacientes"> Listar Todos los Pacientes </a>
-            <li><a href="./?action=agregarPaciente"> Agregar Paciente </a></li>
-            <li><a href="./?action=moduloDeConfiguracion"> Módulo de Configuración </a></li>
-            <li><a href="./?action=buscarPaciente"> Buscar Paciente </a></li>
-            <li><a href="./?action=traerMisPermisos&us={{resources.usuario}}"> Ver mis permisos </a></li>
-        </ul>
-</div>
+
+    {% if resources is empty %}
+        <div class="containter">
+        <br>
+        <center><h1>Hospital Dr. Alejandro Korn</h1></center>
+        <center>Teléfono: 4444444 - E-mail: <a href="mailto:hospital@lp.com">hospital@lp.com</a></center>
+        </div>
+
+
+
+    {% else %}
+        <br>
+        <div class="containter">
+            <ul>
+                <li><a href="./?action=listResources"> Listar Usuarios </a></li>
+                <li><a href="./?action=registrarse"> Registrar Usuario </a></li>
+                <li><a href="./?action=listarPacientes"> Listar Pacientes </a>
+                <li><a href="./?action=agregarPaciente"> Agregar Paciente </a></li>
+                <li><a href="./?action=moduloDeConfiguracion"> Módulo de Configuración </a></li>
+                <li><a href="./?action=buscarPaciente"> Buscar Paciente </a></li>
+                <li><a href="./?action=traerMisPermisos&us={{resources.usuario}}"> Ver mis permisos </a></li>
+            </ul>
+        </div>
+    {% endif %}
 {% include 'footer.html' %}
     </body>
 </html>

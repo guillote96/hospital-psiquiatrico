@@ -50,7 +50,7 @@ class UsuarioController {
             $cantidad =PDOConfiguracion::getInstance()->cantDePaginas(PDOUsuario::getInstance()->cantidad());
             $resources = array('resources'=> PDOUsuario::getInstance()->listarCantidad(1,$cantidad['cantidadElementos']),
                 'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),
-                'cantidad' => $cantidad['cantidadPaginas']);
+                'cantidad' => $cantidad['cantidadPaginas'], 'pagina' => 1);
                 $view = new SimpleResourceList();
                 //$view->show($resources,$cantidadDePaginas);
                 $view->show($resources);
@@ -78,7 +78,7 @@ class UsuarioController {
          $cantidad =PDOConfiguracion::getInstance()->cantDePaginas(PDOUsuario::getInstance()->cantidad());
         $resources = array('resources'=> PDOUsuario::getInstance()->listarCantidad($pagina,$cantidad['cantidadElementos']),
             'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),
-            'cantidad' => $cantidad['cantidadPaginas']);
+            'cantidad' => $cantidad['cantidadPaginas'], 'pagina' => $pagina);
         $view = new SimpleResourceList();
         $view->show($resources);
     }

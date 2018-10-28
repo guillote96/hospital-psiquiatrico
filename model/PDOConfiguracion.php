@@ -47,7 +47,7 @@ class PDOConfiguracion extends PDORepository {
         $cantidadDeRegistros = $cantRegistros;
         $cantElementos=$cantidadDeElementosPorPagina[0][0];
         $cantRegistros =$cantidadDeRegistros[0][0];
-        $cantidadDePaginas = round(($cantRegistros / $cantElementos),0,PHP_ROUND_HALF_UP);
+        $cantidadDePaginas = ceil($cantRegistros / $cantElementos);
         return array('cantidadPaginas' =>$cantidadDePaginas, 'cantidadElementos' => $cantElementos);
     }
 }
