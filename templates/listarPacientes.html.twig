@@ -40,11 +40,11 @@
           <nav aria-label="Page navigation example">
           <nav aria-label="Page navigation example">
           <ul class="pagination justify-content-center">
-          <!--<li class="page-item"><a class="page-link" href="./?action=listarUsuarios&pagina={{i - 1}}" tabindex="-1">Anterior</a></li>-->
+           <li class="page-item"><a class="page-link" href="./?action=listar_pacientes&pagina={% if resources.pagina > 1 %}{{resources.pagina - 1}}{% else %}1{% endif %}">Anterior</a></li>
           {% for i in 1..resources.cantidad %}
-            <li class="page-item"><a class="page-link" href="./?action=listar_pacientes&pagina={{i}}">{{i}}</a></li>
+            <li class="page-item {% if i == resources.pagina %} active {% endif %}"><a class="page-link" href="./?action=listar_pacientes&pagina={{i}}">{{i}}</a></li>
           {% endfor %}
-          <!--<li class="page-item"><a class="page-link" href="./?action=listarUsuarios&pagina={{i + 1}}">Siguiente</a></li>-->
+         <li class="page-item"><a class="page-link" href="./?action=listar_pacientes&pagina={% if resources.pagina < resources.cantidad %}{{resources.pagina + 1}}{% else %}{{ resources.cantidad }}{% endif %}">Siguiente</a></li>
           </ul>
           </nav>
           </nav>
