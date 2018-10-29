@@ -144,7 +144,7 @@ class UsuarioController {
     public function editarUsuario($id){
         $resources = PDOUsuario::getInstance()->traer_usuario($id);
         $view = new EditarUsuario();
-        $view->show(array('resources' => $resources[0],'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername()));
+        $view->show(array('resources' => $resources[0],'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]));
     }
 
      public function iniciarSesion(){
@@ -203,7 +203,7 @@ class UsuarioController {
         $resources= array('resources' => PDORol::getInstance()->traer_roles_noUsuario($id),
                            'misRoles' => PDORol::getInstance()->traer_roles_usuario($id),
                            'user' => PDOUsuario::getInstance()->traer_usuario($id),
-                           'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());
+                           'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
         //$view->show($user, $resources, $misRoles); 
         $view->show($resources); 
     }

@@ -142,7 +142,8 @@ class PacienteController{
                            'region_sanitaria' => PDORegionSanitaria::getInstance()->listAll(),
                            'tipodoc' => PDOTipoDoc::getInstance()->listAll(),
                            'genero' => PDOGenero::getInstance()->listAll(),
-                           'obrasocial' => PDOObraSocial::getInstance()->listAll());
+                           'obrasocial' => PDOObraSocial::getInstance()->listAll(),
+                           'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
 
         $view = new EditarPaciente();
         $view->show($resources);
