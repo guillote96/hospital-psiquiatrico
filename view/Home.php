@@ -21,9 +21,9 @@ class Home extends TwigView {
 		echo self::getTwig()->render('home.html.twig', array('titulo' => $titulo,'descripcion' => $descripcion, 'email' => $email));
 	}
 
-    public function sitioDeshabilitado(){
+    public function sitioDeshabilitado($titulo){
 
-    	echo self::getTwig()->render('mantenimiento.html.twig');
+    	echo self::getTwig()->render('mantenimiento.html.twig',array('titulo' => $titulo));
     }
     
 }

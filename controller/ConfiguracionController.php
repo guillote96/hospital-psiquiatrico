@@ -54,7 +54,7 @@ class ConfiguracionController {
     }
 
     public function modificarConfiguracion(){
-        if(!empty($_POST['titulo']) && !empty($_POST['descripcion']) && !empty($_POST['email']) && !empty($_POST['cantidadDeElementos']) && !empty($_POST['estado'])){
+        if(!empty($_POST['titulo']) && !empty($_POST['descripcion']) && !empty($_POST['email']) && !empty($_POST['cantidadDeElementos'])){
             $titulo = $_POST['titulo'];
             $descripcion = $_POST['descripcion'];
             $email = $_POST['email'];
@@ -78,7 +78,8 @@ class ConfiguracionController {
           foreach ($resources as &$var) {
               if(($var->getVariable() == 'estado') && ($var->getValor() == 0)){
                    $view = new Home();
-                   $view->sitioDeshabilitado();
+                   $titulo = PDOConfiguracion::getInstance()->traer_titulo()[0][0];
+                   $view->sitioDeshabilitado($titulo);
                    return false;
                 }
             }
