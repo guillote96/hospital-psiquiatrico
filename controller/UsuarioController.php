@@ -50,7 +50,7 @@ class UsuarioController {
             $cantidad =PDOConfiguracion::getInstance()->cantDePaginas(PDOUsuario::getInstance()->cantidad());
             $resources = array('resources'=> PDOUsuario::getInstance()->listarCantidad(1,$cantidad['cantidadElementos']),
                 'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),
-                'cantidad' => $cantidad['cantidadPaginas'], 'pagina' => 1);
+                'cantidad' => $cantidad['cantidadPaginas'], 'pagina' => 1, 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
                 $view = new SimpleResourceList();
                 //$view->show($resources,$cantidadDePaginas);
                 $view->show($resources);
@@ -78,7 +78,7 @@ class UsuarioController {
          $cantidad =PDOConfiguracion::getInstance()->cantDePaginas(PDOUsuario::getInstance()->cantidad());
         $resources = array('resources'=> PDOUsuario::getInstance()->listarCantidad($pagina,$cantidad['cantidadElementos']),
             'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),
-            'cantidad' => $cantidad['cantidadPaginas'], 'pagina' => $pagina);
+            'cantidad' => $cantidad['cantidadPaginas'], 'pagina' => $pagina, 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
         $view = new SimpleResourceList();
         $view->show($resources);
     }
@@ -88,7 +88,7 @@ class UsuarioController {
         if(empty($id))
             $view->show();
         else
-           $view->inicio(array('usuario' => PDOUsuario::getInstance()->traer_usuario($id)[0]->getUsername()));
+           $view->inicio(array('usuario' => PDOUsuario::getInstance()->traer_usuario($id)[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]));
     }
     public function registrarse(){
         if (sizeof($_SESSION) == 0){
@@ -101,7 +101,7 @@ class UsuarioController {
                 $view->show();
              }
         $view = new Registrarse();
-        $view->show(array('usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername()));
+        $view->show(array('usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]));
        }
     }
 
@@ -265,7 +265,7 @@ class UsuarioController {
                 $id= $datos[0]->getId();
                 $consulta = PDOPermiso::getInstance()->traer_permisos_usuario($id);
                 $view = new MisPermisos();
-                $view->show(array('resources' => $consulta, 'usuario' =>PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername()));
+                $view->show(array('resources' => $consulta, 'usuario' =>PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]));
             }
         }
     }

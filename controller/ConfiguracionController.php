@@ -31,11 +31,11 @@ class ConfiguracionController {
             else{
                 if($error == 1){
                     $resources = array('resources' =>PDOConfiguracion::getInstance()->listAll(),
-                    'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'error' => 1);
+                    'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'error' => 1, 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
                 }
                 else{
                     $resources = array('resources' =>PDOConfiguracion::getInstance()->listAll(),
-                    'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'error' => 0);
+                    'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'error' => 0, 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
                 }
                 $view = new ModuloDeConfiguracion();
                 $view->show($resources);
@@ -63,7 +63,7 @@ class ConfiguracionController {
 
             $resources = PDOConfiguracion::getInstance()->modificarConfiguracion($titulo,$descripcion,$email,$cantidad,$estado);
         
-            $resources = array('usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());
+            $resources = array('usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
             $view = new Home();
             $view->inicio($resources);
         }

@@ -35,6 +35,11 @@ class PDOConfiguracion extends PDORepository {
          $answer = $this->addObj("UPDATE configuracion SET valor='$estado' WHERE variable='estado'");
     }
 
+    public function traer_titulo(){
+         $answer = $this->queryList("select valor from configuracion where variable = 'titulo'");
+        return $answer;
+    }
+
     public function cantidadDeElementos(){
         $answer = $this->queryList("select valor from configuracion where variable = 'cantidadDeElementos'");
         return $answer;
