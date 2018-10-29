@@ -18,7 +18,7 @@ class ConfiguracionController {
     }
     
     
-    public function listarVariables(){
+    public function listarVariables($error){
          if (sizeof($_SESSION) == 0){
             $view = new IniciarSesion();
             $view->show();
@@ -29,8 +29,14 @@ class ConfiguracionController {
                 $view->show();
             }
             else{
-                $resources = array('resources' =>PDOConfiguracion::getInstance()->listAll(),
-                                   'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());
+                if($error == 1){
+                    $resources = array('resources' =>PDOConfiguracion::getInstance()->listAll(),
+                    'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'error' => 1);
+                }
+                else{
+                    $resources = array('resources' =>PDOConfiguracion::getInstance()->listAll(),
+                    'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'error' => 0);
+                }
                 $view = new ModuloDeConfiguracion();
                 $view->show($resources);
             }
@@ -48,16 +54,22 @@ class ConfiguracionController {
     }
 
     public function modificarConfiguracion(){
-        $titulo = $_POST['titulo'];
-        $descripcion = $_POST['descripcion'];
-        $email = $_POST['email'];
-        $cantidad = $_POST['cantidadDeElementos'];
-        $estado = $_POST['estado'];
-        $resources = PDOConfiguracion::getInstance()->modificarConfiguracion($titulo,$descripcion,$email,$cantidad,$estado);
+        if(!empty($_POST['titulo']) && !empty($_POST['descripcion']) && !empty($_POST['email']) && !empty($_POST['cantidadDeElementos']) && !empty($_POST['estado'])){
+            $titulo = $_POST['titulo'];
+            $descripcion = $_POST['descripcion'];
+            $email = $_POST['email'];
+            $cantidad = $_POST['cantidadDeElementos'];
+            $estado = $_POST['estado'];
+
+            $resources = PDOConfiguracion::getInstance()->modificarConfiguracion($titulo,$descripcion,$email,$cantidad,$estado);
         
-         $resources = array('usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());
-        $view = new Home();
-        $view->inicio($resources);
+            $resources = array('usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());
+            $view = new Home();
+            $view->inicio($resources);
+        }
+        else{
+            ConfiguracionController:: getInstance()->listarVariables(1);
+        }
 
     }
 

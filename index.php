@@ -59,7 +59,7 @@ if(isset($_GET["action"])){
 	    }
 	    else if ($_GET["action"] == 'modificarConfiguracion'){
 		   ConfiguracionController::getInstance()->modificarConfiguracion();
-	     }
+	    }
 	    else{
 		   return false;
 	    }
@@ -197,7 +197,7 @@ if(isset($_GET["action"])){
 			UsuarioController::getInstance()->home(null);
 		}
 		else if(UsuarioController::getInstance()->checkPermiso('configuracion_show', $_SESSION['id'])){
-			ConfiguracionController:: getInstance()->listarVariables();
+			ConfiguracionController:: getInstance()->listarVariables(0);
 		}
 		else{
 			UsuarioController::getInstance()->home($_SESSION['id']);
