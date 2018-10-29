@@ -85,10 +85,14 @@ class UsuarioController {
     
     public function home($id){
         $view = new Home();
-        if(empty($id))
-            $view->show();
+        if(empty($id)){
+            $titulo = PDOConfiguracion::getInstance()->traer_titulo()[0][0];
+            $descripcion = PDOConfiguracion::getInstance()->traer_descripcion()[0][0];
+            $email = PDOConfiguracion::getInstance()->traer_email()[0][0];
+            $view->inicioSinSesion($titulo,$descripcion,$email);
+        }
         else
-           $view->inicio(array('usuario' => PDOUsuario::getInstance()->traer_usuario($id)[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]));
+           $view->inicio(array('usuario' => PDOUsuario::getInstance()->traer_usuario($id)[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'descripcion' => PDOConfiguracion::getInstance()->traer_descripcion()[0][0]));
     }
     public function registrarse(){
         if (sizeof($_SESSION) == 0){
@@ -145,7 +149,8 @@ class UsuarioController {
 
      public function iniciarSesion(){
         $view = new IniciarSesion();
-        $view->show();   
+        $titulo = PDOConfiguracion::getInstance()->traer_titulo()[0][0];
+        $view->show($titulo);   
     }
 
     public function verificarDatos(){
@@ -163,7 +168,7 @@ class UsuarioController {
                     self::getInstance()->setUsuario(PDOUsuario::getInstance()->traer_usuario_por_username($usuario));
                      $_SESSION['usuario'] =self::getInstance()->getUsuario()->getUsername();
 
-                     $resources= array('usuario' => self::getInstance()->getUsuario()->getUsername());
+                     $resources= array('usuario' => self::getInstance()->getUsuario()->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0] );
                     //redireccionar a Home
                     $view = new Home();
                     $view->inicio($resources);
@@ -206,8 +211,12 @@ class UsuarioController {
     public function cerrarSesion(){
         session_destroy();
         $view = new Home();
-         $view->show();
+        $titulo = PDOConfiguracion::getInstance()->traer_titulo()[0][0];
+        $descripcion = PDOConfiguracion::getInstance()->traer_descripcion()[0][0];
+        $email = PDOConfiguracion::getInstance()->traer_email()[0][0];
+        $view->inicioSinSesion($titulo,$descripcion,$email);
     }
+
    public function buscarPorUsername(){
          if(empty($_POST['buscar'])){
             return false;

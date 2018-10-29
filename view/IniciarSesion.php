@@ -3,9 +3,9 @@
 
 class IniciarSesion extends TwigView {
     
-    public function show() {
+    public function show($titulo) {
         
-         echo self::getTwig()->render('login.html.twig');
+         echo self::getTwig()->render('login.html.twig',array('titulo' => $titulo));
         
         
     }

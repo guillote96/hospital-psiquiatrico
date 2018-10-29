@@ -36,7 +36,17 @@ class PDOConfiguracion extends PDORepository {
     }
 
     public function traer_titulo(){
-         $answer = $this->queryList("select valor from configuracion where variable = 'titulo'");
+        $answer = $this->queryList("select valor from configuracion where variable = 'titulo'");
+        return $answer;
+    }
+
+    public function traer_descripcion(){
+        $answer = $this->queryList("select valor from configuracion where variable = 'descripcion'");
+        return $answer;
+    }
+
+    public function traer_email(){
+        $answer = $this->queryList("select valor from configuracion where variable = 'email'");
         return $answer;
     }
 

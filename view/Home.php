@@ -16,6 +16,10 @@ class Home extends TwigView {
 
         
     }
+	
+	public function inicioSinSesion($titulo,$descripcion,$email){
+		echo self::getTwig()->render('home.html.twig', array('titulo' => $titulo,'descripcion' => $descripcion, 'email' => $email));
+	}
 
     public function sitioDeshabilitado(){
 
