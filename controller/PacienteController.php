@@ -29,13 +29,6 @@ class PacienteController{
                 $view->show();
             }
             else{
-              /*$cantidadDeElementosPorPagina = PDOConfiguracion::getInstance()->cantidadDeElementos();
-              $cantidadDeRegistros = PDOPaciente::getInstance()->cantidad();
-              $cantElementos=$cantidadDeElementosPorPagina[0][0];
-              $cantRegistros =$cantidadDeRegistros[0][0];
-               $cantidadDePaginas = round(($cantRegistros / $cantElementos),0,PHP_ROUND_HALF_UP);
-              $resources = array('resources' => PDOPaciente:: getInstance()->listarCantidad(1,$cantElementos),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),
-            'cantidad' => $cantidadDePaginas);*/
             $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
              $cantidad = PDOConfiguracion::getInstance()->cantDePaginas(PDOPaciente::getInstance()->cantidad());
             $resources =array('resources'=> PDOPaciente::getInstance()->listarCantidad(1,$cantidad['cantidadElementos']),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'cantidad' => $cantidad['cantidadPaginas'], 'pagina' => 1, 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
@@ -50,11 +43,6 @@ class PacienteController{
             return false;
         }
         $pagina = $_GET['pagina'];
-        /*$cantidadDeElementosPorPagina = PDOConfiguracion::getInstance()->cantidadDeElementos();
-        $cantidadDeRegistros = PDOPaciente::getInstance()->cantidad();
-        $cantElementos=$cantidadDeElementosPorPagina[0][0];
-        $cantRegistros =$cantidadDeRegistros[0][0];
-        $cantidadDePaginas = round(($cantRegistros / $cantElementos),0,PHP_ROUND_HALF_UP);*/
         $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
         $cantidad = PDOConfiguracion::getInstance()->cantDePaginas(PDOPaciente::getInstance()->cantidad());
         $resources =array('resources'=> PDOPaciente::getInstance()->listarCantidad($pagina,$cantidad['cantidadElementos']),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'cantidad' => $cantidad['cantidadPaginas'], 'pagina' => $pagina, 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
@@ -92,22 +80,15 @@ class PacienteController{
     public function agregar_paciente(){
         $resources = PDOPaciente:: getInstance()->agregar_paciente($_POST['apellido'],$_POST['nombre'], $_POST['fecha_nac'],$_POST['lugar_nac'],$_POST['partido'],$_POST['localidad'],$_POST['genero'],$_POST['tiene_doc'],$_POST['tipo_doc'],$_POST['numero_documento'],$_POST['telefono'],$_POST['region_sanitaria'],$_POST['domicilio'],$_POST['numero_historia_clinica'],$_POST['numero_carpeta'],$_POST['obra_social']);
 
-       /*$resources= array('resources' =>PDOPaciente:: getInstance()->listAll() ,
-                           'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername() );*/
-
         $cantidad = PDOConfiguracion::getInstance()->cantDePaginas(PDOPaciente::getInstance()->cantidad());
         $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
        $resources =array('resources'=> PDOPaciente::getInstance()->listarCantidad(1,$cantidad['cantidadElementos']),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'cantidad' => $cantidad['cantidadPaginas'], 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' =>$permisos);
        
         $view = new ListarPaciente();
         $view->show($resources, $permisos);
-
     }
 
-
     public function actualizar_paciente(){
-                            //"tel" => $_POST['telefono'],
-
         $datos=array("apellido" => $_POST['apellido'],
                     "nombre"  => $_POST['nombre'],
                     "fecha_nac" => $_POST['fecha_nac'],
@@ -124,11 +105,7 @@ class PacienteController{
                     "numero_historia_clinica" => $_POST['numero_historia_clinica'],
                     "numero_carpeta" => $_POST['numero_carpeta'],
                     "obra_social" => $_POST['obra_social']);
-        //var_dump($datos);
         
-        /*$resources= array('resources' => PDOPaciente:: getInstance()->listAll(), 
-                          'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());*/
-
         PDOPaciente::getInstance()->actualizar_paciente($datos);
         $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
          $cantidad = PDOConfiguracion::getInstance()->cantDePaginas(PDOPaciente::getInstance()->cantidad());
