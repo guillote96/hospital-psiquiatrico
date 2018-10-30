@@ -3,10 +3,22 @@
 {% include 'barra.html' %}
 <div class="container">
   {% if resources.error == 1%}
-  <br>
-  <div class="alert alert-secondary" role="alert">
-    Error: No pueden quedar campos vacíos
-  </div>
+    <br>
+    <div class="alert alert-secondary" role="alert">
+      Error: No pueden quedar campos vacíos
+    </div>
+  {% endif %}
+  {% if resources.error == 2%}
+    <br>
+    <div class="alert alert-secondary" role="alert">
+      Error: E-mail invalido
+    </div>
+  {% endif %}
+  {% if resources.error == 3%}
+    <br>
+    <div class="alert alert-secondary" role="alert">
+      Error: Debe ingresar un número entero como cantidad de elementos en los listados
+    </div>
   {% endif %}
   <br>
   <h2><u>Configuración</u></h2>
