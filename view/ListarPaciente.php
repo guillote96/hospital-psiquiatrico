@@ -8,9 +8,9 @@
         
          }*/
 
-         public function show($resourceArray) {
+         public function show($resourceArray, $permisos) {
         
-            echo self::getTwig()->render('listarPacientes.html.twig', array('resources' => $resourceArray));
+            echo self::getTwig()->render('listarPacientes.html.twig', array('resources' => $resourceArray, 'permisos' => $permisos));
         
         
          }

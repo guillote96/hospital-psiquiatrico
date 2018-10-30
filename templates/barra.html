@@ -28,18 +28,30 @@
       <li class="nav-item">
         <a class="nav-link" href="#">Consultas</a>
       </li>
+      {% for permiso in permisos if permiso.nombre == "paciente_index" %}
       <li class="nav-item">
         <a class="nav-link" href="?action=listarPacientes">Pacientes</a>
-      </li>
+      </li> 
+      {% endfor%}
       <li class="nav-item dropdown">
+        {% for permiso in permisos if permiso.nombre == "configuracion_show" %}
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Administración
         </a>
+        {% endfor %}
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        {% for permiso in permisos if permiso.nombre == "usuario_show" %}
           <a class="dropdown-item" href="?action=listResources">Usuarios</a>
+        {% endfor  %}
+        {% for permiso in permisos if permiso.nombre == "configuracion_show" %}
           <a class="dropdown-item" href="?action=listarRoles">Roles</a>
+        {% endfor  %}
+        {% for permiso in permisos if permiso.nombre == "configuracion_show" %}
           <a class="dropdown-item" href="?action=listarPermisos">Permisos</a>
+        {% endfor  %}
+        {% for permiso in permisos if permiso.nombre == "configuracion_show" %}
           <a class="dropdown-item" href="?action=moduloDeConfiguracion">Configuracion</a>
+        {% endfor %} 
         </div>
       </li>
     </ul>

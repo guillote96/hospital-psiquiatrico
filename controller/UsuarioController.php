@@ -51,9 +51,10 @@ class UsuarioController {
             $resources = array('resources'=> PDOUsuario::getInstance()->listarCantidad(1,$cantidad['cantidadElementos']),
                 'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),
                 'cantidad' => $cantidad['cantidadPaginas'], 'pagina' => 1, 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
+            $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
                 $view = new SimpleResourceList();
                 //$view->show($resources,$cantidadDePaginas);
-                $view->show($resources);
+                $view->show($resources, $permisos);
             }
         }
 
@@ -79,8 +80,9 @@ class UsuarioController {
         $resources = array('resources'=> PDOUsuario::getInstance()->listarCantidad($pagina,$cantidad['cantidadElementos']),
             'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),
             'cantidad' => $cantidad['cantidadPaginas'], 'pagina' => $pagina, 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
+        $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
         $view = new SimpleResourceList();
-        $view->show($resources);
+        $view->show($resources, $permisos);
     }
     
     public function home($id){
@@ -92,7 +94,8 @@ class UsuarioController {
             $view->inicioSinSesion($titulo,$descripcion,$email);
         }
         else
-           $view->inicio(array('usuario' => PDOUsuario::getInstance()->traer_usuario($id)[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'descripcion' => PDOConfiguracion::getInstance()->traer_descripcion()[0][0]));
+        $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);  
+           $view->inicio(array('usuario' => PDOUsuario::getInstance()->traer_usuario($id)[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'descripcion' => PDOConfiguracion::getInstance()->traer_descripcion()[0][0], 'permisos' => $permisos));
     }
     public function registrarse(){
         if (sizeof($_SESSION) == 0){
@@ -104,8 +107,9 @@ class UsuarioController {
                 $view = new IniciarSesion();
                 $view->show();
              }
+        $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);     
         $view = new Registrarse();
-        $view->show(array('usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]));
+        $view->show(array('usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' => $permisos));
        }
     }
 
@@ -122,8 +126,7 @@ class UsuarioController {
         $apellido = $_POST['apellido'];
         $activo = $_POST['activo'];     
         $resources = PDOUsuario::getInstance()->agregar_usuario($usuario, $email, $password, $nombre, $apellido, $activo);
-        $view = new Home();
-        $view->show();
+        $this->listResources();
     }
     public function actualizarUsuario($id){
         $usuario = $_POST['usuario'];
@@ -143,8 +146,9 @@ class UsuarioController {
     }
     public function editarUsuario($id){
         $resources = PDOUsuario::getInstance()->traer_usuario($id);
+        $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]); 
         $view = new EditarUsuario();
-        $view->show(array('resources' => $resources[0],'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]));
+        $view->show(array('resources' => $resources[0],'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' => $permisos));
     }
 
      public function iniciarSesion(){
@@ -167,8 +171,8 @@ class UsuarioController {
                     self::getInstance()->alta_sesion($usuario,$id);
                     self::getInstance()->setUsuario(PDOUsuario::getInstance()->traer_usuario_por_username($usuario));
                      $_SESSION['usuario'] =self::getInstance()->getUsuario()->getUsername();
-
-                     $resources= array('usuario' => self::getInstance()->getUsuario()->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0] );
+                     $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]); 
+                     $resources= array('usuario' => self::getInstance()->getUsuario()->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' => $permisos);
                     //redireccionar a Home
                     $view = new Home();
                     $view->inicio($resources);
@@ -199,13 +203,13 @@ class UsuarioController {
         //$resources = PDORol::getInstance()->traer_roles_noUsuario($id);
         //$misRoles = PDORol::getInstance()->traer_roles_usuario($id);
         $view = new AgregarRol();
-
+        $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]); 
         $resources= array('resources' => PDORol::getInstance()->traer_roles_noUsuario($id),
                            'misRoles' => PDORol::getInstance()->traer_roles_usuario($id),
                            'user' => PDOUsuario::getInstance()->traer_usuario($id),
                            'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
         //$view->show($user, $resources, $misRoles); 
-        $view->show($resources); 
+        $view->show($resources, $permisos); 
     }
 
     public function cerrarSesion(){

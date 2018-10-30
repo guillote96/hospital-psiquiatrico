@@ -37,8 +37,9 @@ class ConfiguracionController {
                     $resources = array('resources' =>PDOConfiguracion::getInstance()->listAll(),
                     'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'error' => 0, 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
                 }
+                $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
                 $view = new ModuloDeConfiguracion();
-                $view->show($resources);
+                $view->show($resources, $permisos);
             }
         }
     }
@@ -62,8 +63,9 @@ class ConfiguracionController {
             $estado = $_POST['estado'];
 
             $resources = PDOConfiguracion::getInstance()->modificarConfiguracion($titulo,$descripcion,$email,$cantidad,$estado);
-        
-            $resources = array('usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
+            $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
+            $resources = array('usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' => $permisos);
+
             $view = new Home();
             $view->inicio($resources);
         }

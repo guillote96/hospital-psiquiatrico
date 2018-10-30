@@ -36,11 +36,11 @@ class PacienteController{
                $cantidadDePaginas = round(($cantRegistros / $cantElementos),0,PHP_ROUND_HALF_UP);
               $resources = array('resources' => PDOPaciente:: getInstance()->listarCantidad(1,$cantElementos),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),
             'cantidad' => $cantidadDePaginas);*/
-
+            $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
              $cantidad = PDOConfiguracion::getInstance()->cantDePaginas(PDOPaciente::getInstance()->cantidad());
             $resources =array('resources'=> PDOPaciente::getInstance()->listarCantidad(1,$cantidad['cantidadElementos']),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'cantidad' => $cantidad['cantidadPaginas'], 'pagina' => 1, 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
               $view = new ListarPaciente();
-              $view->show($resources);
+              $view->show($resources, $permisos);
             }
         }
     }
@@ -55,12 +55,12 @@ class PacienteController{
         $cantElementos=$cantidadDeElementosPorPagina[0][0];
         $cantRegistros =$cantidadDeRegistros[0][0];
         $cantidadDePaginas = round(($cantRegistros / $cantElementos),0,PHP_ROUND_HALF_UP);*/
-
+        $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
         $cantidad = PDOConfiguracion::getInstance()->cantDePaginas(PDOPaciente::getInstance()->cantidad());
         $resources =array('resources'=> PDOPaciente::getInstance()->listarCantidad($pagina,$cantidad['cantidadElementos']),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'cantidad' => $cantidad['cantidadPaginas'], 'pagina' => $pagina, 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
         $view = new ListarPaciente();
         //$cantElementos=$cantidad[0][0];
-        $view->show($resources);
+        $view->show($resources, $permisos);
     }
 
     public function agregarPaciente(){
@@ -83,7 +83,8 @@ class PacienteController{
               $view = new AgregarPaciente();
               $usuario = PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername();
               $titulo = PDOConfiguracion::getInstance()->traer_titulo()[0][0];
-              $view->show($partidos, $localidades,$obraSociales,$regionSanitaria,$generos,$tiposDoc,$usuario,$titulo);
+              $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
+              $view->show($partidos, $localidades,$obraSociales,$regionSanitaria,$generos,$tiposDoc,$usuario,$titulo, $permisos);
             }
         }
     }
@@ -95,9 +96,11 @@ class PacienteController{
                            'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername() );*/
 
         $cantidad = PDOConfiguracion::getInstance()->cantDePaginas(PDOPaciente::getInstance()->cantidad());
-       $resources =array('resources'=> PDOPaciente::getInstance()->listarCantidad(1,$cantidad['cantidadElementos']),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'cantidad' => $cantidad['cantidadPaginas'], 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
+        $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
+       $resources =array('resources'=> PDOPaciente::getInstance()->listarCantidad(1,$cantidad['cantidadElementos']),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'cantidad' => $cantidad['cantidadPaginas'], 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' =>$permisos);
+       
         $view = new ListarPaciente();
-        $view->show($resources);
+        $view->show($resources, $permisos);
 
     }
 
@@ -125,11 +128,13 @@ class PacienteController{
         
         /*$resources= array('resources' => PDOPaciente:: getInstance()->listAll(), 
                           'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());*/
+
         PDOPaciente::getInstance()->actualizar_paciente($datos);
+        $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
          $cantidad = PDOConfiguracion::getInstance()->cantDePaginas(PDOPaciente::getInstance()->cantidad());
         $resources =array('resources'=> PDOPaciente::getInstance()->listarCantidad(1,$cantidad['cantidadElementos']),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'cantidad' => $cantidad['cantidadPaginas'], 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
         $view = new ListarPaciente();
-        $view->show($resources);
+        $view->show($resources, $permisos);
 
     }
 
@@ -144,9 +149,9 @@ class PacienteController{
                            'genero' => PDOGenero::getInstance()->listAll(),
                            'obrasocial' => PDOObraSocial::getInstance()->listAll(),
                            'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
-
+        $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
         $view = new EditarPaciente();
-        $view->show($resources);
+        $view->show($resources, $permisos);
     }
 
     public function eliminarPaciente($id){
