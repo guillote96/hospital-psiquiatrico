@@ -92,20 +92,33 @@ class UsuarioController {
     }
 
     public function agregarUsuario(){
-        if(PDOUsuario::getInstance()->existe_usuario($_POST['usuario'])){
-            echo "Ya existe ese Nombre de Usuario";
-            return false;
-        }
-        $usuario = $_POST['usuario'];
-        $email = $_POST['email'];
-        if(isset($_POST['password']))
+        $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
+        $view = new Registrarse();
+        if(!empty($_POST['usuario']) && !empty($_POST['password']) && !empty($_POST['email']) && !empty($_POST['activo']) && !empty($_POST['nombre']) && !empty($_POST['apellido']) ){
+            if(PDOUsuario::getInstance()->existe_usuario($_POST['usuario'])){
+                $view->show(array('usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' => $permisos, 'error' => 2));
+                return false;
+            }
+            $usuario = $_POST['usuario'];
+            $email = $_POST['email'];
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $view->show(array('usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' => $permisos, 'error' => 3));
+                return false;
+            }
+            //if(isset($_POST['password']))
             $password = $_POST['password'];
-        $nombre = $_POST['nombre'];
-        $apellido = $_POST['apellido'];
-        $activo = $_POST['activo'];     
-        $resources = PDOUsuario::getInstance()->agregar_usuario($usuario, $email, $password, $nombre, $apellido, $activo);
-        $this->listResources();
+            $nombre = $_POST['nombre'];
+            $apellido = $_POST['apellido'];
+            $activo = $_POST['activo'];
+            $resources = PDOUsuario::getInstance()->agregar_usuario($usuario, $email, $password, $nombre, $apellido, $activo);
+            $this->listResources();
+        }
+        else{
+            $view->show(array('usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' => $permisos, 'error' => 1));
+                return false;
+        }
     }
+
     public function actualizarUsuario($id){
         $usuario = $_POST['usuario'];
         $email = $_POST['email'];
