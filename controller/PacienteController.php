@@ -78,6 +78,17 @@ class PacienteController{
     }
 
     public function agregar_paciente(){
+
+      if(empty($_POST['apellido']) && empty($_POST['nombre']) && empty($_POST['fecha_nac']) &&empty($_POST['lugar_nac']) && empty($_POST['partido']) && empty($_POST['localidad']) &&empty($_POST['domicilio']) && empty($_POST['partido']) && empty($_POST['genero']) &&empty($_POST['tiene_doc']) && empty($_POST['tipo_doc']) && empty($_POST['numero_documento']) && empty($_POST['telefono']) && empty($_POST['region_sanitaria']) && empty($_POST['numero_historia_clinica']) && empty($_POST['numero_carpeta']) && empty($_POST['obra_social'])){
+           
+             $cantidad = PDOConfiguracion::getInstance()->cantDePaginas(PDOPaciente::getInstance()->cantidad());
+             $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
+             $resources = array('resources'=> PDOPaciente::getInstance()->listarCantidad(1,$cantidad['cantidadElementos']),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'cantidad' => $cantidad['cantidadPaginas'], 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' =>$permisos);
+       
+              $view = new ListarPaciente();
+              $view->show($resources, $permisos);
+
+      }
         $resources = PDOPaciente:: getInstance()->agregar_paciente($_POST['apellido'],$_POST['nombre'], $_POST['fecha_nac'],$_POST['lugar_nac'],$_POST['partido'],$_POST['localidad'],$_POST['genero'],$_POST['tiene_doc'],$_POST['tipo_doc'],$_POST['numero_documento'],$_POST['telefono'],$_POST['region_sanitaria'],$_POST['domicilio'],$_POST['numero_historia_clinica'],$_POST['numero_carpeta'],$_POST['obra_social']);
 
         $cantidad = PDOConfiguracion::getInstance()->cantDePaginas(PDOPaciente::getInstance()->cantidad());
@@ -89,6 +100,19 @@ class PacienteController{
     }
 
     public function actualizar_paciente(){
+      if(empty($_POST['apellido']) && empty($_POST['nombre']) && empty($_POST['fecha_nac']) &&empty($_POST['lugar_nac']) && empty($_POST['partido']) && empty($_POST['localidad']) &&empty($_POST['domicilio']) && empty($_POST['partido']) && empty($_POST['genero']) &&empty($_POST['tiene_doc']) && empty($_POST['tipo_doc']) && empty($_POST['numero_documento']) && empty($_POST['telefono']) && empty($_POST['region_sanitaria']) && empty($_POST['numero_historia_clinica']) && empty($_POST['numero_carpeta']) && empty($_POST['obra_social'])){
+           
+             $cantidad = PDOConfiguracion::getInstance()->cantDePaginas(PDOPaciente::getInstance()->cantidad());
+             $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
+             $resources = array('resources'=> PDOPaciente::getInstance()->listarCantidad(1,$cantidad['cantidadElementos']),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'cantidad' => $cantidad['cantidadPaginas'], 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' =>$permisos);
+       
+              $view = new ListarPaciente();
+              $view->show($resources, $permisos);
+
+      }
+
+
+
         $datos=array("apellido" => $_POST['apellido'],
                     "nombre"  => $_POST['nombre'],
                     "fecha_nac" => $_POST['fecha_nac'],
@@ -156,26 +180,33 @@ class PacienteController{
 
      public function buscar_paciente(){
 
-        if(!empty($_POST['apellido']) && !empty($_POST['nombre']) && !empty($_POST['numero_documento']) && !empty($_POST['tipo_doc'])){
+        if(!empty($_POST['apellido']) || !empty($_POST['nombre']) || (!empty($_POST['numero_documento']) && !empty($_POST['tipo_doc']))){
                 
            $datos=array('resources' => PDOPaciente::getInstance()->buscarPacientePorDatosPersonales($_POST['apellido'],$_POST['nombre'],$_POST['numero_documento'],$_POST['tipo_doc']),
              'usuario' => (PDOUsuario::getInstance()->traer_usuario($_SESSION['id']))[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
+           $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
            $view = new ListarPaciente();
-           $view->show($datos);
+           $view->show($datos,$permisos);
            return true;
         }else 
 
            if( !empty($_POST['numero_historia_clinica'])){
                $datos=array('resources' => PDOPaciente::getInstance()->buscarPacienteHistoriaClinica($_POST['numero_historia_clinica']),
                           'usuario' => (PDOUsuario::getInstance()->traer_usuario($_SESSION['id']))[0]->getUsername());
+                $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
                 $view = new ListarPaciente();
-                $view->show($datos);
+                $view->show($datos,$permisos);
                 return true;
         }else
              {
 
-            echo "Falta completar campos de Datos de paciente o Numero de Historia clinica";
-            return false;
+              $view = new BuscarPaciente();
+              $datos=array('usuario' => (PDOUsuario::getInstance()->traer_usuario($_SESSION['id']))[0]->getUsername(), 
+                           'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0],
+                           'mensaje' => "Falta completar campos de Datos de paciente o Numero de Historia clinica");
+              $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
+              $view->show($datos,$permisos);
+             return false;
              }
 
 

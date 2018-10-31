@@ -71,9 +71,10 @@ class UsuarioController {
             $email = PDOConfiguracion::getInstance()->traer_email()[0][0];
             $view->inicioSinSesion($titulo,$descripcion,$email);
         }
-        else
+        else{
         $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);  
-           $view->inicio(array('usuario' => PDOUsuario::getInstance()->traer_usuario($id)[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'descripcion' => PDOConfiguracion::getInstance()->traer_descripcion()[0][0], 'permisos' => $permisos));
+        $view->inicio(array('usuario' => PDOUsuario::getInstance()->traer_usuario($id)[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'descripcion' => PDOConfiguracion::getInstance()->traer_descripcion()[0][0], 'permisos' => $permisos));
+       }
     }
     public function registrarse(){
         if (sizeof($_SESSION) == 0){
@@ -144,8 +145,10 @@ class UsuarioController {
 
      public function iniciarSesion(){
         $view = new IniciarSesion();
-        $titulo = PDOConfiguracion::getInstance()->traer_titulo()[0][0];
-        $view->show($titulo);   
+        //$titulo = PDOConfiguracion::getInstance()->traer_titulo()[0][0];
+        $resources = array('titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
+        //$view->show($titulo);  
+        $view->show($resources); 
     }
 
     public function verificarDatos(){
@@ -169,12 +172,20 @@ class UsuarioController {
                     $view->inicio($resources);
                     return true;
             }else{
-                echo "Contraseña incorrecta";
+                $view = new IniciarSesion();
+                //$titulo = PDOConfiguracion::getInstance()->traer_titulo()[0][0];
+                //$view->show($titulo);   
+                $resources = array('titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0],
+                                   'mensaje' => "Usuario o Contraseña Incorrecta" );
+                $view->show($resources);
                 return false;
             }
                
         }
-        echo "Usuario o Contraseña Incorrecta";
+        $resources = array('titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0],
+                           'mensaje' => "Usuario o Contraseña Incorrecta" );
+        $view = new IniciarSesion();
+        $view->show($resources);
         return false;
     }
     public function alta_sesion($usuario,$id){

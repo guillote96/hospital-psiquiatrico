@@ -23,7 +23,6 @@ require_once('view/Registrarse.php');
 require_once('view/EditarUsuario.php');
 require_once('view/SimpleResourceList.php');
 require_once('view/Home.php');
-require_once('view/HomeVerdadero.php');
 require_once('view/IniciarSesion.php');
 require_once('view/BuscarUsuario.php');
 require_once('view/ListarPaciente.php');

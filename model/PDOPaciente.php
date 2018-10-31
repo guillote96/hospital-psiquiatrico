@@ -106,7 +106,7 @@ class PDOPaciente extends PDORepository {
     }
 
     public function buscarPacientePorDatosPersonales($apellido,$nombre,$numero_documento,$tipo_doc){
-      $answer = $this->queryList("select apellido, domicilio, fecha_nac, genero_id, p.id as pacienteid, localidad_id, lugar_nac, p.nombre as nombrepaciente, td.nombre as documento, nro_carpeta, nro_historia_clinica, numero, obra_social_id, region_sanitaria_id, tel, tiene_documento, tipo_doc_id from paciente p inner join tipo_documento td on (p.tipo_doc_id = td.id) WHERE apellido='$apellido' AND p.nombre='$nombre'AND numero = $numero_documento AND td.nombre = '$tipo_doc'");
+      $answer = $this->queryList("select apellido, domicilio, fecha_nac, genero_id, p.id as pacienteid, localidad_id, lugar_nac, p.nombre as nombrepaciente, td.nombre as documento, nro_carpeta, nro_historia_clinica, numero, obra_social_id, region_sanitaria_id, tel, tiene_documento, tipo_doc_id from paciente p inner join tipo_documento td on (p.tipo_doc_id = td.id) WHERE (apellido='$apellido') OR (p.nombre='$nombre') OR (numero = $numero_documento AND td.nombre = '$tipo_doc')");
         $final_answer = [];
         foreach ($answer as &$element) {
             $final_answer[] = new Paciente($element['apellido'],$element['domicilio'],$element['fecha_nac'],$element['genero_id'],$element['pacienteid'],$element['localidad_id'],$element['lugar_nac'],$element['nombrepaciente'],$element['nro_carpeta'],$element['nro_historia_clinica'],$element['numero'],$element['obra_social_id'],$element['region_sanitaria_id'],$element['tel'],$element['tiene_documento'],$element['tipo_doc_id']);
