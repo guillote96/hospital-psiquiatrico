@@ -18,7 +18,7 @@ class PDOPaciente extends PDORepository {
     }
 
     public function listAll() {
-        $answer = $this->queryList("select * from paciente");
+        $answer = $this->queryList("select * from paciente ORDER BY apellido, nombre ASC");
         $final_answer = [];
         foreach ($answer as &$element) {
             $final_answer[] = new Paciente($element['apellido'],

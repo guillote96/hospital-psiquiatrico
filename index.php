@@ -135,7 +135,11 @@ if(isset($_GET["action"])){
 		UsuarioController::getInstance()->cerrarSesion();
 	}
 	else if ($_GET["action"] == 'buscarUsuario'){
-		UsuarioController:: getInstance()->tipoDeBusqueda();
+        if(UsuarioController::getInstance()->checkPermiso('paciente_index', $_SESSION['id']))
+			UsuarioController:: getInstance()->tipoDeBusqueda();
+		else
+			UsuarioController::getInstance()->home($_SESSION['id']);
+		
 		//UsuarioController::getInstance()->buscarPorUsername();
 	}
 	else if ($_GET["action"] == 'listarPacientes'){

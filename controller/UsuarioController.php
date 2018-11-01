@@ -220,28 +220,43 @@ class UsuarioController {
         $view->inicioSinSesion($titulo,$descripcion,$email);
     }
 
-   public function buscarPorUsername(){
-         if(empty($_POST['buscar'])){
-            return false;
+   public function buscarUserPor ($datos){
+         if(empty($_POST['buscar']) && empty($_POST['check1']) && empty($_POST['check2']) ){
+            return false; 
           }
-         $datos= PDOUsuario:: getInstance()->buscarPorUsername($_POST['buscar']);
+
+      $resources =array('resources' => $datos,'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
+       $permisos= PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
          $view= new BuscarUsuario();
-         $view->show($datos);
+         $view->show($resources,$permisos);
+         return true;
+
     }
+
+
+
+
+
     public function tipoDeBusqueda(){
-        if(empty($_POST['buscar'])){
-            return false;
-          }
-        $datos; $view;
-        if(strtolower ($_POST['buscar']) == "activo"){
-            $datos= PDOUsuario:: getInstance()->buscarPorActivo(1);
-        }else if(strtolower ($_POST['buscar']) == "bloqueado"){
-            $datos= PDOUsuario:: getInstance()->buscarPorActivo(2);
+      if(empty($_POST['buscar']) && empty($_POST['check1']) && empty($_POST['check2'])){
+
+            $cantidad =PDOConfiguracion::getInstance()->cantDePaginas(PDOUsuario::getInstance()->cantidad());
+            $resources = array('resources'=> PDOUsuario::getInstance()->listarCantidad(1,$cantidad['cantidadElementos']),
+                'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),
+                'cantidad' => $cantidad['cantidadPaginas'], 'pagina' => 1, 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], "mensaje" => "Falta completar campo con Username o elegir Criterio");
+             $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
+             $view = new SimpleResourceList();
+             $view->show($resources, $permisos);
+             return false;
+         }
+
+        if((!empty($_POST['check1'])) && ($_POST['check1'] = 0)){
+            $this->buscarUserPor(PDOUsuario:: getInstance()->buscarPorActivo(0));
+        }else if((!empty($_POST['check2'])) && ($_POST['check2'] = 1)){
+            $this->buscarUserPor(PDOUsuario:: getInstance()->buscarPorActivo(1));
         } else{
-            $datos= PDOUsuario:: getInstance()->buscarPorUsername($_POST['buscar']);
+            $this->buscarUserPor(PDOUsuario:: getInstance()->buscarPorUsername($_POST['buscar']));
         }
-         $view= new BuscarUsuario();
-         $view->show(array('resources' => $datos, 'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername()));
 
     }
 
