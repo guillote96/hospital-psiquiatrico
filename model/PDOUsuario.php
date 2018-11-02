@@ -127,11 +127,11 @@ class PDOUsuario extends PDORepository {
     }
 
     public function cambiar_estado($id, $estado){
-        if($estado==0){
-            $activo = 1;
+        if($estado==1){
+            $activo = 2;
         }
         else{
-            $activo = 0;
+            $activo = 1;
         }
         $answer = $this->addObj("UPDATE usuario SET activo='$activo' WHERE id='$id'");
     }
