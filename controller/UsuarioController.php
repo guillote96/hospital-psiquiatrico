@@ -221,9 +221,10 @@ class UsuarioController {
     }
 
    public function buscarUserPor ($datos){
-         if(empty($_POST['buscar']) && empty($_POST['check1']) && empty($_POST['check2']) ){
+         if(empty($_POST['buscar']) && empty($_POST['check']) && empty($_POST['check2']) ){
             return false; 
           }
+
 
       $resources =array('resources' => $datos,'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
        $permisos= PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
@@ -238,7 +239,7 @@ class UsuarioController {
 
 
     public function tipoDeBusqueda(){
-      if(empty($_POST['buscar']) && empty($_POST['check1']) && empty($_POST['check2'])){
+      if(empty($_POST['buscar']) && empty($_POST['check']) && empty($_POST['check2'])){
 
             $cantidad =PDOConfiguracion::getInstance()->cantDePaginas(PDOUsuario::getInstance()->cantidad());
             $resources = array('resources'=> PDOUsuario::getInstance()->listarCantidad(1,$cantidad['cantidadElementos']),
@@ -247,11 +248,11 @@ class UsuarioController {
              $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
              $view = new SimpleResourceList();
              $view->show($resources, $permisos);
+
              return false;
          }
-
-        if((!empty($_POST['check1'])) && ($_POST['check1'] = 0)){
-            $this->buscarUserPor(PDOUsuario:: getInstance()->buscarPorActivo(0));
+        if((!empty($_POST['check'])) && ($_POST['check'] = 2)){
+            $this->buscarUserPor(PDOUsuario:: getInstance()->buscarPorActivo(2));
         }else if((!empty($_POST['check2'])) && ($_POST['check2'] = 1)){
             $this->buscarUserPor(PDOUsuario:: getInstance()->buscarPorActivo(1));
         } else{
