@@ -93,13 +93,13 @@ function validacion(formu, obj) {
           <strong>{{item.username}}</strong><span></a></td>
           <td>{{item.firstname}}</td>
           <td>{{item.lastname}}</td>
-          <td>{% if (item.activo > 0) %}
+          <td>{% if item.activo == 1 %}
               Inactivo
              {% else %}
              Activo 
              {% endif %}</td>
           <td><a class="btn btn-primary btn-sm" href="./?action=cambiarEstado&id={{ item.id }}&estado={{item.activo}}">
-          {% if (item.activo > 0) %}
+          {% if item.activo == 1 %}
             Activar
           {% else %}
             Bloquear
