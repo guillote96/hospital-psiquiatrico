@@ -172,7 +172,9 @@ class PacienteController{
             }
             else{
               $view = new BuscarPaciente();
-              $datos=array('usuario' => (PDOUsuario::getInstance()->traer_usuario($_SESSION['id']))[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
+              $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
+              $tiposDoc = PDOTipoDoc:: getInstance()->listAll();
+              $datos=array('usuario' => (PDOUsuario::getInstance()->traer_usuario($_SESSION['id']))[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' => $permisos, 'tiposDoc' => $tiposDoc, 'mensajeError' => null);
               $view->show($datos);
             }
         }
@@ -180,7 +182,28 @@ class PacienteController{
 
      public function buscar_paciente(){
 
-        if(!empty($_POST['apellido']) || !empty($_POST['nombre']) || (!empty($_POST['numero_documento']) && !empty($_POST['tipo_doc']))){
+        $apellido = $_POST['apellido'];
+        $nombre = $_POST['nombre'];
+        $tipo_doc = $_POST['tipo_doc'];
+        $numero_documento = $_POST['numero_documento']; 
+        $numero_historia_clinica = $_POST['numero_historia_clinica'];
+        $resources = PDOPaciente::getInstance()->buscar_paciente($apellido, $nombre, $tipo_doc, $numero_documento, $numero_historia_clinica);
+        //SI HAY RESULTADOS DE BUSQUEDA
+        if($resources!=null){
+           $datos=array('resources'=>$resources, 'usuario' => (PDOUsuario::getInstance()->traer_usuario($_SESSION['id']))[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
+           $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
+           $view = new ListarPaciente();
+           $view->show($datos,$permisos);
+        }
+        else{
+              $view = new BuscarPaciente();
+              $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
+              $tiposDoc = PDOTipoDoc:: getInstance()->listAll();
+              $datos=array('usuario' => (PDOUsuario::getInstance()->traer_usuario($_SESSION['id']))[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' => $permisos, 'tiposDoc' => $tiposDoc, 'mensajeError' =>"No se encontraron resultados");
+              $view->show($datos);
+        }
+
+     /*if(!empty($_POST['apellido']) || !empty($_POST['nombre']) || (!empty($_POST['numero_documento']) && !empty($_POST['tipo_doc']))){
                 
            $datos=array('resources' => PDOPaciente::getInstance()->buscarPacientePorDatosPersonales($_POST['apellido'],$_POST['nombre'],$_POST['numero_documento'],$_POST['tipo_doc']),
              'usuario' => (PDOUsuario::getInstance()->traer_usuario($_SESSION['id']))[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
@@ -208,7 +231,7 @@ class PacienteController{
               $view->show($datos,$permisos);
              return false;
              }
-
+*/
 
      }
 	

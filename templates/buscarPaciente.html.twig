@@ -5,8 +5,15 @@
     <body>
 {% include 'barra.html' %}
 <div class="container">
+   {% if resources.mensajeError !=null  %}
+    <br>
+    <div class="alert alert-secondary" role="alert">
+      {{ resources.mensajeError }}
+    </div>
+  {% endif %}
 	<br>
 	<h2><u>Buscar Paciente</u></h2>
+
 	<form action="./index.php?action=buscar_paciente" method="POST">
 		<div class="form-row">
 	    	<div class="form-group col-md-4">
@@ -23,12 +30,12 @@
   		<div class="form-row">
   			<div class="form-group col-md-2">
 		      <label for="tipo_doc">Tipo de Documento:</label>
-		      <select class="form-control" name="tipo_doc" id="tipo_doc" >
-		      <option value="DNI">DNI</option>
-		      <option value="LC">LC</option>
-		      <option value="CI">CI</option>
-		      <option value="LE">LE</option>
-	      	  </select>
+		      <select class="form-control" name="tipo_doc" id="tipo_doc">
+		      	<option value=""> Elegir tipo</option>
+		        {% for tipo in tiposDoc %}
+		        <option value="{{tipo.id}}">{{tipo.name}}</option>
+		        {% endfor %} 
+		      </select>
     		</div>
     	</div>
     	<div class="form-row">

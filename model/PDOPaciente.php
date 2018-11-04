@@ -139,5 +139,31 @@ class PDOPaciente extends PDORepository {
         return $answer;
     }
 
+    public function buscar_paciente($apellido, $nombre, $tipo_doc, $numero_documento, $numero_historia_clinica){
+      $consulta = "select * from paciente WHERE ";
+      if($apellido!=''){
+        $consulta.= "apellido LIKE '%$apellido%' AND ";
+      }
+      if($nombre!=''){
+        $consulta.= "nombre LIKE '%$nombre%' AND ";
+      }
+      if($tipo_doc!=''){
+        $consulta.= "tipo_doc_id = '$tipo_doc' AND ";
+      }
+      if($numero_documento!=''){
+        $consulta.= "numero ='$numero_documento' AND ";
+      }
+      if($numero_historia_clinica!=''){
+        $consulta.= "nro_historia_clinica LIKE '%$numero_historia_clinica%' AND ";
+      }
+      $consulta.= "1=1";
+      $answer = $this->queryList($consulta);
+      $final_answer = [];
+      foreach ($answer as &$element) {
+          $final_answer[] = new Paciente($element['apellido'],$element['domicilio'],$element['fecha_nac'],$element['genero_id'],$element['id'],$element['localidad_id'],$element['lugar_nac'],$element['nombre'],$element['nro_carpeta'],$element['nro_historia_clinica'],$element['numero'],$element['obra_social_id'],$element['region_sanitaria_id'],$element['tel'],$element['tiene_documento'],$element['tipo_doc_id']);
+      }
+      return $final_answer;
+    }
+
 
 }
