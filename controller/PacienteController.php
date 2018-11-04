@@ -190,7 +190,7 @@ class PacienteController{
         $resources = PDOPaciente::getInstance()->buscar_paciente($apellido, $nombre, $tipo_doc, $numero_documento, $numero_historia_clinica);
         //SI HAY RESULTADOS DE BUSQUEDA
         if($resources!=null){
-           $datos=array('resources'=>$resources, 'usuario' => (PDOUsuario::getInstance()->traer_usuario($_SESSION['id']))[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
+           $datos=array('resources'=>$resources, 'usuario' => (PDOUsuario::getInstance()->traer_usuario($_SESSION['id']))[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'titulo1' => "Resultados de la búsqueda");
            $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
            $view = new ListarPaciente();
            $view->show($datos,$permisos);

@@ -34,10 +34,20 @@ function validacion(formu, obj) {
       <div class="container">
       <br>
       <div class="form-row">
-      <div class="form-group col-md-6">
+      <div class="form-group col-md-3">
         <h2><u>Usuarios</u></h2>
       </div>
-      <div class="form-group col-md-6">
+      <form action=./index.php?action=buscarUsuario method="post" >
+      <div class="form-group col-md-12">
+        <div id="form1">
+        <input type="checkbox" name="check" value="2" onchange="validacion('form1', this)"/> Activo
+        <input type="checkbox" name="check2" value="1" onchange="validacion('form1', this)"/> Bloqueado
+        </div>
+        <input type="text" name="buscar" placeholder="Buscar ... "/>
+        <input class="btn btn-primary btn-sm" type="submit" value="Buscar">
+      </div>
+      </form>
+      <div class="form-group col-md-5">
       <a class="btn btn-primary btn-sm float-md-right" href="./?action=registrarse"> Agregar usuario </a>
       </div> 
       </div>
@@ -45,14 +55,15 @@ function validacion(formu, obj) {
 
 
       
-      <form action=./index.php?action=buscarUsuario method="post" >
+      <!--<form action=./index.php?action=buscarUsuario method="post" >
       <input type="text" name="buscar" placeholder="Buscar ... "/>
+      <input type="submit" value="Buscar">
       <div id="form1">
       <input type="checkbox" name="check" value="2" onchange="validacion('form1', this)"/> Activo </a>
       <input type="checkbox" name="check2" value="1" onchange="validacion('form1', this)"/> Bloqueado </a>
       </div>
-      <input type="submit" value="Buscar">
-      </form>
+     
+      </form>-->
 
 
 
