@@ -39,21 +39,12 @@ class UsuarioController {
                 $view->show();
             }
             else{
-                /*$cantidadDeElementosPorPagina = PDOConfiguracion::getInstance()->cantidadDeElementos();
-                $cantidadDeRegistros = PDOUsuario::getInstance()->cantidad();
-                $cantElementos=$cantidadDeElementosPorPagina[0][0];
-                $cantRegistros =$cantidadDeRegistros[0][0];
-                $cantidadDePaginas = round(($cantRegistros / $cantElementos),0,PHP_ROUND_HALF_UP);*/
-                /*$resources =array('resources'=> PDOUsuario::getInstance()->listarCantidad(1,$cantElementos),
-                                  'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());*/
-               
-            $cantidad =PDOConfiguracion::getInstance()->cantDePaginas(PDOUsuario::getInstance()->cantidad());
-            $resources = array('resources'=> PDOUsuario::getInstance()->listarCantidad(1,$cantidad['cantidadElementos']),
+                $cantidad =PDOConfiguracion::getInstance()->cantDePaginas(PDOUsuario::getInstance()->cantidad());
+                $resources = array('resources'=> PDOUsuario::getInstance()->listarCantidad(1,$cantidad['cantidadElementos']),
                 'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),
                 'cantidad' => $cantidad['cantidadPaginas'], 'pagina' => 1, 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
-            $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
+                $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
                 $view = new SimpleResourceList();
-                //$view->show($resources,$cantidadDePaginas);
                 $view->show($resources, $permisos);
             }
         }
@@ -65,21 +56,8 @@ class UsuarioController {
             return false;
         }
         $pagina = $_GET['pagina'];
-        /*$cantidadDeElementosPorPagina = PDOConfiguracion::getInstance()->cantidadDeElementos();
-        $cantidadDeRegistros = PDOUsuario::getInstance()->cantidad();
-        $cantElementos=$cantidadDeElementosPorPagina[0][0];
-        $cantRegistros =$cantidadDeRegistros[0][0];
-        $cantidadDePaginas = round(($cantRegistros / $cantElementos),0,PHP_ROUND_HALF_UP);
-        $cantidad = PDOConfiguracion::getInstance()->cantidadDeElementos();
-        $resources =array('resources'=> PDOUsuario::getInstance()->listarCantidad($pagina,$cantElementos),
-                          'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername());*/
-        //$cantElementos=$cantidad[0][0];
-        //$view->show($resources,$cantidadDePaginas);
-                          
-         $cantidad =PDOConfiguracion::getInstance()->cantDePaginas(PDOUsuario::getInstance()->cantidad());
-        $resources = array('resources'=> PDOUsuario::getInstance()->listarCantidad($pagina,$cantidad['cantidadElementos']),
-            'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),
-            'cantidad' => $cantidad['cantidadPaginas'], 'pagina' => $pagina, 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
+        $cantidad =PDOConfiguracion::getInstance()->cantDePaginas(PDOUsuario::getInstance()->cantidad());
+        $resources = array('resources'=> PDOUsuario::getInstance()->listarCantidad($pagina,$cantidad['cantidadElementos']),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'cantidad' => $cantidad['cantidadPaginas'], 'pagina' => $pagina, 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
         $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
         $view = new SimpleResourceList();
         $view->show($resources, $permisos);
@@ -93,9 +71,10 @@ class UsuarioController {
             $email = PDOConfiguracion::getInstance()->traer_email()[0][0];
             $view->inicioSinSesion($titulo,$descripcion,$email);
         }
-        else
+        else{
         $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);  
-           $view->inicio(array('usuario' => PDOUsuario::getInstance()->traer_usuario($id)[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'descripcion' => PDOConfiguracion::getInstance()->traer_descripcion()[0][0], 'permisos' => $permisos));
+        $view->inicio(array('usuario' => PDOUsuario::getInstance()->traer_usuario($id)[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'descripcion' => PDOConfiguracion::getInstance()->traer_descripcion()[0][0], 'permisos' => $permisos));
+       }
     }
     public function registrarse(){
         if (sizeof($_SESSION) == 0){
@@ -114,20 +93,33 @@ class UsuarioController {
     }
 
     public function agregarUsuario(){
-        if(PDOUsuario::getInstance()->existe_usuario($_POST['usuario'])){
-            echo "Ya existe ese Nombre de Usuario";
-            return false;
-        }
-        $usuario = $_POST['usuario'];
-        $email = $_POST['email'];
-        if(isset($_POST['password']))
+        $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
+        $view = new Registrarse();
+        if(!empty($_POST['usuario']) && !empty($_POST['password']) && !empty($_POST['email']) && !empty($_POST['activo']) && !empty($_POST['nombre']) && !empty($_POST['apellido']) ){
+            if(PDOUsuario::getInstance()->existe_usuario($_POST['usuario'])){
+                $view->show(array('usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' => $permisos, 'error' => 2));
+                return false;
+            }
+            $usuario = $_POST['usuario'];
+            $email = $_POST['email'];
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $view->show(array('usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' => $permisos, 'error' => 3));
+                return false;
+            }
+            //if(isset($_POST['password']))
             $password = $_POST['password'];
-        $nombre = $_POST['nombre'];
-        $apellido = $_POST['apellido'];
-        $activo = $_POST['activo'];     
-        $resources = PDOUsuario::getInstance()->agregar_usuario($usuario, $email, $password, $nombre, $apellido, $activo);
-        $this->listResources();
+            $nombre = $_POST['nombre'];
+            $apellido = $_POST['apellido'];
+            $activo = $_POST['activo'];
+            $resources = PDOUsuario::getInstance()->agregar_usuario($usuario, $email, $password, $nombre, $apellido, $activo);
+            $this->listResources();
+        }
+        else{
+            $view->show(array('usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' => $permisos, 'error' => 1));
+                return false;
+        }
     }
+
     public function actualizarUsuario($id){
         $usuario = $_POST['usuario'];
         $email = $_POST['email'];
@@ -153,8 +145,10 @@ class UsuarioController {
 
      public function iniciarSesion(){
         $view = new IniciarSesion();
-        $titulo = PDOConfiguracion::getInstance()->traer_titulo()[0][0];
-        $view->show($titulo);   
+        //$titulo = PDOConfiguracion::getInstance()->traer_titulo()[0][0];
+        $resources = array('titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
+        //$view->show($titulo);  
+        $view->show($resources); 
     }
 
     public function verificarDatos(){
@@ -178,12 +172,20 @@ class UsuarioController {
                     $view->inicio($resources);
                     return true;
             }else{
-                echo "Contraseña incorrecta";
+                $view = new IniciarSesion();
+                //$titulo = PDOConfiguracion::getInstance()->traer_titulo()[0][0];
+                //$view->show($titulo);   
+                $resources = array('titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0],
+                                   'mensaje' => "Usuario o Contraseña Incorrecta" );
+                $view->show($resources);
                 return false;
             }
                
         }
-        echo "Usuario o Contraseña Incorrecta";
+        $resources = array('titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0],
+                           'mensaje' => "Usuario o Contraseña Incorrecta" );
+        $view = new IniciarSesion();
+        $view->show($resources);
         return false;
     }
     public function alta_sesion($usuario,$id){
@@ -200,15 +202,12 @@ class UsuarioController {
 
     public function agregar_rol($id){
         //$user = PDOUsuario::getInstance()->traer_usuario($id);
-        //$resources = PDORol::getInstance()->traer_roles_noUsuario($id);
-        //$misRoles = PDORol::getInstance()->traer_roles_usuario($id);
         $view = new AgregarRol();
         $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]); 
         $resources= array('resources' => PDORol::getInstance()->traer_roles_noUsuario($id),
                            'misRoles' => PDORol::getInstance()->traer_roles_usuario($id),
                            'user' => PDOUsuario::getInstance()->traer_usuario($id),
                            'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
-        //$view->show($user, $resources, $misRoles); 
         $view->show($resources, $permisos); 
     }
 
@@ -221,28 +220,44 @@ class UsuarioController {
         $view->inicioSinSesion($titulo,$descripcion,$email);
     }
 
-   public function buscarPorUsername(){
-         if(empty($_POST['buscar'])){
-            return false;
+   public function buscarUserPor ($datos){
+         if(empty($_POST['buscar']) && empty($_POST['check']) && empty($_POST['check2']) ){
+            return false; 
           }
-         $datos= PDOUsuario:: getInstance()->buscarPorUsername($_POST['buscar']);
+
+
+      $resources =array('resources' => $datos,'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
+       $permisos= PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
          $view= new BuscarUsuario();
-         $view->show($datos);
+         $view->show($resources,$permisos);
+         return true;
+
     }
+
+
+
+
+
     public function tipoDeBusqueda(){
-        if(empty($_POST['buscar'])){
-            return false;
-          }
-        $datos; $view;
-        if(strtolower ($_POST['buscar']) == "activo"){
-            $datos= PDOUsuario:: getInstance()->buscarPorActivo(1);
-        }else if(strtolower ($_POST['buscar']) == "bloqueado"){
-            $datos= PDOUsuario:: getInstance()->buscarPorActivo(2);
+      if(empty($_POST['buscar']) && empty($_POST['check']) && empty($_POST['check2'])){
+
+            $cantidad =PDOConfiguracion::getInstance()->cantDePaginas(PDOUsuario::getInstance()->cantidad());
+            $resources = array('resources'=> PDOUsuario::getInstance()->listarCantidad(1,$cantidad['cantidadElementos']),
+                'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),
+                'cantidad' => $cantidad['cantidadPaginas'], 'pagina' => 1, 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], "mensaje" => "Falta completar campo con Username o elegir Criterio");
+             $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
+             $view = new SimpleResourceList();
+             $view->show($resources, $permisos);
+
+             return false;
+         }
+        if((!empty($_POST['check'])) && ($_POST['check'] = 2)){
+            $this->buscarUserPor(PDOUsuario:: getInstance()->buscarPorActivo(2));
+        }else if((!empty($_POST['check2'])) && ($_POST['check2'] = 1)){
+            $this->buscarUserPor(PDOUsuario:: getInstance()->buscarPorActivo(1));
         } else{
-            $datos= PDOUsuario:: getInstance()->buscarPorUsername($_POST['buscar']);
+            $this->buscarUserPor(PDOUsuario:: getInstance()->buscarPorUsername($_POST['buscar']));
         }
-         $view= new BuscarUsuario();
-         $view->show(array('resources' => $datos, 'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername()));
 
     }
 

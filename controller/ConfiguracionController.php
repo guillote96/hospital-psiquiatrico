@@ -29,14 +29,8 @@ class ConfiguracionController {
                 $view->show();
             }
             else{
-                if($error == 1){
-                    $resources = array('resources' =>PDOConfiguracion::getInstance()->listAll(),
-                    'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'error' => 1, 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
-                }
-                else{
-                    $resources = array('resources' =>PDOConfiguracion::getInstance()->listAll(),
-                    'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'error' => 0, 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
-                }
+                $resources = array('resources' =>PDOConfiguracion::getInstance()->listAll(),
+                'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'error' => $error, 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
                 $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
                 $view = new ModuloDeConfiguracion();
                 $view->show($resources, $permisos);
@@ -55,11 +49,19 @@ class ConfiguracionController {
     }
 
     public function modificarConfiguracion(){
-        if(!empty($_POST['titulo']) && !empty($_POST['descripcion']) && !empty($_POST['email']) && !empty($_POST['cantidadDeElementos'])){
+        if(!empty($_POST['titulo']) && !empty($_POST['descripcion']) && !empty($_POST['email']) && !empty($_POST['cantidadDeElementos']) && !empty($_POST['estado'])){
             $titulo = $_POST['titulo'];
             $descripcion = $_POST['descripcion'];
             $email = $_POST['email'];
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                ConfiguracionController:: getInstance()->listarVariables(2);
+                return false;
+            }
             $cantidad = $_POST['cantidadDeElementos'];
+            if (!filter_var($cantidad, FILTER_VALIDATE_INT)) {
+                ConfiguracionController:: getInstance()->listarVariables(3);
+                return false;
+            }
             $estado = $_POST['estado'];
 
             $resources = PDOConfiguracion::getInstance()->modificarConfiguracion($titulo,$descripcion,$email,$cantidad,$estado);

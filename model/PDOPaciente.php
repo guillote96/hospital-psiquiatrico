@@ -18,7 +18,7 @@ class PDOPaciente extends PDORepository {
     }
 
     public function listAll() {
-        $answer = $this->queryList("select * from paciente");
+        $answer = $this->queryList("select * from paciente ORDER BY apellido, nombre ASC");
         $final_answer = [];
         foreach ($answer as &$element) {
             $final_answer[] = new Paciente($element['apellido'],
@@ -66,20 +66,6 @@ class PDOPaciente extends PDORepository {
     }
 
     public function actualizar_paciente($datos){
-            /*$sqlLocalidadId= $this->queryList("SELECT id FROM localidad WHERE nombre = '$datos[localidad]'");
-            $sqlRegionSanitariaId= $this->queryList("SELECT id FROM region_sanitaria WHERE nombre = '$datos[region_sanitaria]'");
-            $sqlGeneroId= $this->queryList("SELECT id FROM genero WHERE nombre = '$datos[genero]'");
-            $sqlTipoDocumentoId= $this->queryList("SELECT id FROM tipo_documento WHERE nombre = '$datos[tipo_doc]'");
-            $sqlObraSocialId= $this->queryList("SELECT id FROM obra_social WHERE nombre = '$datos[obra_social]'");
-             
-
-             $idLocalidad= $sqlLocalidadId[0]["id"];
-             $idRegionSanitaria= $sqlRegionSanitariaId[0]["id"];
-             $idGenero= $sqlGeneroId[0]["id"];
-             $idTipoDocumentoId=$sqlTipoDocumentoId[0]["id"];
-             $idObraSocial=$sqlObraSocialId[0]["id"];*/
-
-
              $idLocalidad= $datos['localidad'];
              $idRegionSanitaria= $datos['region_sanitaria'];
              $idGenero= $datos['genero'];
@@ -101,13 +87,8 @@ class PDOPaciente extends PDORepository {
              $numero_historia_clinica = $datos['numero_historia_clinica'];
              $numero_carpeta = $datos['numero_carpeta'];
              $obra_social = $datos['obra_social'];
-             //var_dump($datos);
-             //echo "id: ".$_GET['id'];
-
-             $answer = $this->addObj("UPDATE paciente SET apellido = '$apellido', nombre = '$nombre', fecha_nac = '$fecha_nac', lugar_nac = '$lugar_nac', localidad_id = '$idLocalidad', region_sanitaria_id = '$region_sanitaria', domicilio = '$domicilio', genero_id = '$genero', tiene_documento = '$tiene_doc', tipo_doc_id = '$tipo_doc', numero = '$numero_documento', tel = '$telefono', nro_historia_clinica = '$numero_historia_clinica', nro_carpeta = '$numero_carpeta', obra_social_id = '$obra_social' WHERE id='$_GET[id]'");
-
-            /*$answer = $this->addObj("UPDATE paciente SET apellido = '$datos[apellido]', nombre = '$datos[nombre]', fecha_nac = '$datos[fecha_nac]', lugar_nac ='$datos[lugar_nac]', localidad_id = $idLocalidad, region_sanitaria_id = $idRegionSanitaria, domicilio ='$datos[domicilio]', genero_id=$idGenero ,tiene_documento =$datos[tiene_doc], tipo_doc_id = $idTipoDocumentoId, numero ='$datos[numero_documento]', nro_historia_clinica = '$datos[numero_historia_clinica]',nro_carpeta ='$datos[numero_carpeta]', obra_social_id =$idObraSocial WHERE id=$_GET[id]");*/
-             
+            
+             $answer = $this->addObj("UPDATE paciente SET apellido = '$apellido', nombre = '$nombre', fecha_nac = '$fecha_nac', lugar_nac = '$lugar_nac', localidad_id = '$idLocalidad', region_sanitaria_id = '$region_sanitaria', domicilio = '$domicilio', genero_id = '$genero', tiene_documento = '$tiene_doc', tipo_doc_id = '$tipo_doc', numero = '$numero_documento', tel = '$telefono', nro_historia_clinica = '$numero_historia_clinica', nro_carpeta = '$numero_carpeta', obra_social_id = '$obra_social' WHERE id='$_GET[id]'");             
     }
 
     public function traer_datosVarios($id){
@@ -125,7 +106,7 @@ class PDOPaciente extends PDORepository {
     }
 
     public function buscarPacientePorDatosPersonales($apellido,$nombre,$numero_documento,$tipo_doc){
-      $answer = $this->queryList("select apellido, domicilio, fecha_nac, genero_id, p.id as pacienteid, localidad_id, lugar_nac, p.nombre as nombrepaciente, td.nombre as documento, nro_carpeta, nro_historia_clinica, numero, obra_social_id, region_sanitaria_id, tel, tiene_documento, tipo_doc_id from paciente p inner join tipo_documento td on (p.tipo_doc_id = td.id) WHERE apellido='$apellido' AND p.nombre='$nombre'AND numero = $numero_documento AND td.nombre = '$tipo_doc'");
+      $answer = $this->queryList("select apellido, domicilio, fecha_nac, genero_id, p.id as pacienteid, localidad_id, lugar_nac, p.nombre as nombrepaciente, td.nombre as documento, nro_carpeta, nro_historia_clinica, numero, obra_social_id, region_sanitaria_id, tel, tiene_documento, tipo_doc_id from paciente p inner join tipo_documento td on (p.tipo_doc_id = td.id) WHERE (apellido='$apellido') OR (p.nombre='$nombre') OR (numero = $numero_documento AND td.nombre = '$tipo_doc')");
         $final_answer = [];
         foreach ($answer as &$element) {
             $final_answer[] = new Paciente($element['apellido'],$element['domicilio'],$element['fecha_nac'],$element['genero_id'],$element['pacienteid'],$element['localidad_id'],$element['lugar_nac'],$element['nombrepaciente'],$element['nro_carpeta'],$element['nro_historia_clinica'],$element['numero'],$element['obra_social_id'],$element['region_sanitaria_id'],$element['tel'],$element['tiene_documento'],$element['tipo_doc_id']);
@@ -156,6 +137,32 @@ class PDOPaciente extends PDORepository {
     public function cantidad() {
         $answer = $this->queryList("select count(*) from paciente");
         return $answer;
+    }
+
+    public function buscar_paciente($apellido, $nombre, $tipo_doc, $numero_documento, $numero_historia_clinica){
+      $consulta = "select * from paciente WHERE ";
+      if($apellido!=''){
+        $consulta.= "apellido LIKE '%$apellido%' AND ";
+      }
+      if($nombre!=''){
+        $consulta.= "nombre LIKE '%$nombre%' AND ";
+      }
+      if($tipo_doc!=''){
+        $consulta.= "tipo_doc_id = '$tipo_doc' AND ";
+      }
+      if($numero_documento!=''){
+        $consulta.= "numero ='$numero_documento' AND ";
+      }
+      if($numero_historia_clinica!=''){
+        $consulta.= "nro_historia_clinica LIKE '%$numero_historia_clinica%' AND ";
+      }
+      $consulta.= "1=1";
+      $answer = $this->queryList($consulta);
+      $final_answer = [];
+      foreach ($answer as &$element) {
+          $final_answer[] = new Paciente($element['apellido'],$element['domicilio'],$element['fecha_nac'],$element['genero_id'],$element['id'],$element['localidad_id'],$element['lugar_nac'],$element['nombre'],$element['nro_carpeta'],$element['nro_historia_clinica'],$element['numero'],$element['obra_social_id'],$element['region_sanitaria_id'],$element['tel'],$element['tiene_documento'],$element['tipo_doc_id']);
+      }
+      return $final_answer;
     }
 
 

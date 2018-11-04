@@ -18,7 +18,7 @@ class PDOUsuario extends PDORepository {
     }
 
     public function listAll() {
-        $answer = $this->queryList("select * from usuario");
+        $answer = $this->queryList("select * from usuario ORDER BY username ASC");
         $final_answer = [];
         foreach ($answer as &$element) {
             $final_answer[] = new Usuario($element['id'],$element['email'],$element['username'],$element['activo'],$element['password'],$element['updated_at'],$element['created_at'],$element['first_name'],$element['last_name']);
@@ -89,7 +89,8 @@ class PDOUsuario extends PDORepository {
     }
 
     public function buscarPorUsername($username){
-        $answer = $this->queryList("select * from usuario WHERE username='$username'");
+        /*$answer = $this->queryList("select * from usuario WHERE username='$username'");*/
+        $answer = $this->queryList("select * from usuario WHERE username LIKE '$username%' ORDER BY username ASC");
         $final_answer = [];
         foreach ($answer as &$element) {
             $final_answer[] = new Usuario($element['id'],$element['email'],$element['username'],$element['activo'],$element['password'],$element['updated_at'],$element['created_at'],$element['first_name'],$element['last_name']);
@@ -126,11 +127,11 @@ class PDOUsuario extends PDORepository {
     }
 
     public function cambiar_estado($id, $estado){
-        if($estado==0){
-            $activo = 1;
+        if($estado==1){
+            $activo = 2;
         }
         else{
-            $activo = 0;
+            $activo = 1;
         }
         $answer = $this->addObj("UPDATE usuario SET activo='$activo' WHERE id='$id'");
     }

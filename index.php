@@ -23,7 +23,6 @@ require_once('view/Registrarse.php');
 require_once('view/EditarUsuario.php');
 require_once('view/SimpleResourceList.php');
 require_once('view/Home.php');
-require_once('view/HomeVerdadero.php');
 require_once('view/IniciarSesion.php');
 require_once('view/BuscarUsuario.php');
 require_once('view/ListarPaciente.php');
@@ -136,7 +135,11 @@ if(isset($_GET["action"])){
 		UsuarioController::getInstance()->cerrarSesion();
 	}
 	else if ($_GET["action"] == 'buscarUsuario'){
-		UsuarioController:: getInstance()->tipoDeBusqueda();
+        if(UsuarioController::getInstance()->checkPermiso('paciente_index', $_SESSION['id']))
+			UsuarioController:: getInstance()->tipoDeBusqueda();
+		else
+			UsuarioController::getInstance()->home($_SESSION['id']);
+		
 		//UsuarioController::getInstance()->buscarPorUsername();
 	}
 	else if ($_GET["action"] == 'listarPacientes'){
