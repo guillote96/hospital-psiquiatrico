@@ -72,7 +72,8 @@ class PacienteController{
               $usuario = PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername();
               $titulo = PDOConfiguracion::getInstance()->traer_titulo()[0][0];
               $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
-              $view->show($partidos, $localidades,$obraSociales,$regionSanitaria,$generos,$tiposDoc,$usuario,$titulo, $permisos);
+              $mensaje = null;
+              $view->show($partidos, $localidades,$obraSociales,$regionSanitaria,$generos,$tiposDoc,$usuario,$titulo, $permisos, $mensaje);
             }
         }
     }
@@ -84,9 +85,19 @@ class PacienteController{
              $cantidad = PDOConfiguracion::getInstance()->cantDePaginas(PDOPaciente::getInstance()->cantidad());
              $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
              $resources = array('resources'=> PDOPaciente::getInstance()->listarCantidad(1,$cantidad['cantidadElementos']),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'cantidad' => $cantidad['cantidadPaginas'], 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' =>$permisos);
-       
-              $view = new ListarPaciente();
-              $view->show($resources, $permisos);
+              $view = new AgregarPaciente();
+               $partidos = PDOPartido:: getInstance()->listAll();
+              $localidades = PDOLocalidad:: getInstance()->listAll();
+              $obraSociales = PDOObraSocial:: getInstance()->listAll();
+              $regionSanitaria = PDORegionSanitaria:: getInstance()->listAll();
+              $generos = PDOGenero:: getInstance()->listAll();
+              $tiposDoc = PDOTipoDoc:: getInstance()->listAll();
+              $view = new AgregarPaciente();
+              $usuario = PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername();
+              $titulo = PDOConfiguracion::getInstance()->traer_titulo()[0][0];
+              $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
+              $mensaje = "No pueden quedar campos vacios";
+              $view->show($partidos, $localidades,$obraSociales,$regionSanitaria,$generos,$tiposDoc,$usuario,$titulo, $permisos, $mensaje);
               return false;
 
       }
