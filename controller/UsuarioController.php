@@ -67,15 +67,24 @@ class UsuarioController {
         $view = new Home();
         if(empty($id)){
             $titulo = PDOConfiguracion::getInstance()->traer_titulo()[0][0];
-            $descripcion = PDOConfiguracion::getInstance()->traer_descripcion()[0][0];
-            $email = PDOConfiguracion::getInstance()->traer_email()[0][0];
-            $view->inicioSinSesion($titulo,$descripcion,$email);
+            if(ConfiguracionController::getInstance()->estadoSitio() == true){
+                $descripcion = PDOConfiguracion::getInstance()->traer_descripcion()[0][0];
+                $email = PDOConfiguracion::getInstance()->traer_email()[0][0];
+                $mensaje = null;
+            }
+            else{
+                $mensaje = "Momenentaneamente el sitio se encuentra en mantenimiento. Disculpe las molestias";
+                $descripcion = null;
+                $email = null;
+            }
+            $view->inicioSinSesion($titulo,$descripcion,$email,$mensaje);
         }
         else{
         $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);  
         $view->inicio(array('usuario' => PDOUsuario::getInstance()->traer_usuario($id)[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'descripcion' => PDOConfiguracion::getInstance()->traer_descripcion()[0][0], 'permisos' => $permisos));
        }
     }
+
     public function registrarse(){
         if (sizeof($_SESSION) == 0){
             $view = new IniciarSesion();
@@ -228,11 +237,7 @@ class UsuarioController {
 
     public function cerrarSesion(){
         session_destroy();
-        $view = new Home();
-        $titulo = PDOConfiguracion::getInstance()->traer_titulo()[0][0];
-        $descripcion = PDOConfiguracion::getInstance()->traer_descripcion()[0][0];
-        $email = PDOConfiguracion::getInstance()->traer_email()[0][0];
-        $view->inicioSinSesion($titulo,$descripcion,$email);
+        self::getInstance()->home(null);
     }
 
    public function buscarUserPor ($datos){

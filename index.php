@@ -52,12 +52,12 @@ require_once('view/ListarPermisos.php');
 require_once('view/MisPermisos.php');
 require_once('view/Acceso.php');
 
-if(ConfiguracionController::getInstance()->estadoSitio() == false){
+/*if(ConfiguracionController::getInstance()->estadoSitio() == false){
 if(isset($_GET["action"])){
 	return false;
 }
 
-}else{
+}else{*/
 
 if(isset($_GET["action"])){
 	if ($_GET["action"] == 'listResources'){
@@ -291,4 +291,4 @@ else{
 
 }
 
-}
+//}

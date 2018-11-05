@@ -6,14 +6,17 @@
     <body>
 
     {% if resources is empty %}
-        <div class="containter">
-        <br>
-        <center><h1>Hospital Dr. Alejandro Korn</h1></center>
-        <center>{{descripcion}}</center>
-        <center>E-mail: <a href="mailto:hospital@lp.com">{{email}}</a></center>
-        </div>
-
-
+        {% if mensaje is empty %}
+            <div class="containter">
+            <br>
+            <center><h1>Hospital Dr. Alejandro Korn</h1></center>
+            <center>{{descripcion}}</center>
+            <center>E-mail: <a href="mailto:hospital@lp.com">{{email}}</a></center>
+            </div>
+        {% else %}
+            <br>
+            <center><h1>{{mensaje}}</h1></center>
+        {% endif %}
 
     {% else %}
         <br>
