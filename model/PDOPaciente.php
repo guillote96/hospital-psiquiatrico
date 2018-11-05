@@ -142,10 +142,10 @@ class PDOPaciente extends PDORepository {
     public function buscar_paciente($apellido, $nombre, $tipo_doc, $numero_documento, $numero_historia_clinica){
       $consulta = "select * from paciente WHERE ";
       if($apellido!=''){
-        $consulta.= "apellido LIKE '%$apellido%' AND ";
+        $consulta.= "apellido LIKE '$apellido%' AND ";
       }
       if($nombre!=''){
-        $consulta.= "nombre LIKE '%$nombre%' AND ";
+        $consulta.= "nombre LIKE '$nombre%' AND ";
       }
       if($tipo_doc!=''){
         $consulta.= "tipo_doc_id = '$tipo_doc' AND ";

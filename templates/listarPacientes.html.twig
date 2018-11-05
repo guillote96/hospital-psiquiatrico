@@ -21,6 +21,15 @@
       <div class="form-row">
       <div class="form-group col-md-6">
         <h2><u>Pacientes</u></h2>
+
+        {% if resources.titulo1 is not empty %}
+
+         <br>
+         <div class="alert alert-secondary" role="alert">
+          {{ resources.titulo1 }}
+          </div>
+
+        {% endif %}
       </div>
       <div class="form-group col-md-4">
         <a class="btn btn-primary btn-sm float-right" href="./?action=buscarPaciente"> Buscar Paciente </a>

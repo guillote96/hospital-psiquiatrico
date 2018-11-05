@@ -139,7 +139,7 @@ class UsuarioController {
         $resources = PDOUsuario::getInstance()->actualizar_usuario($usuario, $email, $nombre, $apellido, $activo, $id);
         $this->getInstance()->listResources();   
     }
-    
+
     public function eliminarUsuario(){
         if(empty($_GET["id"])){
             return false;
@@ -238,7 +238,7 @@ class UsuarioController {
           }
 
 
-      $resources =array('resources' => $datos,'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
+      $resources =array('resources' => $datos,'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0],"mensaje" => "Resultado de la Busqueda");
        $permisos= PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
          $view= new BuscarUsuario();
          $view->show($resources,$permisos);
@@ -326,11 +326,18 @@ class UsuarioController {
         foreach ($consulta as &$element) {
             if($permiso == $element->getNombre()){
                 $tengoPermiso = true;
+                break;
             }
         }
+
         return $tengoPermiso;
     }
-
+     
+     public function accesoNoAutorizado($id){
+            $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($id);
+            $view = new Acceso();
+            $view->noautorizado(array('usuario' => PDOUsuario::getInstance()->traer_usuario($id)[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' => $permisos));
+     }
 
 
 }
