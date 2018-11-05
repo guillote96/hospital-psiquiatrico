@@ -168,6 +168,9 @@ class UsuarioController {
 
     public function verificarDatos(){
         if(empty($_POST['usuario']) || empty($_POST['contraseña'])){
+            $view = new IniciarSesion();
+            $resources = array('titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0],'mensaje' => "Debe ingresar usuario y contraseña" );
+            $view->show($resources);
             return false;
         }
         $usuario = $_POST['usuario'];
