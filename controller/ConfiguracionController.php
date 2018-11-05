@@ -80,7 +80,7 @@ class ConfiguracionController {
         public function estadoSitio(){
           $resources = PDOConfiguracion::getInstance()->listAll();
           foreach ($resources as &$var) {
-              if(($var->getVariable() == 'estado') && ($var->getValor() == 0)){
+              if(($var->getVariable() == 'estado') && ($var->getValor() == 2)){
                    $view = new Home();
                    $titulo = PDOConfiguracion::getInstance()->traer_titulo()[0][0];
                    $view->sitioDeshabilitado($titulo);

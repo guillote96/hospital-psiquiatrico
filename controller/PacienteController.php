@@ -79,7 +79,7 @@ class PacienteController{
 
     public function agregar_paciente(){
 
-      if(empty($_POST['apellido']) && empty($_POST['nombre']) && empty($_POST['fecha_nac']) &&empty($_POST['lugar_nac']) && empty($_POST['partido']) && empty($_POST['localidad']) &&empty($_POST['domicilio']) && empty($_POST['partido']) && empty($_POST['genero']) &&empty($_POST['tiene_doc']) && empty($_POST['tipo_doc']) && empty($_POST['numero_documento']) && empty($_POST['telefono']) && empty($_POST['region_sanitaria']) && empty($_POST['numero_historia_clinica']) && empty($_POST['numero_carpeta']) && empty($_POST['obra_social'])){
+      if(empty($_POST['apellido']) || empty($_POST['nombre']) || empty($_POST['fecha_nac']) || empty($_POST['lugar_nac']) || empty($_POST['partido']) || empty($_POST['localidad']) || empty($_POST['domicilio']) || empty($_POST['partido']) || empty($_POST['genero']) || empty($_POST['tiene_doc']) || empty($_POST['tipo_doc']) || empty($_POST['numero_documento']) || empty($_POST['telefono']) || empty($_POST['region_sanitaria']) || empty($_POST['numero_historia_clinica']) || empty($_POST['numero_carpeta']) || empty($_POST['obra_social'])){
            
              $cantidad = PDOConfiguracion::getInstance()->cantDePaginas(PDOPaciente::getInstance()->cantidad());
              $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
@@ -87,6 +87,7 @@ class PacienteController{
        
               $view = new ListarPaciente();
               $view->show($resources, $permisos);
+              return false;
 
       }
         $resources = PDOPaciente:: getInstance()->agregar_paciente($_POST['apellido'],$_POST['nombre'], $_POST['fecha_nac'],$_POST['lugar_nac'],$_POST['partido'],$_POST['localidad'],$_POST['genero'],$_POST['tiene_doc'],$_POST['tipo_doc'],$_POST['numero_documento'],$_POST['telefono'],$_POST['region_sanitaria'],$_POST['domicilio'],$_POST['numero_historia_clinica'],$_POST['numero_carpeta'],$_POST['obra_social']);
@@ -100,7 +101,7 @@ class PacienteController{
     }
 
     public function actualizar_paciente(){
-      if(empty($_POST['apellido']) && empty($_POST['nombre']) && empty($_POST['fecha_nac']) &&empty($_POST['lugar_nac']) && empty($_POST['partido']) && empty($_POST['localidad']) &&empty($_POST['domicilio']) && empty($_POST['partido']) && empty($_POST['genero']) &&empty($_POST['tiene_doc']) && empty($_POST['tipo_doc']) && empty($_POST['numero_documento']) && empty($_POST['telefono']) && empty($_POST['region_sanitaria']) && empty($_POST['numero_historia_clinica']) && empty($_POST['numero_carpeta']) && empty($_POST['obra_social'])){
+      if(empty($_POST['apellido']) || empty($_POST['nombre']) || empty($_POST['fecha_nac']) || empty($_POST['lugar_nac']) || empty($_POST['partido']) || empty($_POST['localidad']) || empty($_POST['domicilio']) || empty($_POST['partido']) || empty($_POST['genero']) || empty($_POST['tiene_doc']) || empty($_POST['tipo_doc']) || empty($_POST['numero_documento']) || empty($_POST['telefono']) || empty($_POST['region_sanitaria']) || empty($_POST['numero_historia_clinica']) || empty($_POST['numero_carpeta']) || empty($_POST['obra_social'])){
            
              $cantidad = PDOConfiguracion::getInstance()->cantDePaginas(PDOPaciente::getInstance()->cantidad());
              $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
@@ -108,6 +109,7 @@ class PacienteController{
        
               $view = new ListarPaciente();
               $view->show($resources, $permisos);
+              return false;
 
       }
 

@@ -53,16 +53,8 @@ require_once('view/MisPermisos.php');
 
 if(ConfiguracionController::getInstance()->estadoSitio() == false){
 if(isset($_GET["action"])){
-	   if ($_GET["action"]== 'moduloDeConfiguracion'){
-		  ConfiguracionController:: getInstance()->listarVariables();
-	    }
-	    else if ($_GET["action"] == 'modificarConfiguracion'){
-		   ConfiguracionController::getInstance()->modificarConfiguracion();
-	    }
-	    else{
-		   return false;
-	    }
-   }
+	return false;
+}
 
 }else{
 
@@ -135,12 +127,10 @@ if(isset($_GET["action"])){
 		UsuarioController::getInstance()->cerrarSesion();
 	}
 	else if ($_GET["action"] == 'buscarUsuario'){
-        if(UsuarioController::getInstance()->checkPermiso('paciente_index', $_SESSION['id']))
+        if(UsuarioController::getInstance()->checkPermiso('usuario_show', $_SESSION['id']))
 			UsuarioController:: getInstance()->tipoDeBusqueda();
 		else
 			UsuarioController::getInstance()->home($_SESSION['id']);
-		
-		//UsuarioController::getInstance()->buscarPorUsername();
 	}
 	else if ($_GET["action"] == 'listarPacientes'){
 		if(!isset($_SESSION['id'])){
@@ -224,22 +214,21 @@ if(isset($_GET["action"])){
 		ConfiguracionController::getInstance()->modificarConfiguracion();
 	}
 	else if ($_GET["action"] == 'agregarRol'){
-		$id= $_GET["id"];
-		UsuarioController::getInstance()->agregar_rol($id);
+
+		if(!empty($_GET["id"]))
+		   UsuarioController::getInstance()->agregar_rol($_GET["id"]);
 	}
 	else if ($_GET["action"] == 'asignarRol'){
-		$id= $_GET["id"];
-		UsuarioController::getInstance()->asignar_rol($id);
+		if(!empty($_GET["id"]))
+		   UsuarioController::getInstance()->asignar_rol($_GET["id"]);
 	}
 	else if ($_GET["action"] == 'desasignarRol'){
-		$idU= $_GET["idU"];
-		$idR= $_GET["idR"];
-		UsuarioController::getInstance()->desasignar_rol($idU, $idR);
+		if(!empty($_GET["idU"]) && !empty($_GET["idU"]))
+		  UsuarioController::getInstance()->desasignar_rol($idU, $idR);
 	}
 	else if ($_GET["action"] == 'cambiarEstado'){
-		$id= $_GET["id"];
-		$estado= $_GET["estado"];
-		UsuarioController::getInstance()->cambiar_estado($id, $estado);
+		if(!empty($_GET["id"]) && !empty($_GET["estado"]))
+		UsuarioController::getInstance()->cambiar_estado($_GET["id"], $_GET["estado"]);
 	}
 	else if ($_GET["action"] == 'listarRoles'){
 		if(!isset($_SESSION['id'])){

@@ -106,7 +106,6 @@ class UsuarioController {
                 $view->show(array('usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' => $permisos, 'error' => 3));
                 return false;
             }
-            //if(isset($_POST['password']))
             $password = $_POST['password'];
             $nombre = $_POST['nombre'];
             $apellido = $_POST['apellido'];
@@ -121,15 +120,30 @@ class UsuarioController {
     }
 
     public function actualizarUsuario($id){
+        $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
+         if(empty($_POST['usuario'])  || empty($_POST['email'])  || empty($_POST['nombre']) || empty($_POST['apellido']) || empty($_POST['activo'])){
+              return false;
+
+         }
         $usuario = $_POST['usuario'];
         $email = $_POST['email'];
         $nombre = $_POST['nombre'];
         $apellido = $_POST['apellido'];
         $activo = $_POST['activo']; 
+
+       if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+          $view= new EditarUsuario(); 
+          $view->show(array('usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'resources' => PDOUsuario::getInstance()->traer_usuario($id)[0], 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' => $permisos, 'error' => 3));
+          return false;
+       }
         $resources = PDOUsuario::getInstance()->actualizar_usuario($usuario, $email, $nombre, $apellido, $activo, $id);
         $this->getInstance()->listResources();   
     }
+    
     public function eliminarUsuario(){
+        if(empty($_GET["id"])){
+            return false;
+        }
         $id = $_GET["id"];
         if( $id != $_SESSION['id']){
             $resources = PDOUsuario::getInstance()->eliminar_usuario($id);
@@ -137,6 +151,9 @@ class UsuarioController {
         $this->getInstance()->listResources(); 
     }
     public function editarUsuario($id){
+        if(empty($id)){
+            return false;
+        }
         $resources = PDOUsuario::getInstance()->traer_usuario($id);
         $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]); 
         $view = new EditarUsuario();
@@ -145,14 +162,12 @@ class UsuarioController {
 
      public function iniciarSesion(){
         $view = new IniciarSesion();
-        //$titulo = PDOConfiguracion::getInstance()->traer_titulo()[0][0];
-        $resources = array('titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
-        //$view->show($titulo);  
+        $resources = array('titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]); 
         $view->show($resources); 
     }
 
     public function verificarDatos(){
-        if(empty($_POST['usuario']) && empty($_POST['contraseña'])){
+        if(empty($_POST['usuario']) || empty($_POST['contraseña'])){
             return false;
         }
         $usuario = $_POST['usuario'];
@@ -173,8 +188,6 @@ class UsuarioController {
                     return true;
             }else{
                 $view = new IniciarSesion();
-                //$titulo = PDOConfiguracion::getInstance()->traer_titulo()[0][0];
-                //$view->show($titulo);   
                 $resources = array('titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0],
                                    'mensaje' => "Usuario o Contraseña Incorrecta" );
                 $view->show($resources);
@@ -201,7 +214,6 @@ class UsuarioController {
     }
 
     public function agregar_rol($id){
-        //$user = PDOUsuario::getInstance()->traer_usuario($id);
         $view = new AgregarRol();
         $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]); 
         $resources= array('resources' => PDORol::getInstance()->traer_roles_noUsuario($id),
@@ -262,18 +274,26 @@ class UsuarioController {
     }
 
     public function asignar_rol($id){
+        if(empty($_POST['idRol'])){
+            return false;
+        }
         $idRol= $_POST['idRol']; 
         $consulta = PDOUsuario::getInstance()->asignar_rol($id, $idRol);
         $this->getInstance()->agregar_rol($id); 
     }
 
     public function desasignar_rol($idU, $idR){
+        if(empty($idU) || empty($idR)){
+            return false;
+        }
         $consulta = PDOUsuario::getInstance()->desasignar_rol($idU, $idR);
-
         $this->getInstance()->agregar_rol($idU);  
     }
 
     public function cambiar_estado($id, $estado){
+        if(empty($id) || empty($estado)){
+            return false;
+        }
         $consulta = PDOUsuario::getInstance()->cambiar_estado($id, $estado);
         $this->getInstance()->listResources();
     }
@@ -298,6 +318,9 @@ class UsuarioController {
         }
     }
     public function checkPermiso($permiso, $id){
+         if(empty($permiso) || empty($id)){
+            return false;
+        }
         $consulta = PDOPermiso::getInstance()->traer_permisos_usuario($id);
         $tengoPermiso = false;
         foreach ($consulta as &$element) {
