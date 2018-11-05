@@ -7,7 +7,7 @@ abstract class PDORepository {
 	const HOST ="localhost";
 	const DB = "grupo2";*/
     
-   /const USERNAME = "grupo2";
+    const USERNAME = "grupo2";
     const PASSWORD = "MzhjMzZiMTI4Y2Q0";
     const HOST ="localhost";
     const DB = "grupo2";
