@@ -31,7 +31,7 @@ class PacienteController{
             else{
             $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
              $cantidad = PDOConfiguracion::getInstance()->cantDePaginas(PDOPaciente::getInstance()->cantidad());
-            $resources =array('resources'=> PDOPaciente::getInstance()->listarCantidad(1,$cantidad['cantidadElementos']),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'cantidad' => $cantidad['cantidadPaginas'], 'pagina' => 1, 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
+            $resources =array('resources'=> PDOPaciente::getInstance()->listarCantidad(1,$cantidad['cantidadElementos'],null),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'cantidad' => $cantidad['cantidadPaginas'], 'pagina' => 1, 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
               $view = new ListarPaciente();
               $view->show($resources, $permisos);
             }
@@ -45,7 +45,7 @@ class PacienteController{
         $pagina = $_GET['pagina'];
         $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
         $cantidad = PDOConfiguracion::getInstance()->cantDePaginas(PDOPaciente::getInstance()->cantidad());
-        $resources =array('resources'=> PDOPaciente::getInstance()->listarCantidad($pagina,$cantidad['cantidadElementos']),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'cantidad' => $cantidad['cantidadPaginas'], 'pagina' => $pagina, 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
+        $resources =array('resources'=> PDOPaciente::getInstance()->listarCantidad($pagina,$cantidad['cantidadElementos'],null),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'cantidad' => $cantidad['cantidadPaginas'], 'pagina' => $pagina, 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
         $view = new ListarPaciente();
         //$cantElementos=$cantidad[0][0];
         $view->show($resources, $permisos);
@@ -194,19 +194,56 @@ class PacienteController{
     }
 
      public function buscar_paciente(){
-
-        $apellido = $_POST['apellido'];
-        $nombre = $_POST['nombre'];
-        $tipo_doc = $_POST['tipo_doc'];
-        $numero_documento = $_POST['numero_documento']; 
-        $numero_historia_clinica = $_POST['numero_historia_clinica'];
-        $resources = PDOPaciente::getInstance()->buscar_paciente($apellido, $nombre, $tipo_doc, $numero_documento, $numero_historia_clinica);
+        if (isset($_POST['apellido'])) {
+          $apellido = $_POST['apellido'];
+        }
+        if (isset($_POST['nombre'])) {
+          $nombre = $_POST['nombre'];
+        }
+        if (isset($_POST['tipo_doc'])) {
+          $tipo_doc = $_POST['tipo_doc'];
+        }
+        if (isset($_POST['numero_documento'])) {
+          $numero_documento = $_POST['numero_documento'];
+        }
+        if (isset($_POST['numero_historia_clinica'])) {
+          $numero_historia_clinica = $_POST['numero_historia_clinica'];
+        }
+        if (isset($_GET['apellido'])) {
+          $apellido = $_GET['apellido'];
+        }
+        if (isset($_GET['nombre'])) {
+          $nombre = $_GET['nombre'];
+        }
+        if (isset($_GET['tipo_doc'])) {
+          $tipo_doc = $_GET['tipo_doc'];
+        }
+        if (isset($_GET['numero_documento'])) {
+          $numero_documento = $_GET['numero_documento'];
+        }
+        if (isset($_GET['numero_historia_clinica'])) {
+          $numero_historia_clinica = $_GET['numero_historia_clinica'];
+        }
+        $pacientes = PDOPaciente::getInstance()->buscar_paciente($apellido, $nombre, $tipo_doc, $numero_documento, $numero_historia_clinica);
+        $array = PDOPaciente::getInstance()->traer_consulta($apellido, $nombre, $tipo_doc, $numero_documento, $numero_historia_clinica);
         //SI HAY RESULTADOS DE BUSQUEDA
-        if($resources!=null){
-           $datos=array('resources'=>$resources, 'usuario' => (PDOUsuario::getInstance()->traer_usuario($_SESSION['id']))[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'titulo1' => "Resultados de la búsqueda");
+        if($pacientes!=null){
+           /*$datos=array('resources'=>$resources, 'usuario' => (PDOUsuario::getInstance()->traer_usuario($_SESSION['id']))[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'titulo1' => "Resultados de la búsqueda");
            $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
            $view = new ListarPaciente();
-           $view->show($datos,$permisos);
+           $view->show($datos,$permisos);*/
+           if(!empty ($_GET['pagina'])){
+            $pagina = $_GET['pagina'];
+           }
+           else{
+            $pagina = 1;
+           }
+          $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
+          $cantidad = PDOConfiguracion::getInstance()->cantDePaginas(array(array(count($pacientes))));
+          $resources =array('resources'=> PDOPaciente::getInstance()->listarCantidad($pagina,$cantidad['cantidadElementos'],$array),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'cantidad' => $cantidad['cantidadPaginas'], 'pagina' => $pagina, 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'datos'=>$array);
+            $view = new ListarPaciente();
+
+           $view->show($resources, $permisos);
         }
         else{
               $view = new BuscarPaciente();

@@ -123,13 +123,40 @@ class PDOPaciente extends PDORepository {
         return $final_answer;
     }
 
-     public function listarCantidad($pagina,$cantidad) {
+     public function listarCantidad($pagina,$cantidad,$array) {
+        if($array == null){
         $answer = $this->queryList("select * from paciente limit ". (($pagina - 1) * $cantidad).",". $cantidad);
-        $final_answer = [];
-        foreach ($answer as &$element) {
-            $final_answer[] = new Paciente($element['apellido'],$element['domicilio'],$element['fecha_nac'],$element['genero_id'],$element['id'],$element['localidad_id'],$element['lugar_nac'],$element['nombre'],$element['nro_carpeta'],$element['nro_historia_clinica'],$element['numero'],$element['obra_social_id'],$element['region_sanitaria_id'],$element['tel'],$element['tiene_documento'],$element['tipo_doc_id']);
         }
-        return $final_answer;
+        else{
+            $consulta = "select * from paciente WHERE ";
+            if($array['apellido']!=''){
+              $apellido = $array['apellido'];
+              $consulta.= "apellido LIKE '%$apellido%' AND ";
+            }
+            if($array['nombre']!=''){
+              $nombre = $array['nombre'];
+              $consulta.= "nombre LIKE '$nombre%' AND ";
+            }
+            if($array['tipo_doc']!=''){
+              $tipo_doc = $array['tipo_doc'];
+              $consulta.= "tipo_doc =$tipo_doc AND ";
+            }
+            if($array['numero_documento']!=''){
+              $numero_documento = $array['apellido'];
+              $consulta.= "numero = $numero_documento AND ";
+            }
+            if($array['numero_historia_clinica']!=''){
+              $numero_historia_clinica = $array['numero_historia_clinica'];
+              $consulta.= "nro_historia_clinica = $numero_historia_clinica AND ";
+            }
+            $consulta.= "1=1";
+            $answer = $this->queryList($consulta." limit ". (($pagina - 1) * $cantidad).",". $cantidad);
+            }
+            $final_answer = [];
+            foreach ($answer as &$element) {
+                $final_answer[] = new Paciente($element['apellido'],$element['domicilio'],$element['fecha_nac'],$element['genero_id'],$element['id'],$element['localidad_id'],$element['lugar_nac'],$element['nombre'],$element['nro_carpeta'],$element['nro_historia_clinica'],$element['numero'],$element['obra_social_id'],$element['region_sanitaria_id'],$element['tel'],$element['tiene_documento'],$element['tipo_doc_id']);
+        }
+           return $final_answer;
 
                          
     }
@@ -142,7 +169,7 @@ class PDOPaciente extends PDORepository {
     public function buscar_paciente($apellido, $nombre, $tipo_doc, $numero_documento, $numero_historia_clinica){
       $consulta = "select * from paciente WHERE ";
       if($apellido!=''){
-        $consulta.= "apellido LIKE '$apellido%' AND ";
+        $consulta.= "apellido LIKE '%$apellido%' AND ";
       }
       if($nombre!=''){
         $consulta.= "nombre LIKE '$nombre%' AND ";
@@ -165,5 +192,23 @@ class PDOPaciente extends PDORepository {
       return $final_answer;
     }
 
-
+    public function traer_consulta($apellido, $nombre, $tipo_doc, $numero_documento, $numero_historia_clinica){
+      $array = array('apellido'=>'','nombre'=>'','tipo_doc'=>'','numero_documento'=>'','numero_historia_clinica'=>'');
+      if($apellido!=''){
+        $array['apellido'] = $apellido;
+      }
+      if($nombre!=''){
+        $array['nombre'] = $nombre;
+      }
+      if($tipo_doc!=''){
+        $array['tipo_doc'] = $tipo_doc;
+      }
+      if($numero_documento!=''){
+        $array['numero_documento'] = $numero_documento;
+      }
+      if($numero_historia_clinica!=''){
+        $array['numero_historia_clinica'] = $numero_historia_clinica;
+      }
+      return $array;
+    }
 }
