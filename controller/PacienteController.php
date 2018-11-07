@@ -236,7 +236,7 @@ class PacienteController{
            }
           $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
           $cantidad = PDOConfiguracion::getInstance()->cantDePaginas(array(array(count($pacientes))));
-          $resources =array('resources'=> PDOPaciente::getInstance()->listarCantidad($pagina,$cantidad['cantidadElementos'],$array),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'cantidad' => $cantidad['cantidadPaginas'], 'pagina' => $pagina, 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'datos'=>$array);
+          $resources =array('resources'=> PDOPaciente::getInstance()->listarCantidad($pagina,$cantidad['cantidadElementos'],$array),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'cantidad' => $cantidad['cantidadPaginas'], 'pagina' => $pagina, 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'datos'=>$array, 'mensaje' => "Resultados de la búsqueda");
             $view = new ListarPaciente();
 
            $view->show($resources, $permisos);
