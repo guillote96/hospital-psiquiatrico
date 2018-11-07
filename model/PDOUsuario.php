@@ -123,7 +123,6 @@ class PDOUsuario extends PDORepository {
     }
 
     public function buscarPorUsername($username){
-        /*$answer = $this->queryList("select * from usuario WHERE username='$username'");*/
         $answer = $this->queryList("select * from usuario WHERE username LIKE '$username%' ORDER BY username ASC");
         $final_answer = [];
         foreach ($answer as &$element) {
@@ -170,7 +169,7 @@ class PDOUsuario extends PDORepository {
         $answer = $this->addObj("UPDATE usuario SET activo='$activo' WHERE id='$id'");
     }
 
-    public function listarCantidad($pagina,$cantidad,$array) {
+    public function listarCantidad($pagina,$cantidad,$array){
         if($array == null){
         $answer = $this->queryList("select * from usuario limit ". (($pagina - 1) * $cantidad).",". $cantidad);
         }

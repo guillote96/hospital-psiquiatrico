@@ -228,10 +228,6 @@ class PacienteController{
         $array = PDOPaciente::getInstance()->traer_consulta($apellido, $nombre, $tipo_doc, $numero_documento, $numero_historia_clinica);
         //SI HAY RESULTADOS DE BUSQUEDA
         if($pacientes!=null){
-           /*$datos=array('resources'=>$resources, 'usuario' => (PDOUsuario::getInstance()->traer_usuario($_SESSION['id']))[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'titulo1' => "Resultados de la búsqueda");
-           $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
-           $view = new ListarPaciente();
-           $view->show($datos,$permisos);*/
            if(!empty ($_GET['pagina'])){
             $pagina = $_GET['pagina'];
            }
@@ -252,43 +248,6 @@ class PacienteController{
               $datos=array('usuario' => (PDOUsuario::getInstance()->traer_usuario($_SESSION['id']))[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' => $permisos, 'tiposDoc' => $tiposDoc, 'mensajeError' =>"No se encontraron resultados");
               $view->show($datos);
         }
-
-     /*if(!empty($_POST['apellido']) || !empty($_POST['nombre']) || (!empty($_POST['numero_documento']) && !empty($_POST['tipo_doc']))){
-                
-           $datos=array('resources' => PDOPaciente::getInstance()->buscarPacientePorDatosPersonales($_POST['apellido'],$_POST['nombre'],$_POST['numero_documento'],$_POST['tipo_doc']),
-             'usuario' => (PDOUsuario::getInstance()->traer_usuario($_SESSION['id']))[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
-           $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
-           $view = new ListarPaciente();
-           $view->show($datos,$permisos);
-           return true;
-        }else 
-
-           if( !empty($_POST['numero_historia_clinica'])){
-               $datos=array('resources' => PDOPaciente::getInstance()->buscarPacienteHistoriaClinica($_POST['numero_historia_clinica']),
-                          'usuario' => (PDOUsuario::getInstance()->traer_usuario($_SESSION['id']))[0]->getUsername());
-                $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
-                $view = new ListarPaciente();
-                $view->show($datos,$permisos);
-                return true;
-        }else
-             {
-
-              $view = new BuscarPaciente();
-              $datos=array('usuario' => (PDOUsuario::getInstance()->traer_usuario($_SESSION['id']))[0]->getUsername(), 
-                           'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0],
-                           'mensaje' => "Falta completar campos de Datos de paciente o Numero de Historia clinica");
-              $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
-              $view->show($datos,$permisos);
-             return false;
-             }
-*/
-
      }
-	
-
-
-
-
-
-
+     
 }
