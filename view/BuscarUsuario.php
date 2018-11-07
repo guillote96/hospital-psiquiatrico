@@ -3,16 +3,15 @@
 
 class BuscarUsuario extends TwigView {
     
-   /* public function show($resources) {
+    public function show($resources) {
         
-         echo self::getTwig()->render('listResources.html.twig', array('resources' => $resources));
+       	if($resources['mensajeError']==null){
+      	 	 echo self::getTwig()->render('buscarUsuario.html.twig',array('resources' => $resources,'permisos' => $resources['permisos']));
+      	 }
+      	else{
+      	 	 echo self::getTwig()->render('buscarUsuario.html.twig',array('resources' => $resources,'permisos' => $resources['permisos'], 'mensajeError' => $resources['mensajeError']));
+      	 }
         
         
-    }*/
-
-
-       public function show($resourceArray, $permisos){
-
-    	echo self::getTwig()->render('listResources.html.twig', array('resources' => $resourceArray,'permisos' => $permisos ));
     }
  }   

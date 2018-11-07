@@ -34,41 +34,17 @@ function validacion(formu, obj) {
       <div class="container">
       <br>
       <div class="form-row">
-      <div class="form-group col-md-3">
+      <div class="form-group col-md-4">
         <h2><u>Usuarios</u></h2>
       </div>
-      <form action=./index.php?action=buscarUsuario method="post" >
-      <div class="form-group col-md-12">
-        <div id="form1">
-        <input type="checkbox" name="check" value="2" onchange="validacion('form1', this)"/> Activo
-        <input type="checkbox" name="check2" value="1" onchange="validacion('form1', this)"/> Bloqueado
-        </div>
-        <input type="text" name="buscar" placeholder="Buscar ... "/>
-        <input class="btn btn-primary btn-sm" type="submit" value="Buscar">
-      </div>
-      </form>
-      <div class="form-group col-md-5">
+      <div class="form-group col-md-6">
+      <a class="btn btn-primary btn-sm float-right" href="./?action=buscarUsuario"> Buscar Usuario </a>
+    </div>
+      <div class="form-group col-md-2">
       <a class="btn btn-primary btn-sm float-md-right" href="./?action=registrarse"> Agregar usuario </a>
+      
       </div> 
       </div>
-
-
-
-      
-      <!--<form action=./index.php?action=buscarUsuario method="post" >
-      <input type="text" name="buscar" placeholder="Buscar ... "/>
-      <input type="submit" value="Buscar">
-      <div id="form1">
-      <input type="checkbox" name="check" value="2" onchange="validacion('form1', this)"/> Activo </a>
-      <input type="checkbox" name="check2" value="1" onchange="validacion('form1', this)"/> Bloqueado </a>
-      </div>
-     
-      </form>-->
-
-
-
-
-
 
       {% if resources.mensaje is defined %}
 
@@ -80,10 +56,6 @@ function validacion(formu, obj) {
           {% endif %}
 
     {% endif %}
-
-
-
-
       <div class="table-responsive"> 
         <table class="table">
   <thead>
@@ -128,11 +100,22 @@ function validacion(formu, obj) {
           <nav aria-label="Page navigation example">
           <nav aria-label="Page navigation example">
           <ul class="pagination justify-content-center">
+           {% if resources.datos is empty %}
           <li class="page-item"><a class="page-link" href="./?action=listarUsuarios&pagina={% if resources.pagina > 1 %}{{resources.pagina - 1}}{% else %}1{% endif %}">Anterior</a></li>
           {% for i in 1..resources.cantidad %}
             <li class="page-item {% if i == resources.pagina %} active {% endif %}"><a class="page-link" href="./?action=listarUsuarios&pagina={{i}}">{{i}}</a></li>
           {% endfor %}
-          <li class="page-item"><a class="page-link" href="./?action=listarUsuarios&pagina={% if resources.pagina < resources.cantidad %}{{resources.pagina + 1}}{% else %}{{ resources.cantidad }}{% endif %}">Siguiente</a></li>
+          <li class="page-item"><a class="page-link" href="./?action=listarUsuarios&pagina={% if resources.pagina < resources.cantidad %}{{resources.pagina + 1}}{% else %}{{ resources.cantidad }}{% endif %}">Siguiente</a></li>  
+          {% else %} 
+           <li class="page-item"><a class="page-link" href="./?action=buscar_usuario&pagina={% if resources.pagina > 1 %}{{resources.pagina - 1}}{% else %}1{% endif %}&username={{resources.datos.username}}&email={{resources.datos.email}}&estado={{resources.datos.estado}}">Anterior</a></li>
+          {% for i in 1..resources.cantidad %}
+            <li class="page-item {% if i == resources.pagina %} active {% endif %}"><a class="page-link" href="./?action=buscar_usuario&pagina={{i}}&username={{resources.datos.username}}&email={{resources.datos.email}}&estado={{resources.datos.estado}}">{{i}}</a></li>
+          {% endfor %}
+         <li class="page-item"><a class="page-link" href="./?action=buscar_usuario&pagina={% if resources.pagina < resources.cantidad %}{{resources.pagina + 1}}{% else %}{{ resources.cantidad }}{% endif %}&username={{resources.datos.username}}&email={{resources.datos.email}}&estado={{resources.datos.estado}}">Siguiente</a></li>  
+      {% endif %}  
+
+
+
           </ul>
           </nav>
           </nav>

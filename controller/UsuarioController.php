@@ -40,7 +40,7 @@ class UsuarioController {
             }
             else{
                 $cantidad =PDOConfiguracion::getInstance()->cantDePaginas(PDOUsuario::getInstance()->cantidad());
-                $resources = array('resources'=> PDOUsuario::getInstance()->listarCantidad(1,$cantidad['cantidadElementos']),
+                $resources = array('resources'=> PDOUsuario::getInstance()->listarCantidad(1,$cantidad['cantidadElementos'],null),
                 'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),
                 'cantidad' => $cantidad['cantidadPaginas'], 'pagina' => 1, 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
                 $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
@@ -57,7 +57,7 @@ class UsuarioController {
         }
         $pagina = $_GET['pagina'];
         $cantidad =PDOConfiguracion::getInstance()->cantDePaginas(PDOUsuario::getInstance()->cantidad());
-        $resources = array('resources'=> PDOUsuario::getInstance()->listarCantidad($pagina,$cantidad['cantidadElementos']),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'cantidad' => $cantidad['cantidadPaginas'], 'pagina' => $pagina, 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
+        $resources = array('resources'=> PDOUsuario::getInstance()->listarCantidad($pagina,$cantidad['cantidadElementos'],null),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'cantidad' => $cantidad['cantidadPaginas'], 'pagina' => $pagina, 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
         $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
         $view = new SimpleResourceList();
         $view->show($resources, $permisos);
@@ -241,25 +241,96 @@ class UsuarioController {
     }
 
    public function buscarUserPor ($datos){
-         if(empty($_POST['buscar']) && empty($_POST['check']) && empty($_POST['check2']) ){
+         if(empty($_GET['buscar']) && empty($_GET['check']) && empty($_GET['check2']) ){
             return false; 
           }
 
+        $tipo = null;
+        if(!empty($_GET['buscar'])){
+            $tipo=$_GET['buscar'];
+        }
+        if(!empty($_GET['check'])){
+            $tipo=$_GET['check'];
+        }
+        if(!empty($_GET['check2'])){
+            $tipo=$_GET['check2'];
+        }
+        if(!empty($_GET['tipo'])){
+            $tipo=$_GET['tipo'];
+        }
+        
 
-      $resources =array('resources' => $datos,'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0],"mensaje" => "Resultado de la Busqueda");
+      $resources =array('resources' => $datos,'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0],"mensaje" => "Resultado de la Busqueda",'tipo' => $tipo,'cantidad'=> sizeof($datos));
        $permisos= PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
          $view= new BuscarUsuario();
          $view->show($resources,$permisos);
          return true;
 
     }
-
-
-
-
+    public function buscarUsuario(){
+        if (sizeof($_SESSION) == 0){
+            $view = new IniciarSesion();
+            $view->show();
+        }
+        else{
+            if($_SESSION["id"] == NULL){
+                $view = new IniciarSesion();
+                $view->show();
+            }
+            else{
+              $view = new BuscarUsuario();
+              $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
+              $tiposDoc = PDOTipoDoc:: getInstance()->listAll();
+              $datos=array('usuario' => (PDOUsuario::getInstance()->traer_usuario($_SESSION['id']))[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' => $permisos,'mensajeError' => null);
+              $view->show($datos);
+            }
+        }
+    }
+    public function buscar_usuario(){
+        if (isset($_POST['username'])) {
+          $username = $_POST['username'];
+        }
+        if (isset($_POST['email'])) {
+          $email = $_POST['email'];
+        }
+        if (isset($_POST['estado'])) {
+          $estado = $_POST['estado'];
+        }
+        if (isset($_GET['username'])) {
+          $username = $_GET['username'];
+        }
+        if (isset($_GET['email'])) {
+          $email = $_GET['email'];
+        }
+        if (isset($_GET['estado'])) {
+          $estado = $_GET['estado'];
+        }
+        $usuarios = PDOUsuario::getInstance()->buscar_usuario($username, $email, $estado);
+        $array = PDOUsuario::getInstance()->traer_consulta($username, $email, $estado);
+        //SI HAY RESULTADOS DE BUSQUEDA
+        if($usuarios!=null){
+           if(!empty ($_GET['pagina'])){
+                $pagina = $_GET['pagina'];
+           }
+           else{
+                $pagina = 1;
+           }
+          $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
+          $cantidad = PDOConfiguracion::getInstance()->cantDePaginas(array(array(count($usuarios))));
+          $resources =array('resources'=> PDOUsuario::getInstance()->listarCantidad($pagina,$cantidad['cantidadElementos'],$array),'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'cantidad' => $cantidad['cantidadPaginas'], 'pagina' => $pagina, 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'datos'=>$array);
+        $view = new ListarUsuarios();
+        $view->show($resources, $permisos);
+        }
+        else{
+              $view = new BuscarUsuario();
+              $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
+              $datos=array('usuario' => (PDOUsuario::getInstance()->traer_usuario($_SESSION['id']))[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' => $permisos, 'mensajeError' =>"No se encontraron resultados");
+              $view->show($datos);
+        }
+    }
 
     public function tipoDeBusqueda(){
-      if(empty($_POST['buscar']) && empty($_POST['check']) && empty($_POST['check2'])){
+      if(empty($_GET['buscar']) && empty($_GET['check']) && empty($_GET['check2'])){
 
             $cantidad =PDOConfiguracion::getInstance()->cantDePaginas(PDOUsuario::getInstance()->cantidad());
             $resources = array('resources'=> PDOUsuario::getInstance()->listarCantidad(1,$cantidad['cantidadElementos']),
@@ -270,13 +341,13 @@ class UsuarioController {
              $view->show($resources, $permisos);
 
              return false;
-         }
-        if((!empty($_POST['check'])) && ($_POST['check'] = 2)){
+    }
+        if((!empty($_GET['check'])) && ($_GET['check'] = 2)){
             $this->buscarUserPor(PDOUsuario:: getInstance()->buscarPorActivo(2));
-        }else if((!empty($_POST['check2'])) && ($_POST['check2'] = 1)){
+        }else if((!empty($_GET['check2'])) && ($_GET['check2'] = 1)){
             $this->buscarUserPor(PDOUsuario:: getInstance()->buscarPorActivo(1));
         } else{
-            $this->buscarUserPor(PDOUsuario:: getInstance()->buscarPorUsername($_POST['buscar']));
+            $this->buscarUserPor(PDOUsuario:: getInstance()->buscarPorUsername($_GET['buscar']));
         }
 
     }

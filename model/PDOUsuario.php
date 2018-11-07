@@ -88,6 +88,40 @@ class PDOUsuario extends PDORepository {
 
     }
 
+    public function buscar_usuario($username, $email, $estado){
+      $consulta = "select * from usuario WHERE ";
+      if($username!=''){
+        $consulta.= "username LIKE '%$username%' AND ";
+      }
+      if($email!=''){
+        $consulta.= "email LIKE '$email%' AND ";
+      }
+      if($estado!=''){
+        $consulta.= "activo = '$estado' AND ";
+      }
+      $consulta.= "1=1";
+      $answer = $this->queryList($consulta);
+      $final_answer = [];
+      foreach ($answer as &$element) {
+            $final_answer[] = new Usuario($element['id'],$element['email'],$element['username'],$element['activo'],$element['password'],$element['updated_at'],$element['created_at'],$element['first_name'],$element['last_name']);
+      }
+      return $final_answer;
+    }
+
+    public function traer_consulta($username, $email, $estado){
+      $array = array('username'=>'','email'=>'','estado'=>'');
+      if($username!=''){
+        $array['username'] = $username;
+      }
+      if($email!=''){
+        $array['email'] = $email;
+      }
+      if($estado!=''){
+        $array['estado'] = $estado;
+      }
+      return $array;
+    }
+
     public function buscarPorUsername($username){
         /*$answer = $this->queryList("select * from usuario WHERE username='$username'");*/
         $answer = $this->queryList("select * from usuario WHERE username LIKE '$username%' ORDER BY username ASC");
@@ -136,15 +170,32 @@ class PDOUsuario extends PDORepository {
         $answer = $this->addObj("UPDATE usuario SET activo='$activo' WHERE id='$id'");
     }
 
-     public function listarCantidad($pagina,$cantidad) {
+    public function listarCantidad($pagina,$cantidad,$array) {
+        if($array == null){
         $answer = $this->queryList("select * from usuario limit ". (($pagina - 1) * $cantidad).",". $cantidad);
-        $final_answer = [];
+        }
+        else{
+            $consulta = "select * from usuario WHERE ";
+            if($array['username']!=''){
+              $username = $array['username'];
+              $consulta.= "username LIKE '%$username%' AND ";
+            }
+            if($array['email']!=''){
+              $email = $array['email'];
+              $consulta.= "email LIKE '$email%' AND ";
+            }
+            if($array['estado']!=''){
+              $estado = $array['estado'];
+              $consulta.= "activo =$estado AND ";
+            }
+            $consulta.= "1=1";
+            $answer = $this->queryList($consulta." limit ". (($pagina - 1) * $cantidad).",". $cantidad);
+        }
+            $final_answer = [];
         foreach ($answer as &$element) {
             $final_answer[] = new Usuario($element['id'],$element['email'],$element['username'],$element['activo'],$element['password'],$element['updated_at'],$element['created_at'],$element['first_name'],$element['last_name']);
         }
-        return $final_answer;
-
-                         
+        return $final_answer;                      
     }
 
      public function cantidad() {

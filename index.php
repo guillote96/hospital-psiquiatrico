@@ -26,6 +26,7 @@ require_once('view/Home.php');
 require_once('view/IniciarSesion.php');
 require_once('view/BuscarUsuario.php');
 require_once('view/ListarPaciente.php');
+require_once('view/ListarUsuarios.php');
 require_once('view/AgregarPaciente.php');
 require_once('view/EditarPaciente.php');
 require_once('view/BuscarPaciente.php');
@@ -133,13 +134,13 @@ if(isset($_GET["action"])){
 	else if ($_GET["action"] == 'cerrarSesion'){
 		UsuarioController::getInstance()->cerrarSesion();
 	}
-	else if ($_GET["action"] == 'buscarUsuario'){
+/*	else if ($_GET["action"] == 'buscarUsuario'){
         if(UsuarioController::getInstance()->checkPermiso('usuario_show', $_SESSION['id']))
 			UsuarioController:: getInstance()->tipoDeBusqueda();
 		else
 			//UsuarioController::getInstance()->home($_SESSION['id']);
 			UsuarioController::getInstance()->accesoNoAutorizado($_SESSION['id']);
-	}
+	}*/
 	else if ($_GET["action"] == 'listarPacientes'){
 		if(!isset($_SESSION['id'])){
 			UsuarioController::getInstance()->home(null);
@@ -223,6 +224,20 @@ if(isset($_GET["action"])){
 	}
 	else if ($_GET["action"] == 'buscar_paciente'){
 		PacienteController:: getInstance()->buscar_paciente();
+	}
+	else if ($_GET["action"] == 'buscarUsuario'){
+		if(!isset($_SESSION['id'])){
+			UsuarioController::getInstance()->home(null);
+		}
+		else if(UsuarioController::getInstance()->checkPermiso('usuario_show', $_SESSION['id'])){
+			UsuarioController:: getInstance()->buscarUsuario();
+		}
+		else{
+			UsuarioController::getInstance()->accesoNoAutorizado($_SESSION['id']);
+		}
+	}
+	else if ($_GET["action"] == 'buscar_usuario'){
+		UsuarioController:: getInstance()->buscar_usuario();
 	}
 	else if ($_GET["action"] == 'modificarConfiguracion'){
 		ConfiguracionController::getInstance()->modificarConfiguracion();
