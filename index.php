@@ -53,12 +53,6 @@ require_once('view/ListarPermisos.php');
 require_once('view/MisPermisos.php');
 require_once('view/Acceso.php');
 
-/*if(ConfiguracionController::getInstance()->estadoSitio() == false){
-if(isset($_GET["action"])){
-	return false;
-}
-
-}else{*/
 
 if(isset($_GET["action"])){
 	if ($_GET["action"] == 'listResources'){
@@ -87,7 +81,6 @@ if(isset($_GET["action"])){
 			UsuarioController::getInstance()->eliminarUsuario($id);
 		}
 		else{
-			//UsuarioController::getInstance()->home(null);
 			UsuarioController::getInstance()->accesoNoAutorizado($_SESSION['id']);
 		}
 	}
@@ -101,7 +94,6 @@ if(isset($_GET["action"])){
 	    		UsuarioController::getInstance()->registrarse();
 			}
 			else{
-				//UsuarioController::getInstance()->home($_SESSION['id']);
 				UsuarioController::getInstance()->accesoNoAutorizado($_SESSION['id']);
 			}	
 		}
@@ -115,7 +107,6 @@ if(isset($_GET["action"])){
 			UsuarioController::getInstance()->editarUsuario($id);
 		}
 		else{
-			//UsuarioController::getInstance()->home($_SESSION['id']);
 			UsuarioController::getInstance()->accesoNoAutorizado($_SESSION['id']);
 		}	
 	}
@@ -134,13 +125,6 @@ if(isset($_GET["action"])){
 	else if ($_GET["action"] == 'cerrarSesion'){
 		UsuarioController::getInstance()->cerrarSesion();
 	}
-/*	else if ($_GET["action"] == 'buscarUsuario'){
-        if(UsuarioController::getInstance()->checkPermiso('usuario_show', $_SESSION['id']))
-			UsuarioController:: getInstance()->tipoDeBusqueda();
-		else
-			//UsuarioController::getInstance()->home($_SESSION['id']);
-			UsuarioController::getInstance()->accesoNoAutorizado($_SESSION['id']);
-	}*/
 	else if ($_GET["action"] == 'listarPacientes'){
 		if(!isset($_SESSION['id'])){
 			UsuarioController::getInstance()->home(null);
@@ -149,7 +133,6 @@ if(isset($_GET["action"])){
 			PacienteController:: getInstance()->listarTodosLosPacientes();
 		}
 		else{
-			//UsuarioController::getInstance()->home($_SESSION['id']);
 			UsuarioController::getInstance()->accesoNoAutorizado($_SESSION['id']);
 		}
 	}
@@ -161,7 +144,6 @@ if(isset($_GET["action"])){
 			PacienteController:: getInstance()->agregarPaciente();
 		}
 		else{
-			//UsuarioController::getInstance()->home($_SESSION['id']);
 			UsuarioController::getInstance()->accesoNoAutorizado($_SESSION['id']);
 		}
 		
@@ -178,7 +160,6 @@ if(isset($_GET["action"])){
 			PacienteController:: getInstance()->editarPaciente($id);
 		}
 		else{
-			//UsuarioController::getInstance()->home($_SESSION['id']);
 			UsuarioController::getInstance()->accesoNoAutorizado($_SESSION['id']);
 		}
 	}
@@ -193,7 +174,6 @@ if(isset($_GET["action"])){
 			PacienteController:: getInstance()->eliminarPaciente($_GET["id"]);
 		}
 		else{
-			//UsuarioController::getInstance()->home($_SESSION['id']);
 			UsuarioController::getInstance()->accesoNoAutorizado($_SESSION['id']);
 		}
 		
@@ -206,7 +186,6 @@ if(isset($_GET["action"])){
 			ConfiguracionController:: getInstance()->listarVariables(0);
 		}
 		else{
-			//UsuarioController::getInstance()->home($_SESSION['id']);
 			UsuarioController::getInstance()->accesoNoAutorizado($_SESSION['id']);
 		}
 	}
@@ -218,7 +197,6 @@ if(isset($_GET["action"])){
 			PacienteController:: getInstance()->buscarPaciente();
 		}
 		else{
-			//UsuarioController::getInstance()->home($_SESSION['id']);
 			UsuarioController::getInstance()->accesoNoAutorizado($_SESSION['id']);
 		}
 	}
@@ -267,7 +245,6 @@ if(isset($_GET["action"])){
 			RolController::getInstance()->listar_roles();
 		}
 		else{
-			//UsuarioController::getInstance()->home($_SESSION['id']);
 			UsuarioController::getInstance()->accesoNoAutorizado($_SESSION['id']);
 		}
 	}
@@ -279,7 +256,6 @@ if(isset($_GET["action"])){
 			PermisoController::getInstance()->listar_permisos();
 		}
 		else{
-			//UsuarioController::getInstance()->home($_SESSION['id']);
 			UsuarioController::getInstance()->accesoNoAutorizado($_SESSION['id']);
 		}
 		
