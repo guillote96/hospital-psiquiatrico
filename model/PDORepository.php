@@ -9,7 +9,7 @@ abstract class PDORepository {
     
     const USERNAME = "grupo2";
     const PASSWORD = "MzhjMzZiMTI4Y2Q0";
-    const HOST ="https://sql.proyecto2018.linti.unlp.edu.ar/";
+    const HOST ="localhost";
     const DB = "grupo2";
     
     private function getConnection(){
