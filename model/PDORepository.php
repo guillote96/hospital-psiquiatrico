@@ -33,5 +33,12 @@ abstract class PDORepository {
         $stmt = $connection->prepare($sql);
         $stmt-> execute();
     }
+
+    protected function query($sql,$array){
+        $connection = $this->getConnection();
+        $stmt = $connection->prepare($sql);
+        $stmt->execute($array);
+        return $stmt->fetchAll();
+    }
     
 }

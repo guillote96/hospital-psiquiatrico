@@ -1,0 +1,116 @@
+{% include 'encabezado.html'%}
+    <head>
+        <title>Home</title>
+
+   
+    </head>
+    <body>
+{% include 'barra.html'%}
+	<br>
+  <div class="container">
+    {% if mensaje is defined %}
+      {% if not mensaje  is empty  %}
+        <div class="alert alert-secondary" role="alert">
+          {{ mensaje }}
+        </div>
+      {% endif %}
+    {% endif %}
+    <div class="form-row">
+      <div class="form-group col-md-6">
+  <h2><u>Registrar Atencion</u></h2>
+
+  <form action="./index.php?action=registrar_atencion&id={{ paciente.id }}" method="POST">
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="nombreapellido">Paciente </label>
+      <input type="text" class="form-control" id="nombreapellido" name="nombreapellido" placeholder="Paciente"  value="{{ nombreapellido }}" readonly="readonly" required>
+    </div>
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="fecha">Fecha</label>
+      <input type="date" class="form-control" id="fecha" name="fecha" placeholder="fecha" required>
+    </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="motivo">Motivo Consulta</label>
+      <select class="form-control" name="motivo" id="motivo" required>
+        <option value="">Elegir Opcion</option>
+        {% for motivo in motivos %}
+        <option value="{{motivo.id}}">{{motivo.nombre}}</option>
+        {% endfor %} 
+      </select>
+    </div>
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="derivacion">Derivacion:</label>
+      <select class="form-control" name="derivacion" id="derivacion" >
+        <option value="">Elegir Opcion</option>
+        {% for derivacion in derivaciones %}
+        <option value="{{derivacion.id}}">{{derivacion.nombre}}</option>
+        {% endfor %}    
+  	  </select>
+    </div>
+
+  <div class="form-group">
+    <label for="articulacion">Articulacion:</label>
+    <input type="text" class="form-control" id="articulacion" name="articulacion" placeholder="articulacion" >
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="internacion">¿Derivo de una Internacion?</label>
+      <select class="form-control" name="internacion" id="internacion" required>
+         <option value="">Elegir Opcion</option>
+         <option value="1">Si</option>
+         <option value="2">No</option>
+  	  </select>
+    </div>
+    </div>
+
+    <div class="form-group col-md-10">
+      <label for="diagnostico">Diagnostico:</label>
+      <textarea class="form-control" rows="3" id="diagnostico" name="diagnostico" placeholder="diagnostico" required></textarea>
+    </div>
+   
+
+    <div class="form-group col-md-10">
+      <label for="observaciones">Observaciones</label>
+      <textarea class="form-control" rows="3" id="observaciones" name="observaciones" placeholder="observaciones" ></textarea>
+    </div>
+
+
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="tratamiento">Tratamiento Farmacologico</label>
+     <select class="form-control" name="tratamiento" id="tratamiento" >
+        <option value="">Elegir Opcion</option>
+        {% for tratamiento in tratamientos  %}
+        <option value="{{tratamiento.id}}">{{tratamiento.nombre}}</option>
+        {% endfor %}    
+      </select>
+      </select>
+    </div>
+    </div>
+
+   <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="acompanamiento">Acompañamiento</label>
+     <select class="form-control" name="acompanamiento" id="acompanamiento" >
+        <option value="">Elegir Opcion</option>
+        {% for acompanamiento in acompanamientos  %}
+        <option value="{{acompanamiento.id}}">{{acompanamiento.nombre}}</option>
+        {% endfor %}    
+      </select>
+      </select>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Aceptar</button>
+</form>
+</div>
+{% include 'footer.html'%}
+ </body>
+</html>

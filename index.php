@@ -6,10 +6,18 @@ error_reporting(-1);
 
 
 require_once('controller/LocalidadController.php');
+require_once('controller/AtencionController.php');
 require_once('model/PDORepository.php');
 require_once('model/PDOLocalidad.php');
 require_once('model/PDOPaciente.php');
 require_once('model/PDOPartido.php');
+require_once('model/PDOConsulta.php');
+require_once('model/PDOMotivoConsulta.php');
+require_once('model/PDOTratamientoFarmacologico.php');
+require_once('model/PDOAcompanamiento.php');
+require_once('model/Acompanamiento.php');
+require_once('model/TratamientoFarmacologico.php');
+require_once('model/MotivoConsulta.php');
 require_once('model/Paciente.php');
 require_once('model/Partido.php');
 require_once('model/Localidad.php');
@@ -41,6 +49,7 @@ require_once('model/PDOObraSocial.php');
 require_once('model/PDOGenero.php');
 require_once('model/PDOTipoDoc.php');
 require_once('model/Usuario.php');
+require_once('model/Consulta.php');
 require_once('controller/ConfiguracionController.php');
 require_once('model/Configuracion.php');
 require_once('model/Rol.php');
@@ -52,6 +61,7 @@ require_once('view/AgregarRol.php');
 require_once('view/ListarPermisos.php');
 require_once('view/MisPermisos.php');
 require_once('view/Acceso.php');
+require_once('view/RegistrarAtencion.php');
 
 
 if(isset($_GET["action"])){
@@ -269,7 +279,19 @@ if(isset($_GET["action"])){
 	}
 	else if ($_GET["action"] == 'listar_pacientes'){
 		PacienteController::getInstance()->listarPacientes();
-	}																					
+	}
+	else if ($_GET["action"] == 'registrarAtencion'){
+	    if(!isset($_SESSION['id'])){
+			UsuarioController::getInstance()->home(null);
+		}
+         else if(UsuarioController::getInstance()->checkPermiso('paciente_show', $_SESSION['id'])){
+		    AtencionController::getInstance()->registrarAtencion();
+	   }
+	   else{ UsuarioController::getInstance()->accesoNoAutorizado($_SESSION['id']);}
+	}
+	else if ($_GET["action"] == 'registrar_atencion'){
+		AtencionController::getInstance()->registrar_atencion($_GET['id']);
+	}																									
 }	
 else{
 	if(empty($_SESSION['id'])){
