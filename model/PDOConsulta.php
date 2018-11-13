@@ -35,4 +35,20 @@ class PDOConsulta extends PDORepository {
 
     }
 
+
+       public function traer_consulta($idConsulta) {
+        $answer = $this->query("select * from consulta where id=:id", array(':id' => $idConsulta));
+        $final_answer = [];
+        foreach ($answer as &$element) {
+            $final_answer[] = new Consulta ($element['id'],$element['paciente_id'],$element['fecha'],$element['motivo_id'],$element['derivacion_id'],$element['articulacion_con_instituciones'],$element['internacion'],$element['diagnostico'],$element['observaciones'],$element['tratamiento_farmacologico_id'],$element['acompanamiento_id']);
+        }
+        return $final_answer;
+    }
+
+    public function actualizarConsulta($array){
+      $result=$this->query("UPDATE consulta SET paciente_id = :pacienteid, fecha = :fecha,  motivo_id = :motivoid, derivacion_id = :derivacionid, articulacion_con_instituciones = :articulacion, internacion = :internacion, diagnostico = :diagnostico, observaciones = :observaciones, tratamiento_farmacologico_id = :tratamiento, acompanamiento_id = :acompanamiento WHERE id = :id",$array);
+      return $result;
+
+    }
+
 }

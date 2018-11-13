@@ -62,6 +62,7 @@ require_once('view/ListarPermisos.php');
 require_once('view/MisPermisos.php');
 require_once('view/Acceso.php');
 require_once('view/RegistrarAtencion.php');
+require_once('view/EditarAtencion.php');
 
 
 if(isset($_GET["action"])){
@@ -290,8 +291,14 @@ if(isset($_GET["action"])){
 	   else{ UsuarioController::getInstance()->accesoNoAutorizado($_SESSION['id']);}
 	}
 	else if ($_GET["action"] == 'registrar_atencion'){
-		AtencionController::getInstance()->registrar_atencion($_GET['id']);
-	}																									
+		AtencionController::getInstance()->registrar_atencion();
+	}
+	else if ($_GET["action"] == 'editarAtencion'){
+		AtencionController::getInstance()->editarAtencion();
+	}
+	else if ($_GET["action"] == 'editar_atencion'){
+		AtencionController::getInstance()->editar_atencion();
+	}																											
 }	
 else{
 	if(empty($_SESSION['id'])){

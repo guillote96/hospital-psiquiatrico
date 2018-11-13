@@ -5,11 +5,11 @@ class Consulta {
     private $id;
     private $paciente_id;
     private $fecha;
-     private $motivo_id;
+    private $motivo_id;
     private $derivacion_id;
     private $articulacion_con_instituciones;
     private $internacion;
-   private $diagnostico;
+    private $diagnostico;
     private $observaciones;
     private $tratamiento_farmacologico_id;
     private $acompanamiento_id;

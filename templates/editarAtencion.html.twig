@@ -17,10 +17,10 @@
     {% endif %}
     <div class="form-row">
       <div class="form-group col-md-5">
-        <h2><u>Registrar Atencion</u></h2>
+        <h2><u>Editar Atencion</u></h2>
       </div>
     </div>
-  <form action="./index.php?action=registrar_atencion&pacienteId={{ paciente.id }}" method="POST">
+  <form action="./index.php?action=editar_atencion&id={{ atencion.id }}&pacienteId={{ atencion.pacienteid}}" method="POST">
   <div class="form-row">
     <div class="form-group col-md-7">
       <label for="nombreapellido">Paciente </label>
@@ -28,7 +28,7 @@
     </div>
     <div class="form-group col-md-5">
       <label for="fecha">Fecha</label>
-      <input type="date" class="form-control" id="fecha" name="fecha" placeholder="fecha" required>
+      <input type="date" class="form-control" id="fecha" name="fecha" placeholder="fecha" value="{{ atencion.fecha }}"required>
     </div>
   </div>
   <div class="form-row">
@@ -37,7 +37,7 @@
       <select class="form-control" name="motivo" id="motivo" required>
         <option value="">Elegir Opcion</option>
         {% for motivo in motivos %}
-        <option value="{{motivo.id}}">{{motivo.nombre}}</option>
+        <option value="{{motivo.id}}" {% if motivo.id == atencion.motivoid  %} selected {% endif %} >{{motivo.nombre}}</option>
         {% endfor %} 
       </select>
     </div>
@@ -46,7 +46,7 @@
       <select class="form-control" name="derivacion" id="derivacion" >
         <option value="">Elegir Opcion</option>
         {% for derivacion in derivaciones %}
-        <option value="{{derivacion.id}}">{{derivacion.nombre}}</option>
+        <option value="{{derivacion.id}}" {% if derivacion.id == atencion.derivacionid  %} selected {% endif %}>{{derivacion.nombre}}</option>
         {% endfor %}    
   	  </select>
     </div>
@@ -54,27 +54,27 @@
   <div class="form-row">
     <div class="form-group col-md-9">
       <label for="articulacion">Articulacion:</label>
-      <input type="text" class="form-control" id="articulacion" name="articulacion" placeholder="articulacion" >
+      <input type="text" class="form-control" id="articulacion" name="articulacion" placeholder="articulacion" value="{{atencion.articulacion}}" >
     </div>
     <div class="form-group col-md-3">
       <label for="internacion">¿Derivo de una Internacion?</label>
       <select class="form-control" name="internacion" id="internacion" required>
          <option value="">Elegir Opcion</option>
-         <option value="1">Si</option>
-         <option value="2">No</option>
+         <option value="1" {% if 1 == atencion.internacion  %} selected {% endif %}>Si</option>
+         <option value="2" {% if 2 == atencion.internacion  %} selected {% endif %}>No</option>
   	  </select>
     </div>
   </div>
   <div class="form-row">
     <div class="form-group col-md-12">
       <label for="diagnostico">Diagnostico:</label>
-      <textarea class="form-control" rows="3" id="diagnostico" name="diagnostico" placeholder="diagnostico" required></textarea>
+      <textarea class="form-control" rows="3" id="diagnostico" name="diagnostico" placeholder="diagnostico"  required> {{ atencion.diagnostico }}</textarea>
     </div>
   </div>
   <div class="form-row">
     <div class="form-group col-md-12">
       <label for="observaciones">Observaciones</label>
-      <textarea class="form-control" rows="3" id="observaciones" name="observaciones" placeholder="observaciones" ></textarea>
+      <textarea class="form-control" rows="3" id="observaciones" name="observaciones" placeholder="observaciones" > {{ atencion.observaciones }}</textarea>
     </div>
   </div>
 
@@ -84,7 +84,7 @@
      <select class="form-control" name="tratamiento" id="tratamiento" >
         <option value="">Elegir Opcion</option>
         {% for tratamiento in tratamientos  %}
-        <option value="{{tratamiento.id}}">{{tratamiento.nombre}}</option>
+        <option value="{{tratamiento.id}}" {% if tratamiento.id == atencion.tratamientofarmacologicoid  %} selected {% endif %}>{{tratamiento.nombre}}</option>
         {% endfor %}    
       </select>
       </select>
@@ -94,7 +94,7 @@
       <select class="form-control" name="acompanamiento" id="acompanamiento" >
         <option value="">Elegir Opcion</option>
         {% for acompanamiento in acompanamientos  %}
-        <option value="{{acompanamiento.id}}">{{acompanamiento.nombre}}</option>
+        <option value="{{acompanamiento.id}}" {% if acompanamiento.id == atencion.acompanamientoid  %} selected {% endif %}>{{acompanamiento.nombre}}</option>
         {% endfor %}    
       </select>
     </div>
