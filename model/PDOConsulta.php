@@ -58,4 +58,33 @@ class PDOConsulta extends PDORepository {
 
     }
 
+       public function traer_consultas_de_paciente($array) {
+        $answer = $this->query("select * from consulta where paciente_id = :pacienteid", $array);
+        $final_answer = [];
+        foreach ($answer as &$element) {
+            $final_answer[] = new Consulta ($element['id'],$element['paciente_id'],$element['fecha'],$element['motivo_id'],$element['derivacion_id'],$element['articulacion_con_instituciones'],$element['internacion'],$element['diagnostico'],$element['observaciones'],$element['tratamiento_farmacologico_id'],$element['acompanamiento_id']);
+        }
+        return $final_answer;
+    }
+
+    public function listarCantidad($pagina,$cantidad,$id){
+
+        $page=(($pagina - 1) * $cantidad);
+        $answer = $this->query("SELECT * from consulta where paciente_id = :id LIMIT :pagina , :cantidad" , array(':pagina' => $page ,':cantidad'=> $cantidad ,':id'=> $id));
+        $final_answer=[];
+        foreach ($answer as &$element) {
+            $final_answer[] = new Consulta ($element['id'],$element['paciente_id'],$element['fecha'],$element['motivo_id'],$element['derivacion_id'],$element['articulacion_con_instituciones'],$element['internacion'],$element['diagnostico'],$element['observaciones'],$element['tratamiento_farmacologico_id'],$element['acompanamiento_id']);
+        }
+        return $final_answer;                      
+    }
+
+    public function cantidad() {
+        $answer = $this->queryList("select count(*) from consulta");
+        return $answer;
+    }
+
+
+
+
+
 }

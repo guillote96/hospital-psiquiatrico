@@ -63,6 +63,8 @@ require_once('view/MisPermisos.php');
 require_once('view/Acceso.php');
 require_once('view/RegistrarAtencion.php');
 require_once('view/EditarAtencion.php');
+require_once('view/ListarAtenciones.php');
+
 
 
 if(isset($_GET["action"])){
@@ -294,13 +296,19 @@ if(isset($_GET["action"])){
 		AtencionController::getInstance()->registrar_atencion();
 	}
 	else if ($_GET["action"] == 'editarAtencion'){
-		AtencionController::getInstance()->editarAtencion();
+		AtencionController::getInstance()->editarAtencion($_GET['id']);
 	}
 	else if ($_GET["action"] == 'editar_atencion'){
 		AtencionController::getInstance()->editar_atencion();
 	}
 	else if ($_GET["action"] == 'eliminar_atencion'){
 		AtencionController::getInstance()->eliminar_atencion();
+	}
+	else if ($_GET["action"] == 'listarAtenciones'){
+		AtencionController::getInstance()->listarAtenciones($_GET['id']);
+	}
+	else if ($_GET["action"] == 'listar_atenciones'){
+		AtencionController::getInstance()->listar_atenciones();
 	}																													
 }	
 else{

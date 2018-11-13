@@ -1,0 +1,90 @@
+{% include 'encabezado.html'%}
+{% set const = 1 %}
+    <head>
+    <title>Atenciones</title>
+    <script type="text/javascript">
+          function confirmar(){
+
+                  if (confirm("¿Deseas eliminar este registro?"))
+                    return true;
+                  else
+                     return false;
+
+                 }
+
+        
+function validacion(formu, obj) {
+  limite=1; //limite de checks a seleccionar
+  num=0;
+  if (obj.checked) {
+    for (i=0; ele=document.getElementById(formu).children[i]; i++)
+      if (ele.checked) num++;
+  if (num>limite)
+    obj.checked=false;
+  }
+}  
+
+
+
+</script>
+    </head>
+{% include 'barra.html'%}
+    <body>
+      <br>
+      <div class="container">
+      <br>
+      <div class="form-row">
+      <div class="form-group col-md-4">
+        <h2><u>Atenciones</u></h2>
+      </div>
+      </div>
+
+      {% if mensaje is defined %}
+
+          {% if not mensaje  is empty  %}
+               <div class="alert alert-secondary" role="alert">
+                {{ mensaje }}
+               </div>
+          {% endif %}
+
+    {% endif %}
+      <div class="table-responsive"> 
+        <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Editar Atencion</th>
+      <th scope="col">Eliminar</th>
+    </tr>
+  </thead>
+   <tbody>
+        {% for item in atenciones %}
+          <tr>
+          <td><a href="./?action=editarAtencion&id={{ item.id }}">
+          <strong>{{item.id}}</strong><span></a></td>
+
+          <td><a class="btn btn-primary btn-sm" href="./?action=eliminar_atencion&id={{ item.id }}"> Eliminar </a></td>
+        {% endfor %}
+      </tbody>
+        </table>
+      </div>
+      </div>
+        <br>
+        {% if cantidad > 1 %}
+          <nav aria-label="Page navigation example">
+          <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+           {% if resources.datos is empty %}
+          <li class="page-item"><a class="page-link" href="./?action=listar_atenciones&pagina={% if pagina > 1 %}{{ pagina - 1}}{% else %}1{% endif %}">Anterior</a></li>
+          {% for i in 1..cantidad %}
+            <li class="page-item {% if i == pagina %} active {% endif %}"><a class="page-link" href="./?action=listar_atenciones&pagina={{i}}">{{i}}</a></li>
+          {% endfor %}
+          <li class="page-item"><a class="page-link" href="./?action=listar_atenciones&pagina={% if pagina < cantidad %}{{pagina + 1}}{% else %}{{ cantidad }}{% endif %}">Siguiente</a></li>  
+      {% endif %}  
+
+          </ul>
+          </nav>
+          </nav>
+{% endif %}
+{% include 'footer.html'%}
+    </body>
+</html>
