@@ -51,4 +51,11 @@ class PDOConsulta extends PDORepository {
 
     }
 
+    public function eliminarConsulta($array){
+         $result=$this->query("DELETE FROM consulta WHERE id = :id",$array);
+         return $result;
+
+
+    }
+
 }

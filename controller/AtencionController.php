@@ -120,6 +120,15 @@ class AtencionController {
         PDOConsulta::getInstance()->actualizarConsulta($array);
     }
 
+     public function eliminar_atencion(){
+         if(!isset($_GET['id']) || empty($_GET['id'])){
+            return false;
+           }
+         $array = array(':id' => $_GET['id']);
+         PDOConsulta::getInstance()->eliminarConsulta($array);
+     }
+
+
 
 
 

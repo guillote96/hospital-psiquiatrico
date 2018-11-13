@@ -298,7 +298,10 @@ if(isset($_GET["action"])){
 	}
 	else if ($_GET["action"] == 'editar_atencion'){
 		AtencionController::getInstance()->editar_atencion();
-	}																											
+	}
+	else if ($_GET["action"] == 'eliminar_atencion'){
+		AtencionController::getInstance()->eliminar_atencion();
+	}																													
 }	
 else{
 	if(empty($_SESSION['id'])){
