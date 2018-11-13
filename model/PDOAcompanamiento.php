@@ -21,7 +21,7 @@ class PDOAcompanamiento extends PDORepository {
         $answer = $this->queryList("select * from acompanamiento");
         $final_answer = [];
         foreach ($answer as &$element) {
-            $final_answer[] = new TratamientoFarmacologico ($element['nombre'],$element['id']);
+            $final_answer[] = new Acompanamiento ($element['nombre'],$element['id']);
         }
         return $final_answer;
     }
