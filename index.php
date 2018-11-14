@@ -65,7 +65,7 @@ require_once('view/RegistrarAtencion.php');
 require_once('view/EditarAtencion.php');
 require_once('view/ListarAtenciones.php');
 require_once('view/Reportes.php');
-require_once('view/ReportePorCriterio.php');
+require_once('view/GraficoPorCriterio.php');
 
 
 
@@ -315,8 +315,8 @@ if(isset($_GET["action"])){
 	else if ($_GET["action"] == 'reportes'){
 		AtencionController::getInstance()->reportes();
 	}
-	else if ($_GET["action"] == 'reportePorCriterio'){
-		AtencionController::getInstance()->reporteporCriterio();
+	else if ($_GET["action"] == 'graficoPorCriterio'){
+		AtencionController::getInstance()->graficoporCriterio();
 	}																													
 }	
 else{

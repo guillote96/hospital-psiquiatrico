@@ -1,17 +1,39 @@
- {%include 'encabezado.html' %}
+{% include 'encabezado.html'%}
     <head>
-        <title>Reportes</title>
+      <title>Usuarios</title>
     </head>
-{% include 'barra.html' %}
+{% include 'barra.html'%}
     <body>
-    	<div class="containter">
-    		<h2><u>Reportes</u></h2>
-            <ul>
-                <li><a href="./?action=reportePorCriterio&i=1"> Listado de consultas agrupadas por motivo </a></li>
-                <li><a href="./?action=reportePorCriterio&i=2"> Listado de consultas agrupadas por género </a></li>
-                <li><a href="./?action=reportePorCriterio&i=3"> Listado de consultas agrupadas por localidad </a></li>
-            </ul>
+      <br>
+      <div class="container">
+        <br>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <h2><u>Reportes</u></h2>
+          </div>
         </div>
-    {% include 'footer.html' %}
+        <div class="table-responsive"> 
+          <table class="table">
+            <tbody>
+              <tr>
+                <td><a><strong>Consultas agrupadas por motivo</strong></a></td>
+                <td><a class="btn btn-primary btn-sm" href="./?action=listadoPorCriterio&i=1">Ver Listado</a></td>
+                <td><a class="btn btn-primary btn-sm" href="./?action=graficoPorCriterio&i=1">Ver Gráfico</a></td>
+              </tr>
+              <tr>
+                <td><a><strong>Consultas agrupadas por género</strong></a></td>
+                <td><a class="btn btn-primary btn-sm" href="./?action=listadoPorCriterio&i=2">Ver Listado</a></td>
+                <td><a class="btn btn-primary btn-sm" href="./?action=graficoPorCriterio&i=2">Ver Gráfico</a></td>
+              </tr>
+              <tr>
+                <td><a><strong>Consultas agrupadas por localidades</strong></a></td>
+                <td><a class="btn btn-primary btn-sm" href="./?action=listadoPorCriterio&i=3">Ver Listado</a></td>
+                <td><a class="btn btn-primary btn-sm" href="./?action=graficoPorCriterio&i=3">Ver Gráfico</a></td>
+              </tr>        
+            </tbody>
+          </table>
+      </div>
+    </div>
+{% include 'footer.html'%}
     </body>
 </html>

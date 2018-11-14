@@ -177,7 +177,7 @@ class AtencionController {
         $view->show($resources);
     }
 
-    public function reportePorCriterio(){
+    public function graficoPorCriterio(){
         $i = $_GET['i'];
         if($i == 1){
             //Consultas agrupadas por motivo
@@ -198,7 +198,7 @@ class AtencionController {
             //Consultas agrupadas por localidad
             $criterio = "Localidad";
         }
-        $view = new ReportePorCriterio();
+        $view = new GraficoPorCriterio();
         $resources = array('usuario' =>PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0],'criterio' => $criterio, 'datos' => $datos);
         $view->show($resources);
     }
