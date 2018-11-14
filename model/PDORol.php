@@ -44,4 +44,22 @@ class PDORol extends PDORepository {
         return $final_answer;
     }
 
+    public function existe_rol($nombre){
+        $answer = $this->queryList("select * from rol where nombre='$nombre'");
+        if (count($answer) > 0){
+            return true;
+        }
+
+        return false;
+    }
+    
+    public function alta_rol($nombre){
+        $answer = $this->addObj("INSERT INTO rol (nombre) VALUES ('$nombre')");      
+    }
+
+    public function eliminar_rol($id){
+        $answer = $this->addObj("DELETE FROM rol_tiene_permiso WHERE rol_id='$id'");
+        $answer = $this->addObj("DELETE FROM rol WHERE id='$id'");
+    }
+
 }

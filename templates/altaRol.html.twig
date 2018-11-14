@@ -1,0 +1,34 @@
+{% include 'encabezado.html'%}
+    <head>
+        <title>Home</title>
+    </head>
+    <body>
+    {% include 'barra.html'%}
+		<div class="container">
+      <br>
+      {% if resources.error == 1%}
+    <br>
+    <div class="alert alert-secondary" role="alert">
+      Error: No pueden quedar campos vacios
+    </div>
+  {% endif %}
+  {% if resources.error == 2%}
+    <br>
+    <div class="alert alert-secondary" role="alert">
+      Error: El nombre de rol ya existe
+    </div>
+  {% endif %}
+  <h3><u>Agregar Rol</u></h3>
+  <form action="./index.php?action=alta_rol" method="POST">
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="nombre">Nombre:</label>
+      <input type="text" class="form-control" id="nombre" placeholder="Nombre" name="nombre" required>
+    </div>
+  </div>
+  <input type="submit" class="btn btn-primary" value="Aceptar"/>
+  </form>
+</div>
+{% include 'footer.html'%}
+    </body>
+</html>

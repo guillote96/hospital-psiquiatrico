@@ -66,6 +66,7 @@ require_once('view/EditarAtencion.php');
 require_once('view/ListarAtenciones.php');
 require_once('view/Reportes.php');
 require_once('view/GraficoPorCriterio.php');
+require_once('view/AltaRol.php');
 
 
 
@@ -317,6 +318,34 @@ if(isset($_GET["action"])){
 	}
 	else if ($_GET["action"] == 'graficoPorCriterio'){
 		AtencionController::getInstance()->graficoporCriterio();
+	}
+	else if ($_GET["action"] == 'altaRol'){
+				if (!isset($_SESSION['id'])){
+			UsuarioController::getInstance()->home(null);
+		}
+		else{
+			if(UsuarioController::getInstance()->checkPermiso('usuario_new', $_SESSION['id'])){
+	    		RolController::getInstance()->agregar_rol();
+			}
+			else{
+				UsuarioController::getInstance()->accesoNoAutorizado($_SESSION['id']);
+			}	
+		}
+	}
+	else if ($_GET["action"] == 'alta_rol'){
+		RolController:: getInstance()->alta_rol();
+	}
+	else if ($_GET["action"] == 'eliminarRol'){
+		if(!isset($_SESSION['id'])){
+			UsuarioController::getInstance()->home(null);
+		}
+		else if(UsuarioController::getInstance()->checkPermiso('configuracion_show', $_SESSION['id'])){
+			$id = $_GET["id"];
+			RolController::getInstance()->eliminarRol($id);
+		}
+		else{
+			UsuarioController::getInstance()->accesoNoAutorizado($_SESSION['id']);
+		}
 	}																													
 }	
 else{
