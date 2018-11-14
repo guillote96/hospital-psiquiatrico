@@ -418,7 +418,6 @@ class UsuarioController {
             $view->noautorizado(array('usuario' => PDOUsuario::getInstance()->traer_usuario($id)[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' => $permisos));
      }
 
-
 }
 
     

@@ -171,7 +171,37 @@ class AtencionController {
         $view->show($resources);
     }
 
+    public function reportes(){
+        $view = new Reportes();
+        $resources = array('usuario' =>PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
+        $view->show($resources);
+    }
 
+    public function reportePorCriterio(){
+        $i = $_GET['i'];
+        if($i == 1){
+            //Consultas agrupadas por motivo
+            $criterio = "Motivo";
+        }
+        else if ($i == 2){
+            $masculino = PDOConsulta::getInstance()->cantidadDeConsultasPorGenero(1);
+            $femenino = PDOConsulta::getInstance()->cantidadDeConsultasPorGenero(2);
+            $otro = PDOConsulta::getInstance()->cantidadDeConsultasPorGenero(3);
+            $total = $masculino + $femenino + $otro;
+            $porcentajeMasculino = $masculino/$total * 100;
+            $porcentajeFemenino = $femenino/$total * 100;
+            $porcentajeOtro = $otro/$total * 100;
+            $datos = array(array('nombre' => "Masculino",'porcentaje' => $porcentajeMasculino),array('nombre' => "Femenino", 'porcentaje' => $porcentajeFemenino), array('nombre' => "Otro", 'porcentaje' => $porcentajeOtro));
+            $criterio = "Género";
+        }
+        else if ($i == 3){
+            //Consultas agrupadas por localidad
+            $criterio = "Localidad";
+        }
+        $view = new ReportePorCriterio();
+        $resources = array('usuario' =>PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0],'criterio' => $criterio, 'datos' => $datos);
+        $view->show($resources);
+    }
 
 
 

@@ -83,7 +83,19 @@ class PDOConsulta extends PDORepository {
         return $answer;
     }
 
+    public function cantidadDeConsultasPorGenero($idGenero){
+        $answer = $this->query("SELECT COUNT(*) FROM consulta INNER JOIN paciente ON (consulta.paciente_id = paciente.id) INNER JOIN genero ON (paciente.genero_id = genero.id) WHERE genero.id = :id", array(':id' => $idGenero));
+        return $answer[0][0];
+    }
 
+    public function consultasPorGenero(){
+        $answer = $this->query("SELECT * FROM consulta INNER JOIN paciente ON (consulta.paciente_id = paciente.id) INNER JOIN genero ON (paciente.genero_id = genero.id) GROUP BY genero.id", array());
+        $final_answer=[];
+        foreach ($answer as &$element) {
+            $final_answer[] = new Consulta ($element['id'],$element['paciente_id'],$element['fecha'],$element['motivo_id'],$element['derivacion_id'],$element['articulacion_con_instituciones'],$element['internacion'],$element['diagnostico'],$element['observaciones'],$element['tratamiento_farmacologico_id'],$element['acompanamiento_id']);
+        }
+        return $final_answer;    
+    }
 
 
 

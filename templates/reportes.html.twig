@@ -1,0 +1,17 @@
+ {%include 'encabezado.html' %}
+    <head>
+        <title>Reportes</title>
+    </head>
+{% include 'barra.html' %}
+    <body>
+    	<div class="containter">
+    		<h2><u>Reportes</u></h2>
+            <ul>
+                <li><a href="./?action=reportePorCriterio&i=1"> Listado de consultas agrupadas por motivo </a></li>
+                <li><a href="./?action=reportePorCriterio&i=2"> Listado de consultas agrupadas por género </a></li>
+                <li><a href="./?action=reportePorCriterio&i=3"> Listado de consultas agrupadas por localidad </a></li>
+            </ul>
+        </div>
+    {% include 'footer.html' %}
+    </body>
+</html>
