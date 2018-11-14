@@ -54,9 +54,11 @@ class RolController {
                 $view->show(array('usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' => $permisos, 'error' => 2));
                 return false;
             }
-            $nombre = $_POST['nombre'];
-            $resources = PDORol::getInstance()->alta_rol($nombre);
-            $this->listar_roles();
+            else{
+                $nombre = $_POST['nombre'];
+                $resources = PDORol::getInstance()->alta_rol($nombre);
+                $this->listar_roles();
+            }
         }
         else{
             $view = new AltaRol();
@@ -73,5 +75,34 @@ class RolController {
         $resources = PDORol::getInstance()->eliminar_rol($id);
         $this->getInstance()->listar_roles(); 
     }
+
+    public function editar_rol($id){
+        $resources = PDORol::getInstance()->traer_rol($id);
+        $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]); 
+        $view = new EditarRol();
+        $view->show(array('resources' => $resources[0],'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' => $permisos));
+    }
+
+    public function actualizarRol($id){
+        $resources = PDORol::getInstance()->traer_rol($id);
+        $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
+         if(empty($_POST['nombre']) || !isset($_POST['nombre'])){
+
+            $view = new EditarRol();
+            $view->show(array('resources' => $resources[0],'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' => $permisos, 'error' => 1));
+                return false;
+        }
+        else{
+            if(PDORol::getInstance()->existe_rol($_POST['nombre'])){
+                    $view = new EditarRol();
+                    $view->show(array('resources' => $resources[0],'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' => $permisos, 'error' => 2));
+                    return false;
+                }
+            $nombre = $_POST['nombre'];
+            $resources = PDORol::getInstance()->actualizar_rol($nombre,$id);
+            $this->getInstance()->listar_roles(); 
+        }      
+    }
+
     
 }

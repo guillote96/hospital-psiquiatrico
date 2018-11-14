@@ -62,4 +62,18 @@ class PDORol extends PDORepository {
         $answer = $this->addObj("DELETE FROM rol WHERE id='$id'");
     }
 
+    public function traer_rol($id){
+        $answer = $this->queryList("select * from rol WHERE id='$id'");
+        $final_answer = [];
+        foreach ($answer as &$element) {
+            $final_answer[] = new Rol($element['nombre'],$element['id']);
+        }
+        return $final_answer;
+
+    }
+
+    public function actualizar_rol($nombre, $id){
+         $answer = $this->addObj("UPDATE rol SET nombre= '$nombre' WHERE id='$id'");
+    }
+
 }

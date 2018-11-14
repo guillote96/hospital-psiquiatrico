@@ -67,7 +67,7 @@ require_once('view/ListarAtenciones.php');
 require_once('view/Reportes.php');
 require_once('view/GraficoPorCriterio.php');
 require_once('view/AltaRol.php');
-
+require_once('view/EditarRol.php');
 
 
 if(isset($_GET["action"])){
@@ -346,6 +346,22 @@ if(isset($_GET["action"])){
 		else{
 			UsuarioController::getInstance()->accesoNoAutorizado($_SESSION['id']);
 		}
+	}
+	else if ($_GET["action"] == 'editarRol'){
+		if(!isset($_SESSION['id'])){
+			UsuarioController::getInstance()->home(null);
+		}
+		else if(UsuarioController::getInstance()->checkPermiso('configuracion_show', $_SESSION['id'])){
+			$id = $_GET["id"];
+			RolController:: getInstance()->editar_rol($id);
+		}
+		else{
+			UsuarioController::getInstance()->accesoNoAutorizado($_SESSION['id']);
+		}
+	}
+	else if ($_GET["action"] == 'actualizarRol'){
+		$id= $_GET["id"];
+        RolController::getInstance()->actualizarRol($id);
 	}																													
 }	
 else{
