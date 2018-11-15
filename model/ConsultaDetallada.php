@@ -1,6 +1,6 @@
 <?php
 
-class Consulta {
+class ConsultaDetallada {
 
     private $id;
     private $paciente_id;
@@ -15,9 +15,11 @@ class Consulta {
     private $acompanamiento_id;
     private $nombre;
     private $apellido;
-    
-    public function __construct($id,$paciente_id,$fecha,$motivo_id,$derivacion_id,$articulacion_con_instituciones,$internacion,$diagnostico,$observaciones,$tratamiento_farmacologico_id,$acompanamiento_id) {
-            $this->id=$id;
+    private $genero;
+    private $localidad;
+
+    public function __construct($id,$paciente_id,$fecha,$motivo_id,$derivacion_id,$articulacion_con_instituciones,$internacion,$diagnostico,$observaciones,$tratamiento_farmacologico_id,$acompanamiento_id,$nombre,$apellido,$genero,$localidad) {
+        $this->id=$id;
             $this->paciente_id=$paciente_id;
             $this->fecha=$fecha;
             $this->motivo_id=$motivo_id;
@@ -28,6 +30,10 @@ class Consulta {
             $this->observaciones=$observaciones;
             $this->tratamiento_farmacologico_id=$tratamiento_farmacologico_id;
             $this->acompanamiento_id=$acompanamiento_id;
+            $this->nombre=$nombre;
+            $this->apellido=$apellido;
+            $this->genero=$genero;
+            $this->localidad=$localidad;
     }
 
     public function getId() {
@@ -74,6 +80,20 @@ class Consulta {
     public function getAcompanamientoId() {
         return $this->acompanamiento_id;
     }
-   
 
+    public function getNombre() {
+        return $this->nombre;
+    }
+
+    public function getApellido() {
+        return $this->apellido;
+    }
+
+    public function getGenero() {
+        return $this->genero;
+    }
+
+    public function getLocalidad() {
+        return $this->localidad;
+    }
 }

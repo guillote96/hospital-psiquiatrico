@@ -187,15 +187,16 @@ class AtencionController {
             $masculino = PDOConsulta::getInstance()->cantidadDeConsultasPorGenero(1);
             $femenino = PDOConsulta::getInstance()->cantidadDeConsultasPorGenero(2);
             $otro = PDOConsulta::getInstance()->cantidadDeConsultasPorGenero(3);
-            $total = $masculino + $femenino + $otro;
-            $porcentajeMasculino = $masculino/$total * 100;
-            $porcentajeFemenino = $femenino/$total * 100;
-            $porcentajeOtro = $otro/$total * 100;
-            $datos = array(array('nombre' => "Masculino",'porcentaje' => $porcentajeMasculino),array('nombre' => "Femenino", 'porcentaje' => $porcentajeFemenino), array('nombre' => "Otro", 'porcentaje' => $porcentajeOtro));
+            $datos = array(array('nombre' => "Masculino",'porcentaje' => $masculino),array('nombre' => "Femenino", 'porcentaje' => $femenino), array('nombre' => "Otro", 'porcentaje' => $otro));
             $criterio = "Género";
         }
         else if ($i == 3){
-            //Consultas agrupadas por localidad
+            $informacion = PDOConsulta::getInstance()->consultasAgrupadasPorLocalidad();
+            $datos=array();
+            foreach ($informacion as &$dato){
+              array_push($datos,array('nombre' => $dato->getName(), 'porcentaje' => $dato->getId()));
+            }
+            $total = count($datos);
             $criterio = "Localidad";
         }
         $view = new GraficoPorCriterio();
@@ -203,7 +204,34 @@ class AtencionController {
         $view->show($resources);
     }
 
+    public function listadoPDF(){
+      require('./recursos/fpdf181/fpdf.php');
 
+      $pdf = new FPDF();
+      $pdf->AddPage();
+      $pdf->SetFont('Arial','B',16);
+      $pdf->Cell(40,10,'Hello World!');
+      $pdf->Output();
+    }
+
+
+    public function listadoPorCriterio(){
+      $i = $_GET['i'];
+      if($i == 1){
+        $criterio = "Motivo";
+      }
+      else if ($i == 2){
+        $datos = PDOConsulta::getInstance()->consultasPorGenero();
+        $criterio = "Género";
+      }
+      else if($i == 3){
+        $datos = PDOConsulta::getInstance()->consultasPorLocalidad();
+        $criterio = "Localidades";
+      }
+      $view = new ListadoPorCriterio();
+      $resources = array('usuario' =>PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0],'criterio' => $criterio, 'datos' => $datos);
+      $view->show($resources);
+    }
 
 
 

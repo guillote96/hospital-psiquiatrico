@@ -68,6 +68,8 @@ require_once('view/Reportes.php');
 require_once('view/GraficoPorCriterio.php');
 require_once('view/AltaRol.php');
 require_once('view/EditarRol.php');
+require_once('view/ListadoPorCriterio.php');
+require_once('model/ConsultaDetallada.php');
 
 
 if(isset($_GET["action"])){
@@ -362,6 +364,12 @@ if(isset($_GET["action"])){
 	else if ($_GET["action"] == 'actualizarRol'){
 		$id= $_GET["id"];
         RolController::getInstance()->actualizarRol($id);
+	}
+	else if ($_GET["action"] == 'listadoPorCriterio'){
+		AtencionController::getInstance()->listadoPorCriterio();
+	}
+	else if ($_GET["action"] == 'listadoPDF'){
+		AtencionController::getInstance()->listadoPDF();
 	}																													
 }	
 else{
