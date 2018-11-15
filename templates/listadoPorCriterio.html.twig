@@ -1,0 +1,47 @@
+{% include 'encabezado.html'%}
+    <head>
+      <title>Usuarios</title>
+    </head>
+{% include 'barra.html'%}
+    <body>
+    	<br>
+    	<div class="container">
+    		<div class="form-row">
+		    	<div class="form-group col-md-10">
+		        	<h2><u>Consultas agrupadas por {{resources.criterio}}</u></h2>
+		      	</div>
+		      	<div class="form-group col-md-2">
+		      		<a class="btn btn-primary btn-sm float-md-right" href="./?action=listadoPDF"> Ver archivo PDF </a>
+      			</div> 
+      		</div>
+    		<div class="table-responsive"> 
+        		<table class="table">
+  					<thead>
+    					<tr>
+					    	<th scope="col">Paciente</th>
+					    	<th scope="col">Fecha</th>
+					    	<th scope="col">Motivo</th>
+					    	<th scope="col">Derivación</th>
+					    	<th scope="col">Diagnóstico</th>
+					    	<th scope="col">Género</th>
+					    	<th scope="col">Localidad</th>
+    					</tr>
+ 					</thead>
+ 					<tbody>
+ 						{% for i in resources.datos %}
+ 						<tr>
+ 							<td>{{i.nombre}} {{i.apellido}}</td>
+ 							<td>{{i.fecha}}</td>
+ 							<td>{{i.motivoid}}</td>
+ 							<td>{{i.derivacionid}}</td>
+ 							<td>{{i.diagnostico}}</td>
+ 							<td>{{i.genero}}</td>
+ 							<td>{{i.localidad}}</td>
+ 						</tr>
+ 						{% endfor %}
+ 					</tbody>
+ 				</table>
+    	</div>
+    {% include 'footer.html' %}
+    </body>
+</html>
