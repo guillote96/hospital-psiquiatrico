@@ -1,0 +1,30 @@
+<html>
+	<style>
+	#mapdiv {    
+    height: 55%;
+    width: 45%;
+}
+	</style>
+  <body>
+  <div id="mapdiv">
+  <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+  <script>
+    map = new OpenLayers.Map("mapdiv");
+    map.addLayer(new OpenLayers.Layer.OSM());
+
+    var lonLat = new OpenLayers.LonLat(-57.9489, -34.9314  )
+          .transform(
+            new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+            map.getProjectionObject() // to Spherical Mercator Projection
+          );
+    var zoom=13;
+
+    var markers = new OpenLayers.Layer.Markers( "Markers" );
+    map.addLayer(markers);
+    map.setCenter (lonLat, zoom);
+    markers.addMarker(new OpenLayers.Marker(l));
+    
+    
+  </script>
+  </div>
+</body></html>
