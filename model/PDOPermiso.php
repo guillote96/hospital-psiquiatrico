@@ -45,5 +45,47 @@ class PDOPermiso extends PDORepository {
         return $final_answer;
     }
 
+    public function existe_permiso($nombre){
+        $answer = $this->queryList("select * from permiso where nombre='$nombre'");
+        if (count($answer) > 0){
+            return true;
+        }
+
+        return false;
+    }
+
+    public function alta_permiso($nombre, $rol){
+        $answer = $this->addObj("INSERT INTO permiso (nombre) VALUES ('$nombre')"); 
+        $idP = $this->traer_id($nombre);  
+        foreach ($rol as &$element) {
+            $answer = $this->addObj("INSERT INTO rol_tiene_permiso (rol_id, permiso_id) VALUES($element, $idP[0])");
+        }
+    }
+
+    public function eliminar_permiso($id){
+        $answer = $this->addObj("DELETE FROM rol_tiene_permiso WHERE permiso_id='$id'");
+        $answer = $this->addObj("DELETE FROM permiso WHERE id='$id'");
+    }
+
+    public function traer_permiso($id){
+        $answer = $this->queryList("select * from permiso WHERE id='$id'");
+        $final_answer = [];
+        foreach ($answer as &$element) {
+            $final_answer[] = new Permiso($element['nombre'],$element['id']);
+        }
+        return $final_answer;
+
+    }
+
+    public function traer_id($nombre){
+        $answer = $this->queryList("select id from permiso WHERE nombre='$nombre'");
+        return $answer[0];
+
+    }
+
+    public function actualizar_Permiso($nombre, $id){
+         $answer = $this->addObj("UPDATE permiso SET nombre= '$nombre' WHERE id='$id'");
+    }
+
 
 }

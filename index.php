@@ -67,6 +67,7 @@ require_once('view/ListarAtenciones.php');
 require_once('view/Reportes.php');
 require_once('view/GraficoPorCriterio.php');
 require_once('view/AltaRol.php');
+require_once('view/AltaPermiso.php');
 require_once('view/EditarRol.php');
 require_once('view/ListadoPorCriterio.php');
 require_once('model/ConsultaDetallada.php');
@@ -370,6 +371,34 @@ if(isset($_GET["action"])){
 	}
 	else if ($_GET["action"] == 'listadoPDF'){
 		AtencionController::getInstance()->listadoPDF();
+	}
+	else if ($_GET["action"] == 'altaPermiso'){
+				if (!isset($_SESSION['id'])){
+			UsuarioController::getInstance()->home(null);
+		}
+		else{
+			if(UsuarioController::getInstance()->checkPermiso('usuario_new', $_SESSION['id'])){
+	    		PermisoController::getInstance()->agregar_permiso();
+			}
+			else{
+				UsuarioController::getInstance()->accesoNoAutorizado($_SESSION['id']);
+			}	
+		}
+	}
+	else if ($_GET["action"] == 'alta_permiso'){
+		PermisoController:: getInstance()->alta_permiso();
+	}
+	else if ($_GET["action"] == 'eliminarPermiso'){
+		if(!isset($_SESSION['id'])){
+			UsuarioController::getInstance()->home(null);
+		}
+		else if(UsuarioController::getInstance()->checkPermiso('configuracion_show', $_SESSION['id'])){
+			$id = $_GET["id"];
+			PermisoController::getInstance()->eliminarPermiso($id);
+		}
+		else{
+			UsuarioController::getInstance()->accesoNoAutorizado($_SESSION['id']);
+		}
 	}																													
 }	
 else{
