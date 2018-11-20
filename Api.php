@@ -16,7 +16,7 @@ $client = new Client(['base_uri' => 'https://api-referencias.proyecto2018.linti.
 
 switch ($_GET['action']) {
     case '/instituciones':
-        return InstitucionController::getInstance()->institucionesJSON();
+        echo InstitucionController::getInstance()->institucionesJSON();
         
     default:
         $msg['text']  = 'Lo siento ' . $response['message']['from']['first_name'] . ', pero [' . $cmd . '] no es un comando válido.' . PHP_EOL;

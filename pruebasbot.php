@@ -49,7 +49,7 @@ switch ($cmd) {
         break;
 
     case '/instituciones':
-        $msg['text']  = echo file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/Api.php?action=/instituciones", false);
+        $msg['text']  = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/Api.php?action=/instituciones", false);
         break;
  
     default:
