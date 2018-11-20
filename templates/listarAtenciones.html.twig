@@ -62,7 +62,7 @@ function validacion(formu, obj) {
           <td><a href="./?action=editarAtencion&id={{ item.id }}">
           <strong>{{item.id}}</strong><span></a></td>
 
-          <td><a class="btn btn-primary btn-sm" href="./?action=eliminar_atencion&id={{ item.id }}"> Eliminar </a></td>
+          <td><a class="btn btn-primary btn-sm" href="./?action=eliminar_atencion&id={{ item.id }}" onclick="return confirmar({{item.id}})"> Eliminar </a></td>
         {% endfor %}
       </tbody>
         </table>

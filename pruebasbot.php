@@ -47,6 +47,10 @@ switch ($cmd) {
     case '/menú':
         $msg['text']  = 'El menú del día es ensalada tropical';
         break;
+
+    case '/instituciones':
+        $msg['text']  = 'El menú del día es ensalada tropical';
+        break;
  
     case '/info':
         $msg['text']  = json_encode($response);

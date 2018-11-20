@@ -28,6 +28,8 @@
       <div class="form-group col-md-2">
         <a class="btn btn-primary btn-sm float-right" href="./?action=agregarPaciente"> Agregar Paciente </a>
       </div>
+
+
     </div>
     {% if resources.mensaje is not empty %} 
           <div class="alert alert-secondary" role="alert">
@@ -43,6 +45,8 @@
                   <th scope="col">Domicilio</th>
                   <th scope="col">Editar</th>
                   <th scope="col">Eliminar</th>
+                  <th scope="col">Agregar Atencion</th>
+                  <th scope="col">Listar Atencion</th>
                 </tr>
   </thead>
   <tbody>
@@ -55,6 +59,14 @@
 
 
           <td><a class="btn btn-primary btn-sm" href="./?action=eliminarPaciente&id={{ item.id }}" onclick="return confirmar()"> Eliminar </a></td>
+
+       <td> <div class="btn btn-primary btn-sm">
+        <a class="btn btn-primary btn-sm float-right" href="./?action=registrarAtencion&id={{ item.id }}"> Agregar Atencion </a></td>
+      </div>
+
+           <td> <div class="btn btn-primary btn-sm">
+        <a class="btn btn-primary btn-sm float-right" href="./?action=listarAtenciones&id={{ item.id }}"> Listar Atenciones </a></td>
+      </div>
 
         {% endfor %}
       </tbody>

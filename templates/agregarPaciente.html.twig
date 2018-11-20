@@ -5,6 +5,84 @@
     <body>
 {% include 'barra.html'%}
 	<br>
+
+
+<script
+  src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script>
+var   xmlhttp, myObj, x, txt = "";
+
+xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        myObj = JSON.parse(this.responseText);
+        for (x in myObj) {
+            txt += "<option value="+myObj[x].id+">"+myObj[x].nombre+"</option>" + "<br>";
+        }
+        document.getElementById("partido").innerHTML = txt;
+    }
+};
+xmlhttp.open("GET", "https://api-referencias.proyecto2018.linti.unlp.edu.ar/partido", true);
+xmlhttp.send();
+
+</script>
+
+<script>
+var   xmlhttp, obrasocial, x, txt2 = "";
+xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        obrasocial = JSON.parse(this.responseText);
+        for (x in obrasocial) {
+            txt2 += "<option value="+obrasocial[x].id+">"+obrasocial[x].nombre+"</option>" + "<br>";
+        }
+        document.getElementById("obra_social").innerHTML = txt2;
+    }
+};
+xmlhttp.open("GET", "https://api-referencias.proyecto2018.linti.unlp.edu.ar/obra-social", true);
+xmlhttp.send();
+
+</script>
+
+
+<script>
+var   xmlhttp, localidad, x, txt3 = "";
+xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        localidad = JSON.parse(this.responseText);
+        for (x in localidad) {
+            txt3 += "<option value="+localidad[x].id+">"+localidad[x].nombre+"</option>" + "<br>";
+        }
+        document.getElementById("localidad").innerHTML = txt3;
+    }
+};
+xmlhttp.open("GET", "https://api-referencias.proyecto2018.linti.unlp.edu.ar/localidad/partido/" + 1, true);
+xmlhttp.send();
+
+</script>
+
+
+<script>
+var   xmlhttp, tipodocumentos, x, txt4 = "";
+xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        tipodocumentos = JSON.parse(this.responseText);
+        for (x in tipodocumentos) {
+            txt4 += "<option value="+tipodocumentos[x].id+">"+tipodocumentos[x].nombre+"</option>" + "<br>";
+        }
+        document.getElementById("tipo_doc").innerHTML = txt4;
+    }
+};
+xmlhttp.open("GET", "https://api-referencias.proyecto2018.linti.unlp.edu.ar/tipo-documento", true);
+xmlhttp.send();
+
+</script>
+
+
+
+
   <div class="container">
     {% if mensaje is defined %}
       {% if not mensaje  is empty  %}
@@ -46,17 +124,17 @@
     <div class="form-group col-md-6">
       <label for="partido">Partido:</label>
       <select class="form-control" name="partido" id="partido" required>
-        {% for part in partidos %}
+       <!-- {% for part in partidos %}
         <option value="{{part.id}}">{{part.name}}</option>
-        {% endfor %} 
+        {% endfor %} -->   
       </select>
     </div>
     <div class="form-group col-md-6">
       <label for="localidad">Localidad:</label>
       <select class="form-control" name="localidad" id="localidad" required>
-        {% for loc in localidades %}
+        <!--{% for loc in localidades %}
         <option value="{{loc.id}}">{{loc.name}}</option>
-        {% endfor %}    
+        {% endfor %}-->
   	  </select>
     </div>
   </div>
@@ -84,9 +162,9 @@
     <div class="form-group col-md-8">
       <label for="obra_social">Obra Social:</label>
       <select class="form-control" name="obra_social" id="obra_social" required>
-        {% for obra in obraSociales %}
+        <!--{% for obra in obraSociales %}
         <option value="{{obra.id}}">{{obra.nombre}}</option>
-        {% endfor %} 
+        {% endfor %}-->
       </select>
     </div>
   </div>
@@ -101,9 +179,9 @@
     <div class="form-group col-md-2">
       <label for="tipo_doc">Tipo de Documento:</label>
       <select class="form-control" name="tipo_doc" id="tipo_doc" required>
-        {% for tipo in tiposDoc %}
+        <!--{% for tipo in tiposDoc %}
         <option value="{{tipo.id}}">{{tipo.name}}</option>
-        {% endfor %} 
+        {% endfor %} -->
       </select>
     </div>
     <div class="form-group col-md-4">

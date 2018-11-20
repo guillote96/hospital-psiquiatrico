@@ -73,10 +73,13 @@ class AtencionController {
 
     public function registrarAtencion(){
     	//RECORDAR QUE TIENE un 1 POR DEFECTO PERO HAY QUE PASARLE EL ID DEL PACIENTE QUE CORRESPONDA (UNICAMENTE ESTA PARA PRUEBAS)
-    	$string=PDOPaciente::getInstance()->traer_paciente(1)[0]->getNombre()." ".PDOPaciente::getInstance()->traer_paciente(1)[0]->getApellido();
-    	$datos = array('paciente' => PDOPaciente::getInstance()->traer_paciente(1)[0],
+      if(!isset($_GET['id']) || empty($_GET['id'])){
+        return false;
+      }
+    	$string=PDOPaciente::getInstance()->traer_paciente($_GET['id'])[0]->getNombre()." ".PDOPaciente::getInstance()->traer_paciente($_GET['id'])[0]->getApellido();
+    	$datos = array('paciente' => PDOPaciente::getInstance()->traer_paciente($_GET['id'])[0],
     		           'nombreapellido' => $string, 
-    		           'resources' => array("usuario"=>PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername()),
+    		           'resources' => array("usuario"=>PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]),
                        'motivos' => PDOMotivoConsulta::getInstance()->listAll(),
                        'tratamientos' => PDOTratamientoFarmacologico::getInstance()->listAll(),
                        'acompanamientos' => PDOacompanamiento::getInstance()->listAll(),
@@ -92,6 +95,8 @@ class AtencionController {
         $array= self::validador_campos();
         PDOConsulta::getInstance()->insertarConsulta($array);
 
+        PacienteController::getInstance()->listarTodosLosPacientes();
+
         //falta redireccionar alguna view
 
     }
@@ -103,7 +108,7 @@ class AtencionController {
             $string= PDOPaciente::getInstance()->traer_paciente($atencion->getPacienteId())[0]->getNombre(). " ".PDOPaciente::getInstance()->traer_paciente($atencion->getPacienteId())[0]->getApellido();
             $datos = array('nombreapellido' => $string,
                            'atencion' => $atencion,
-                           'resources' => array("usuario"=>PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername()),
+                           'resources' => array("usuario"=>PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]),
                            'motivos' => PDOMotivoConsulta::getInstance()->listAll(),
                            'tratamientos' => PDOTratamientoFarmacologico::getInstance()->listAll(),
                            'acompanamientos' => PDOacompanamiento::getInstance()->listAll(),
@@ -143,10 +148,9 @@ class AtencionController {
             $cantidad = PDOConfiguracion::getInstance()->cantDePaginas(PDOConsulta::getInstance()->cantidad());
              //$atenciones= PDOConsulta::getInstance()->listarCantidad(1,$cantidad['cantidadElementos'],$idPaciente);
              $datos = array('atenciones' => $atenciones,
-                            'resources' => array("usuario" => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername()),
+                            'resources' => array("usuario" => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]),
                             'permisos' => PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]),
-                            'cantidad' => $cantidad['cantidadPaginas'],'pagina' => 1,
-                            'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]);
+                            'cantidad' => $cantidad['cantidadPaginas'],'pagina' => 1);
              
              $view = new ListarAtenciones();
             $view->show($datos);
