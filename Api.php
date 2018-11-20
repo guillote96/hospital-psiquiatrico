@@ -1,10 +1,29 @@
 <?php
 require_once ('./vendor/vendor/autoload.php');
+require_once('./controller/InstitucionController.php');
+require_once('./model/PDORepository.php');
+require_once('./model/PDOInstitucion.php');
+require_once('./model/Institucion.php');
+
+
 
 use GuzzleHttp\Client;
 
-$client = new Client(['base_uri' => 'https://api-referencias.proyecto2018.linti.unlp.edu.ar/', 'timeout'  => 2.0]);
+$client = new Client(['base_uri' => 'https://api-referencias.proyecto2018.linti.unlp.edu.ar', 'timeout'  => 2.0]);
 
-$response = $client->request('GET', 'obra-social');
 
-echo $response->getBody();
+
+
+switch ($_GET['action']) {
+    case '/instituciones':
+        return InstitucionController::getInstance()->institucionesJSON();
+        
+    default:
+        $msg['text']  = 'Lo siento ' . $response['message']['from']['first_name'] . ', pero [' . $cmd . '] no es un comando válido.' . PHP_EOL;
+        $msg['text'] .= 'Prueba /help para ver la lista de comandos disponibles';
+        break;
+}
+
+
+
+//echo $response->getBody();

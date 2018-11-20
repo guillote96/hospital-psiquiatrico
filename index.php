@@ -73,6 +73,7 @@ require_once('view/ListadoPorCriterio.php');
 require_once('model/ConsultaDetallada.php');
 
 
+
 if(isset($_GET["action"])){
 	if ($_GET["action"] == 'listResources'){
 		if(!isset($_SESSION['id'])){

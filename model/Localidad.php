@@ -2,8 +2,8 @@
 
 class Localidad {
     
-    private $name;
-    private $id;
+   private $name;
+   private $id;
     private $partido_id;
     
     public function __construct($name, $id, $partido_id) {

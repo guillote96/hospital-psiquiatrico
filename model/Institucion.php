@@ -2,11 +2,11 @@
 
 class Institucion {
     
-    private $nombre;
-    private $director;
-    private $telefono;
-    private $region_sanitaria_id;
-    private $tipo_institucion_id;
+    public $nombre;
+    public $director;
+    public $telefono;
+    public $region_sanitaria_id;
+    public $tipo_institucion_id;
     
     public function __construct($nombre, $director, $telefono, $region_sanitaria_id, $tipo_institucion_id) {
         $this->nombre = $nombre;

@@ -49,11 +49,7 @@ switch ($cmd) {
         break;
 
     case '/instituciones':
-        $msg['text']  = 'El menú del día es ensalada tropical';
-        break;
- 
-    case '/info':
-        $msg['text']  = json_encode(file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/Api.php", false));
+        $msg['text']  = echo file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/Api.php?action=/instituciones", false);
         break;
  
     default:

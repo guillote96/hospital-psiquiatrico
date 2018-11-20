@@ -24,7 +24,9 @@ class PDOLocalidad extends PDORepository {
         foreach ($answer as &$element) {
             $final_answer[] = new Localidad($element['nombre'],$element['id'],$element['partido_id']);
         }
+        echo json_encode($final_answer);
         return $final_answer;
+
     }
 
 }

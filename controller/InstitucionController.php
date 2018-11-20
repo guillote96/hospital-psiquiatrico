@@ -28,5 +28,13 @@ class InstitucionController {
         $view = new Home();
         $view->show();
     }
+
+     public function institucionesJSON(){
+        $resources = PDOInstitucion::getInstance()->listAll();
+        $answer= json_encode($resources);
+        
+       return $answer;
+    
+     }
     
 }
