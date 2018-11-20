@@ -53,7 +53,7 @@ switch ($cmd) {
         break;
  
     case '/info':
-        $msg['text']  = json_encode(file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/Api.php", false));
+        $msg['text']  = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/Api.php", false));
         break;
  
     default:
