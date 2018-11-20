@@ -7,4 +7,4 @@ $client = new Client(['base_uri' => 'https://api-referencias.proyecto2018.linti.
 
 $response = $client->request('GET', 'obra-social/2');
 
-return $response->getBody();
+echo $response->getBody();
