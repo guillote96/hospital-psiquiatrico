@@ -1,0 +1,46 @@
+{% include 'encabezado.html'%}
+    <head>
+        <title>Home</title>
+    </head>
+    <body>
+{% include 'barra.html'%}
+    <br>
+<div class="container">
+  <h2><u>Edición de Permiso</u></h2>
+      {% if resources.error == 1%}
+    <br>
+    <div class="alert alert-secondary" role="alert">
+      Error: No se permiten campos vacios
+    </div>
+    {% endif %}
+      {% if resources.error == 2%}
+    <br>
+    <div class="alert alert-secondary" role="alert">
+      Error: El Nombre de Permiso ingresado ya existe
+    </div>
+    {% endif %}
+  <div class="form-row">
+  <div class="form-group col-md-4">
+  <form action="./index.php?action=actualizarPermiso&id={{resources.resources.id}}" method="POST">
+      <label for="usuario">Nombre</label>
+      <input type="text" class="form-control" id="nombre" placeholder="Nombre" name="nombre" value="{{resources.resources.nombre}}" required>
+  </div>
+  </div>
+    Roles que tendran el permiso
+    <div class="form-row">
+      <br>
+        {% for rol in roles %}
+        <div form-group col-md-4>
+        {% if rol.id in asignados %}
+          <input type="checkbox" name="rol[]" value="{{rol.id}}" checked>{{rol.nombre}}
+        {% else %}
+          <input type="checkbox" name="rol[]" value="{{rol.id}}">{{rol.nombre}}
+        {% endif %}           
+        {% endfor %}
+        </div>
+    <button type="submit" class="btn btn-primary">Aceptar</button>
+  </form>
+</div>
+{% include 'footer.html'%}
+    </body>
+</html>

@@ -87,5 +87,17 @@ class PDOPermiso extends PDORepository {
          $answer = $this->addObj("UPDATE permiso SET nombre= '$nombre' WHERE id='$id'");
     }
 
+    public function traer_roles_permiso($id){
+        $answer = $this->queryList("SELECT DISTINCT rol_id FROM rol_tiene_permiso WHERE permiso_id = '$id'");
+        $array  = array();
+        $i = 0;
+        foreach($answer as &$element){
+            $array[$i] = $element[0];
+            $i++;
+
+        }
+        return $array;
+    }
+
 
 }
