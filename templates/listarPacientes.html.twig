@@ -60,13 +60,12 @@
 
           <td><a class="btn btn-primary btn-sm" href="./?action=eliminarPaciente&id={{ item.id }}" onclick="return confirmar()"> Eliminar </a></td>
 
-       <td> <div class="btn btn-primary btn-sm">
-        <a class="btn btn-primary btn-sm float-right" href="./?action=registrarAtencion&id={{ item.id }}"> Agregar Atencion </a></td>
-      </div>
+          <td>
+          <a class="btn btn-primary btn-sm" href="./?action=registrarAtencion&id={{ item.id }}"> Agregar Atencion </a></td>
 
-           <td> <div class="btn btn-primary btn-sm">
-        <a class="btn btn-primary btn-sm float-right" href="./?action=listarAtenciones&id={{ item.id }}"> Listar Atenciones </a></td>
-      </div>
+          <td>
+          <a class="btn btn-primary btn-sm" href="./?action=listarAtenciones&id={{ item.id }}"> Listar Atenciones </a></td>
+      
 
         {% endfor %}
       </tbody>
