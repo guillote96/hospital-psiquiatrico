@@ -2,15 +2,15 @@
 
 abstract class PDORepository {
     
-  /* const USERNAME = "root";
+  const USERNAME = "root";
     const PASSWORD = "";
 	const HOST ="localhost";
-	const DB = "grupo2";*/
+	const DB = "grupo2";
     
-    const USERNAME = "grupo2";
+    /*const USERNAME = "grupo2";
     const PASSWORD = "MzhjMzZiMTI4Y2Q0";
     const HOST ="localhost";
-    const DB = "grupo2";
+    const DB = "grupo2";*/
     
     private function getConnection(){
         $u=self::USERNAME;

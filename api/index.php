@@ -26,16 +26,16 @@ $app->get('/',  function ($request, $response, $args) {
 
 
 $app->get('/instituciones', function ($request, $response, $args)   {
-	return $response->withJson(InstitucionController::getInstance()->instituciones(), 200);
+	return $response->withJson(InstitucionController::getInstance()->instituciones(), 200)->getBody();
 });
 
 
 $app->get('/instituciones/{id}', function ($request, $response, $args) {
-    return $response->withJson(InstitucionController::getInstance()->institucion($args['id']), 200);
+    return $response->withJson(InstitucionController::getInstance()->institucion($args['id']), 200)->getBody();
 });
 
 $app->get('/instituciones/​region-sanitaria/{rs}',function ($request, $response, $args) {
- return $response->withJson(InstitucionController::getInstance()->institucionesPorRegion($args['​rs']),200);
+ return $response->withJson(InstitucionController::getInstance()->institucionesPorRegion($args['​rs']),200)->getBody();
 });
 
 $app->run();
