@@ -4,54 +4,42 @@
 
    
     </head>
-<style>
-  #map {    
-    height: 100%;
-    width: 100%;
-     }
-  </style>
 
-  <body>
+  <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+  <script>
+    function init(){
+      map = new OpenLayers.Map("mapdiv");
+      map.addLayer(new OpenLayers.Layer.OSM());
+      var lonLat = new OpenLayers.LonLat( -57.945619580459 ,-34.923290310202 )
+      .transform(new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+      map.getProjectionObject() // to Spherical Mercator Projection
+      );
+      var zoom=12;
+      var markers = new OpenLayers.Layer.Markers( "Markers" );
+      map.addLayer(markers);    
+      //markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat().transform(new OpenLayers.Projection("EPSG:4326"),map.getProjectionObject())));
+      map.setCenter (lonLat, zoom);
+    }
+  </script>
+
+  <body onload="init();">
 {% include 'barra.html'%}
 
 
 
-
-
   <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
+  <div class="modal fade bd-example-modal-lg" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
     
       <!-- Modal content-->
   <div class="modal-content">
         <div class="modal-header">
+          <h5 class="modal-title">Mapa de Atenciones</h5>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
        <div class="modal-body">
-        <div id="mapdiv">
-           <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
-            <script>
-              map = new OpenLayers.Map("mapdiv");
-              map.addLayer(new OpenLayers.Layer.OSM());
-
-            var lonLat = new OpenLayers.LonLat( -0.1279688 ,51.5077286 )
-          .transform(
-            new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
-            map.getProjectionObject() // to Spherical Mercator Projection
-          );
-          
-            var zoom=16;
-
-            var markers = new OpenLayers.Layer.Markers( "Markers" );
-            map.addLayer(markers);
-    
-            markers.addMarker(new OpenLayers.Marker(lonLat));
-    
-            map.setCenter (lonLat, zoom);
-           </script>
-  
+        <center><div id="mapdiv" style="width: 700px; height: 400px; display : inline-block;" class="map">
         </div>
-        
       </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -60,7 +48,8 @@
       
     </div>
 </div>
-	<br>
+
+<br>
 <div class="container">
     {% if mensaje is defined %}
       {% if not mensaje  is empty  %}

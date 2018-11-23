@@ -69,6 +69,7 @@ require_once('view/GraficoPorCriterio.php');
 require_once('view/AltaRol.php');
 require_once('view/AltaPermiso.php');
 require_once('view/EditarRol.php');
+require_once('view/EditarPermiso.php');
 require_once('view/ListadoPorCriterio.php');
 require_once('model/ConsultaDetallada.php');
 
@@ -400,7 +401,23 @@ if(isset($_GET["action"])){
 		else{
 			UsuarioController::getInstance()->accesoNoAutorizado($_SESSION['id']);
 		}
-	}																													
+	}
+	else if ($_GET["action"] == 'editarPermiso'){
+		if(!isset($_SESSION['id'])){
+			UsuarioController::getInstance()->home(null);
+		}
+		else if(UsuarioController::getInstance()->checkPermiso('configuracion_show', $_SESSION['id'])){
+			$id = $_GET["id"];
+			PermisoController:: getInstance()->editar_permiso($id);
+		}
+		else{
+			UsuarioController::getInstance()->accesoNoAutorizado($_SESSION['id']);
+		}
+	}		
+	else if ($_GET["action"] == 'actualizarPermiso'){
+		$id= $_GET["id"];
+        PermisoController::getInstance()->actualizarPermiso($id);
+	}																											
 }	
 else{
 	if(empty($_SESSION['id'])){
