@@ -46,10 +46,8 @@ switch ($cmd) {
 
  
     case '/instituciones':
-       $params = explode(" ", $cmd_params);
-       var_dump($params);
-       if(count($params) > 1){
-        $msg['text']  = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/".$params[0],false);
+       if(count($cmd_params) > 1){
+        $msg['text']  = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/".$cmd_params[0],false);
         }else{
           $msg['text']  = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones",false);
         }
