@@ -43,13 +43,10 @@ switch ($cmd) {
         $msg['text'] .= '/help Muestra esta ayuda media flaca';
         $msg['reply_to_message_id'] = null;
         break;
- 
-    case '/instituciones:$cmd_params':
-        $msg['text']  = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/$cmd_params",false);
-        break;
+
  
     case '/instituciones':
-        $msg['text']  = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones",false);
+        $msg['text']  = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/".$cmd_params[0],false);
         break;
  
     default:
