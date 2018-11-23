@@ -38,8 +38,13 @@ class InstitucionController {
 
     public function institucion($id){
         $resources = PDOInstitucion::getInstance()->traer_institucion($id);
-        
-       return $resources;
+        return $resources;
+    
+     }
+
+    public function institucionesPorRegion($id){
+        $resources = PDOInstitucion::getInstance()->traer_institucionesPorRegion($id);
+         return $resources;
     
      }
     

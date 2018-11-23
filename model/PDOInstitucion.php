@@ -38,4 +38,15 @@ class PDOInstitucion extends PDORepository {
 
     }
 
+    public function traer_institucionesPorRegion($idRegionSanitaria){
+         $answer = $this->query("select * from institucion where region_sanitaria_id=:idRegionSanitaria", array(':idRegionSanitaria' => $idRegionSanitaria));
+        $final_answer = [];
+        foreach ($answer as &$element) {
+            $final_answer[] = new Institucion($element['id'],$element['nombre'],$element['director'],$element['telefono'],$element['region_sanitaria_id'],$element['tipo_institucion_id']);
+        }
+        return $final_answer;
+
+
+    }
+
 }

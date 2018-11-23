@@ -38,18 +38,20 @@ switch ($cmd) {
  
     case '/help':
         $msg['text']  = 'Los comandos disponibles son estos:' . PHP_EOL;
-        $msg['text'] .= '/start Inicializa el bot' . PHP_EOL;
-        $msg['text'] .= '/menú Muestra el menú del día' . PHP_EOL;
-        $msg['text'] .= '/help Muestra esta ayuda media flaca';
+        $msg['text'] .= '/instituciones: Muestra determinada Institucion' . PHP_EOL;
+        $msg['text'] .= '/instituciones Muestra todas las instituciones' . PHP_EOL;
+        $msg['text'] .= '/help Muestra esta ayuda';
         $msg['reply_to_message_id'] = null;
         break;
  
-    case '/menú':
-        $msg['text']  = 'El menú del día es ensalada tropical';
-        break;
 
     case '/instituciones':
-        $msg['text']  = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones", false);
+        $msg['text']  = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/", false);
+        break;
+
+
+    case '/instituciones:'$id'':
+        $msg['text']  = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/$id", false);
         break;
  
     default:
