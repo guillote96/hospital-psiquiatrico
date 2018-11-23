@@ -46,7 +46,7 @@ switch ($cmd) {
  
 
     case '/instituciones':
-        $msg['text']  = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/", false);
+        $msg['text']  = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones", false);
         break;
 
 
@@ -66,7 +66,7 @@ switch ($cmd) {
 
 
 //Realizamos el envío
-$url = 'https://api.telegram.org/bot715347360:AAGAlJgWadhL_AAV3cT1kSFbQ__a1r6CSTk/sendMessage';
+$url = 'https://api.telegram.org/bot733229952:AAHPHl4rhawU1jX_nSnhGlAjTAykj6MnACs/sendMessage';
 
 $options = array(
     'http' => array(

@@ -25,17 +25,17 @@ $app->get('/',  function ($request, $response, $args) {
 });
 
 
-$app->get('/instituciones/', function ($request, $response, $args)   {
+$app->get('/instituciones', function ($request, $response, $args)   {
 	return $response->withJson(InstitucionController::getInstance()->instituciones(), 200);
 });
 
 
 $app->get('/instituciones/{id}', function ($request, $response, $args) {
-	return $response->withJson(InstitucionController::getInstance()->institucion($args['id']), 200);
+    return $response->withJson(InstitucionController::getInstance()->institucion($args['id']), 200);
 });
 
-$app->get('/instituciones/region-sanitaria/​{id}',function ($request, $response, $args) {
- return $response->withJson(InstitucionController::getInstance()->institucionesPorRegion($args['​id']), 200);
+$app->get('/instituciones/​region-sanitaria/{rs}',function ($request, $response, $args) {
+ return $response->withJson(InstitucionController::getInstance()->institucionesPorRegion($args['​rs']),200);
 });
 
 $app->run();
