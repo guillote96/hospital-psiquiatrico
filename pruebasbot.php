@@ -44,7 +44,7 @@ switch ($cmd) {
         $msg['reply_to_message_id'] = null;
         break;
  
-    case "/instituciones:":
+    case '/instituciones:':
         $msg['text']  = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/$cmd_params",false);
         break;
  
