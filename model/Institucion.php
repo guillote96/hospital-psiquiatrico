@@ -1,14 +1,15 @@
 <?php
 
 class Institucion {
-    
+    public $id;
     public $nombre;
     public $director;
     public $telefono;
     public $region_sanitaria_id;
     public $tipo_institucion_id;
     
-    public function __construct($nombre, $director, $telefono, $region_sanitaria_id, $tipo_institucion_id) {
+    public function __construct($id,$nombre, $director, $telefono, $region_sanitaria_id, $tipo_institucion_id) {
+        $this->id=$id;
         $this->nombre = $nombre;
         $this->director= $director;
         $this->telefono = $telefono;

@@ -21,9 +21,21 @@ class PDOInstitucion extends PDORepository {
         $answer = $this->queryList("select * from institucion");
         $final_answer = [];
         foreach ($answer as &$element) {
-            $final_answer[] = new Institucion($element['nombre'],$element['director'],$element['telefono'],$element['region_sanitaria_id'],$element['tipo_institucion_id']);
+            $final_answer[] = new Institucion($element['id'],$element['nombre'],$element['director'],$element['telefono'],$element['region_sanitaria_id'],$element['tipo_institucion_id']);
         }
         return $final_answer;
+    }
+
+    public function traer_institucion($id){
+        $answer = $this->query("select * from institucion where id=:id", array(':id' => $id));
+        $final_answer = [];
+        foreach ($answer as &$element) {
+            $final_answer[] = new Institucion($element['id'],$element['nombre'],$element['director'],$element['telefono'],$element['region_sanitaria_id'],$element['tipo_institucion_id']);
+        }
+        return $final_answer;
+
+
+
     }
 
 }

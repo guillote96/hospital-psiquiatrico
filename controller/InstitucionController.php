@@ -29,11 +29,17 @@ class InstitucionController {
         $view->show();
     }
 
-     public function institucionesJSON(){
+     public function instituciones(){
         $resources = PDOInstitucion::getInstance()->listAll();
-        $answer= json_encode($resources);
         
-       return $answer;
+       return $resources;
+    
+     }
+
+    public function institucion($id){
+        $resources = PDOInstitucion::getInstance()->traer_institucion($id);
+        
+       return $resources;
     
      }
     
