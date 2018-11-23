@@ -66,7 +66,7 @@ switch ($cmd) {
 
 
 //Realizamos el envío
-$url = 'https://api.telegram.org/bot715347360:AAEUopLqExo3FpJGESNyTeDLoX-UXLqrKVE/sendMessage';
+$url = 'https://api.telegram.org/bot715347360:AAGAlJgWadhL_AAV3cT1kSFbQ__a1r6CSTk/sendMessage';
 
 $options = array(
     'http' => array(
