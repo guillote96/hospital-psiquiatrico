@@ -44,12 +44,12 @@ switch ($cmd) {
         $msg['reply_to_message_id'] = null;
         break;
  
-    case '/menú':
-        $msg['text']  = 'El menú del día es ensalada tropical';
+    case '/instituciones:'$id'':
+        $msg['text']  = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/$id",false);
         break;
  
-    case '/info':
-        $msg['text']  = json_encode($response);
+    case '/instituciones':
+        $msg['text']  = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones",false);
         break;
  
     default:
