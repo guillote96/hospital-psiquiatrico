@@ -74,11 +74,11 @@ function validacion(formu, obj) {
           <nav aria-label="Page navigation example">
           <ul class="pagination justify-content-center">
            {% if resources.datos is empty %}
-          <li class="page-item"><a class="page-link" href="./?action=listar_atenciones&pagina={% if pagina > 1 %}{{ pagina - 1}}{% else %}1{% endif %}">Anterior</a></li>
+          <li class="page-item"><a class="page-link" href="./?action=listar_atenciones&pagina={% if pagina > 1 %}{{ pagina - 1}}&id={{ paciente }}{% else %}1{% endif %}">Anterior</a></li>
           {% for i in 1..cantidad %}
-            <li class="page-item {% if i == pagina %} active {% endif %}"><a class="page-link" href="./?action=listar_atenciones&pagina={{i}}">{{i}}</a></li>
+            <li class="page-item {% if i == pagina %} active {% endif %}"><a class="page-link" href="./?action=listar_atenciones&pagina={{i}}&id={{paciente}}">{{i}}</a></li>
           {% endfor %}
-          <li class="page-item"><a class="page-link" href="./?action=listar_atenciones&pagina={% if pagina < cantidad %}{{pagina + 1}}{% else %}{{ cantidad }}{% endif %}">Siguiente</a></li>  
+          <li class="page-item"><a class="page-link" href="./?action=listar_atenciones&pagina={% if pagina < cantidad %}{{pagina + 1}}{% else %}{{ cantidad }}&id={{paciente}}{% endif %}">Siguiente</a></li>  
       {% endif %}  
 
           </ul>

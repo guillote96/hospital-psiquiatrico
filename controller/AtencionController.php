@@ -141,16 +141,14 @@ class AtencionController {
 
          public function listarAtenciones($idPaciente){
             //Traer atenciones de determinado paciente
-             $atenciones= PDOConsulta::getInstance()->traer_consultas_de_paciente(array(':pacienteid' => $idPaciente));
+          $cant = PDOConfiguracion::getInstance()->cantDePaginas(PDOConsulta::getInstance()->cantidad($idPaciente));
 
+            $atenciones= PDOConsulta::getInstance()->listarCantidad(1,$cant['cantidadElementos'],$idPaciente);
 
-
-            $cantidad = PDOConfiguracion::getInstance()->cantDePaginas(PDOConsulta::getInstance()->cantidad());
-             //$atenciones= PDOConsulta::getInstance()->listarCantidad(1,$cantidad['cantidadElementos'],$idPaciente);
-             $datos = array('atenciones' => $atenciones,
+             $datos = array('atenciones' => $atenciones,'paciente'=>$idPaciente,
                             'resources' => array("usuario" => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]),
                             'permisos' => PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]),
-                            'cantidad' => $cantidad['cantidadPaginas'],'pagina' => 1);
+                            'cantidad' => $cant['cantidadPaginas'],'pagina' => 1);
              
              $view = new ListarAtenciones();
             $view->show($datos);
@@ -158,15 +156,15 @@ class AtencionController {
     }
 
 
-     public function listar_atenciones(){
-        $idPaciente=1;
+     public function listar_atenciones($idPaciente){
+
         if (empty($_GET['pagina'])){
             return false;
         }
         $pagina = $_GET['pagina'];
-        $cantidad = PDOConfiguracion::getInstance()->cantDePaginas(PDOConsulta::getInstance()->cantidad());
-        $resources = array('atenciones' => PDOConsulta::getInstance()->listarCantidad($pagina,$cantidad['cantidadElementos'],$idPaciente),
-            'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),
+        $cantidad = PDOConfiguracion::getInstance()->cantDePaginas(PDOConsulta::getInstance()->cantidad($idPaciente));
+        $resources = array('atenciones' => PDOConsulta::getInstance()->listarCantidad($pagina,$cantidad['cantidadElementos'],$idPaciente),'paciente'=> $idPaciente,
+            'resources' => array('usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername()),
             'cantidad' => $cantidad['cantidadPaginas'], 
             'pagina' => $pagina, 
             'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0],

@@ -4,6 +4,78 @@
     </head>
     <body>
       {% include 'barra.html'%}
+      <script>
+var   xmlhttp, myObj, x, txt = "";
+
+xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        myObj = JSON.parse(this.responseText);
+        for (x in myObj) {
+            txt += "<option value="+myObj[x].id+"{% if item.getName == resources.datos.partido %} selected {% endif %}>"+myObj[x].nombre+"</option>" + "<br>";
+        }
+        document.getElementById("partido").innerHTML = txt;
+    }
+};
+xmlhttp.open("GET", "https://api-referencias.proyecto2018.linti.unlp.edu.ar/partido", true);
+xmlhttp.send();
+
+</script>
+
+<script>
+var   xmlhttp, obrasocial, x, txt2 = "";
+xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        obrasocial = JSON.parse(this.responseText);
+        for (x in obrasocial) {
+            txt2 += "<option value="+obrasocial[x].id+"{% if item.getNombre == resources.datos.obrasocial %} selected {% endif %}>"+obrasocial[x].nombre+"</option>" + "<br>";
+        }
+        document.getElementById("obra_social").innerHTML = txt2;
+    }
+};
+xmlhttp.open("GET", "https://api-referencias.proyecto2018.linti.unlp.edu.ar/obra-social", true);
+xmlhttp.send();
+
+</script>
+
+
+<script>
+var   xmlhttp, localidad, x, txt3 = "";
+xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        localidad = JSON.parse(this.responseText);
+        for (x in localidad) {
+            txt3 += "<option value="+localidad[x].id+"{% if localidad[x].nombre == resources.datos.localidad %} selected {% endif %}>"+localidad[x].nombre+"</option>" + "<br>";
+        }
+        document.getElementById("localidad").innerHTML = txt3;
+    }
+};
+xmlhttp.open("GET", "https://api-referencias.proyecto2018.linti.unlp.edu.ar/localidad", true);
+xmlhttp.send();
+
+</script>
+
+
+<script>
+var   xmlhttp, tipodocumentos, x, txt4 = "";
+xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        tipodocumentos = JSON.parse(this.responseText);
+        for (x in tipodocumentos) {
+            txt4 += "<option value="+tipodocumentos[x].id+"{% if item.getName == resources.datos.tipodocumento %} selected {% endif %}>"+tipodocumentos[x].nombre+"</option>" + "<br>";
+        }
+        document.getElementById("tipo_doc").innerHTML = txt4;
+    }
+};
+xmlhttp.open("GET", "https://api-referencias.proyecto2018.linti.unlp.edu.ar/tipo-documento", true);
+xmlhttp.send();
+
+</script>
+
+
     	<br>
       <div class="container">
         <div class="form-row">
@@ -36,17 +108,17 @@
           <div class="form-group col-md-6">
             <label for="partido">Partido:</label>
               <select class="form-control" name="partido" id="partido" required>
-              {% for item in resources.partidos %}
+              <!--{% for item in resources.partidos %}
 			         <option value={{ item.getId }} {% if item.getName == resources.datos.partido %} selected {% endif %}>{{ item.getName }}</option>
-		          {% endfor %}
+		          {% endfor %}-->
               </select>
           </div>
           <div class="form-group col-md-6">
             <label for="localidad">Localidad:</label>
             <select class="form-control" name="localidad" id="localidad" required>
-            {% for item in resources.localidades %}
+           <!-- {% for item in resources.localidades %}
 		          <option value={{ item.getId }} {% if item.getName == resources.datos.localidad %} selected {% endif %}>{{ item.getName }}</option>
-            {% endfor %}    
+            {% endfor %}-->    
   	       </select>
           </div>
         </div>
@@ -74,9 +146,9 @@
           <div class="form-group col-md-8">
             <label for="obra_social">Obra Social:</label>
             <select class="form-control" name="obra_social" id="obra_social" required>
-            {% for item in resources.obrasocial %}
+           <!-- {% for item in resources.obrasocial %}
 			       <option value={{ item.getId }} {% if item.getNombre == resources.datos.obrasocial %} selected {% endif %}>{{ item.getNombre }}</option>
-		        {% endfor %}
+		        {% endfor %}-->
             </select>
           </div>
         </div>
@@ -91,9 +163,9 @@
           <div class="form-group col-md-2">
             <label for="tipo_doc">Tipo de Documento:</label>
             <select class="form-control" name="tipo_doc" id="tipo_doc" required>
-            {% for item in resources.tipodoc %}
+            <!--{% for item in resources.tipodoc %}
 		          <option value={{ item.getId }} {% if item.getName == resources.datos.tipodocumento %} selected {% endif %}>{{ item.getName }}</option>
-		        {% endfor %}
+		        {% endfor %}-->
             </select>
           </div>
           <div class="form-group col-md-4">

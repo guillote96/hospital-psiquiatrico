@@ -316,7 +316,7 @@ if(isset($_GET["action"])){
 		AtencionController::getInstance()->listarAtenciones($_GET['id']);
 	}
 	else if ($_GET["action"] == 'listar_atenciones'){
-		AtencionController::getInstance()->listar_atenciones();
+		AtencionController::getInstance()->listar_atenciones($_GET["id"]);
 	}
 	else if ($_GET["action"] == 'reportes'){
 		AtencionController::getInstance()->reportes();

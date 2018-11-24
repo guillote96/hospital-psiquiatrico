@@ -1,4 +1,5 @@
 <?php
+header("Access-Control-Allow-Origin: *");
 require_once ('../vendor/vendor/autoload.php');
 require_once ('../controller/InstitucionController.php');
 require_once ('../model/PDORepository.php');
