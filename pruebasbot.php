@@ -39,18 +39,19 @@ switch ($cmd) {
     case '/help':
         $msg['text']  = 'Los comandos disponibles son estos:' . PHP_EOL;
         $msg['text'] .= '/start Inicializa el bot' . PHP_EOL;
-        $msg['text'] .= '/menú Muestra el menú del día' . PHP_EOL;
+        $msg['text'] .= '/instituciones' . PHP_EOL;
+        $msg['text'] .= '/instituciones-region-sanitaria:{id}' . PHP_EOL;
         $msg['text'] .= '/help Muestra esta ayuda media flaca';
         $msg['reply_to_message_id'] = null;
         break;
 
  
     case '/instituciones':
-       if(count($cmd_params) > 1){
-        $msg['text']  = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/".$cmd_params[0],false);
-        }else{
-          $msg['text']  = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones",false);
-        }
+        $msg['text']  = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones",false);
+        break;
+
+    case '/instituciones-region-sanitaria:':
+        $msg['text']  = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/region-sanitaria/".$cmd_params[0],false);
         break;
  
     default:
