@@ -51,15 +51,20 @@ class PermisoController {
         
         $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
         $roles = PDORol::getInstance()->traer_roles();
-        if(!empty($_POST['nombre']) && isset($_POST['nombre']) && !empty($_POST['rol']) && isset($_POST['rol'])){
-            if(PDOPermiso::getInstance()->existe_permiso($_POST['nombre'])){
+        if(!empty($_POST['nombre']) && isset($_POST['nombre'])){
+            if(PDOPermiso::getInstance()->existe_permiso($_POST['nombre'], null)){
                 $view = new AltaPermiso();
                 $view->show(array('usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' => $permisos, 'error' => 2, 'roles' => $roles));
                 return false;
             }
             else{
                 $nombre = $_POST['nombre'];
-                $rol = $_POST['rol'];
+                if(!empty($_POST['rol']) && isset($_POST['rol'])){
+                    $rol = $_POST['rol'];
+                }
+                else{
+                    $rol=null;
+                }    
                 $resources = PDOPermiso::getInstance()->alta_permiso($nombre, $rol);
                 $this->listar_permisos();
             }
@@ -74,22 +79,29 @@ class PermisoController {
     public function actualizarPermiso($id){
         $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]);
         $roles = PDORol::getInstance()->traer_roles();
-        if(!empty($_POST['nombre']) && isset($_POST['nombre']) && !empty($_POST['rol']) && isset($_POST['rol'])){
-            if(PDOPermiso::getInstance()->existe_permiso($_POST['nombre'])){
+        $resources = PDOPermiso::getInstance()->traer_permiso($id);
+        $asignados = PDOPermiso::getInstance()->traer_roles_permiso($id);
+        if(!empty($_POST['nombre']) && isset($_POST['nombre'])){
+            if(PDOPermiso::getInstance()->existe_permiso($_POST['nombre'], $id)){
                 $view = new EditarPermiso();
-                $view->show(array('usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' => $permisos, 'error' => 2, 'roles' => $roles));
+                $view->show(array('resources' => $resources[0], 'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' => $permisos, 'error' => 2, 'roles' => $roles, 'asignados' => $asignados));
                 return false;
             }
             else{
                 $nombre = $_POST['nombre'];
-                $rol = $_POST['rol'];
-                $resources = PDOPermiso::getInstance()->editar_permiso($nombre, $rol);
+                if(!empty($_POST['rol']) && isset($_POST['rol'])){
+                    $rol = $_POST['rol'];
+                }
+                else{
+                    $rol=null;
+                }               
+                $resources = PDOPermiso::getInstance()->actualizar_permiso($nombre, $rol, $id);
                 $this->listar_permisos();
             }
         }
         else{
             $view = new EditarPermiso();
-            $view->show(array('usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' => $permisos, 'error' => 1, 'roles' => $roles));
+            $view->show(array('resources' => $resources[0], 'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' => $permisos, 'error' => 1, 'roles' => $roles, 'asignados' => $asignados));
                 return false;
         }    
     }
@@ -111,5 +123,6 @@ class PermisoController {
         $view = new EditarPermiso();
         $view->show(array('resources' => $resources[0],'usuario' => PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0], 'permisos' => $permisos, 'roles' => $roles, 'asignados'=>$asignados));
     }
+
     
 }

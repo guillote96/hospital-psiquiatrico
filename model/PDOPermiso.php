@@ -45,11 +45,16 @@ class PDOPermiso extends PDORepository {
         return $final_answer;
     }
 
-    public function existe_permiso($nombre){
-        $answer = $this->queryList("select * from permiso where nombre='$nombre'");
-        if (count($answer) > 0){
-            return true;
+    public function existe_permiso($nombre, $id){
+        if($id!=null){
+            $answer = $this->queryList("select * from permiso where nombre='$nombre' AND id<>'$id'");       
         }
+        else{
+            $answer = $this->queryList("select * from permiso where nombre='$nombre'");
+        }
+        if (count($answer) > 0){
+                return true;
+            }   
 
         return false;
     }
@@ -57,9 +62,11 @@ class PDOPermiso extends PDORepository {
     public function alta_permiso($nombre, $rol){
         $answer = $this->addObj("INSERT INTO permiso (nombre) VALUES ('$nombre')"); 
         $idP = $this->traer_id($nombre);  
-        foreach ($rol as &$element) {
-            $answer = $this->addObj("INSERT INTO rol_tiene_permiso (rol_id, permiso_id) VALUES($element, $idP[0])");
-        }
+        if($rol!=null){
+            foreach ($rol as &$element) {
+              $answer = $this->addObj("INSERT INTO rol_tiene_permiso (rol_id, permiso_id) VALUES($element, $idP[0])");
+             }
+        }     
     }
 
     public function eliminar_permiso($id){
@@ -83,8 +90,15 @@ class PDOPermiso extends PDORepository {
 
     }
 
-    public function actualizar_Permiso($nombre, $id){
+    public function actualizar_permiso($nombre,$rol, $id){
          $answer = $this->addObj("UPDATE permiso SET nombre= '$nombre' WHERE id='$id'");
+         $roles = PDORol::getInstance()->traer_roles();
+         $answer = $this->addObj("DELETE FROM rol_tiene_permiso WHERE permiso_id='$id'");
+         if($rol!=null){
+            foreach ($rol as &$element) {
+                 $answer = $this->addObj("INSERT INTO rol_tiene_permiso (rol_id, permiso_id) VALUES($element, $id)");
+             }
+         }
     }
 
     public function traer_roles_permiso($id){
