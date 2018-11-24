@@ -50,7 +50,7 @@ switch ($cmd) {
         $msg['text']  = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones",false);
         break;
 
-    case '/instituciones-region-sanitaria:':
+    case '/instituciones-region-sanitaria':
          $cmd_params = explode(" ", $cmd_params);
         $msg['text']  = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/region-sanitaria/".$cmd_params[0],false);
         break;
