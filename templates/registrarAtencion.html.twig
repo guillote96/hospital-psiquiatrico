@@ -26,22 +26,28 @@
   <body onload="init();">
 
 
-<script>
-var   xmlhttp, derivaciones, x, txt4 = "";
-xmlhttp = new XMLHttpRequest();
-xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-        derivaciones = JSON.parse(xmlHttp.responseText);
-      for (x in derivaciones) {
-  txt4 += "<option value="+derivaciones[x].id+">"+derivaciones[x].nombre+"</option>" + "<br>";
-        }
-        document.getElementById("derivacion").innerHTML = txt4;
-    }
-};
-xmlhttp.open("GET" ,"https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones", false);
-xmlhttp.send();
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+<script type="text/javascript">
+function getData(){
+  $.ajax({
+    type: "GET",
+    url: 'https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones', 
+    dataType: "json",
+    success: function(data){
+      $.each(data,function(key, registro) {
+        $("#derivacion").append('<option value='+registro.id+'>'+registro.nombre+'</option>');
+      });        
+    },
+    error: function(data) {
+      alert('error');
+    }
+  });
+}
 </script>
+
+<body onload="getData()">
+
 
 
   <!-- Modal -->
