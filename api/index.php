@@ -16,26 +16,24 @@ $config = [
 
 $app = new \Slim\App($config);
 
-$app->get('/',  function ($request, $response, $args) {
-	$response->withStatus(200);
-	$body = $response->getBody();
-	$body->write('<html><body><h1>API Instituciones</h1></body></html>');
-	$response->withHeader('Content-Type', 'text/html');
-	return $response;
-});
 
+$app->group('/instituciones', function() use ($app) {
 
-$app->get('/instituciones', function ($request, $response, $args)   {
+   $app->get('', function ($request, $response, $args)   {
 	return $response->withJson(InstitucionController::getInstance()->instituciones(), 200);
-});
+   });
 
 
-$app->get('/instituciones/{id}', function ($request, $response, $args) {
-    return $response->withJson(InstitucionController::getInstance()->institucion($args['id']), 200);
-});
+   $app->get('/{id}', function ($request, $response, $args) {
+   return $response->withJson(InstitucionController::getInstance()->institucion($args['id']), 200);
+   });
 
-$app->get('/instituciones/​region-sanitaria/{rs}',function ($request, $response, $args) {
- return $response->withJson(InstitucionController::getInstance()->institucionesPorRegion($args['​rs']),200);
+   $app->get('/region-sanitaria/{rs}', function ($request, $response, $args) {
+     return $response->withJson(InstitucionController::getInstance()->institucionesPorRegion($args["rs"]),200);
+
+
+    });
+
 });
 
 $app->run();
