@@ -52,7 +52,10 @@ switch ($cmd) {
 
     case '/instituciones-region-sanitaria':
         $cmd_params = explode(" ", $cmd_params);
-        $msg['text']  = json_decode(file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/region-sanitaria/".$cmd_params[1],false));
+        $informacion = ile_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/region-sanitaria/".$cmd_params[1],false);
+        $informacion = json_decode($informacion,true);
+        echo $informacion['nombre'];
+        $msg['text']  = $informacion['nombre']; //file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/region-sanitaria/".$cmd_params[1],false);
         break;
  
     default:
