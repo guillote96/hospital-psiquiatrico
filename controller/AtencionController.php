@@ -182,7 +182,12 @@ class AtencionController {
     public function graficoPorCriterio(){
         $i = $_GET['i'];
         if($i == 1){
-            //Consultas agrupadas por motivo
+            $informacion = PDOConsulta::getInstance()->consultasAgrupadasPorMotivo();
+            $datos=array();
+            foreach ($informacion as &$dato){
+              array_push($datos,array('nombre' => $dato->getNombre(), 'porcentaje' => $dato->getId()));
+            }
+            $total = count($datos);
             $criterio = "Motivo";
         }
         else if ($i == 2){
@@ -207,12 +212,59 @@ class AtencionController {
     }
 
     public function listadoPDF(){
+      $i = $_GET['i'];
       require('./recursos/fpdf181/fpdf.php');
+      date_default_timezone_set('America/Argentina/Buenos_Aires');
+
+      if($i == 1){
+        $datos = PDOConsulta::getInstance()->consultasPorMotivo();
+        $criterio = "Motivo";
+      }
+      elseif($i == 2){
+        $datos = PDOConsulta::getInstance()->consultasPorGenero();
+        $criterio = "Genero";
+      }
+      elseif($i == 3){
+        $datos = PDOConsulta::getInstance()->consultasPorLocalidad();
+        $criterio = "Localidad";
+      }
 
       $pdf = new FPDF();
       $pdf->AddPage();
       $pdf->SetFont('Arial','B',16);
-      $pdf->Cell(40,10,'Hello World!');
+      $pdf->Cell(190,10,'Hospital Dr. Alejandro Korn',0,0,'C');
+      $pdf->Ln();
+      $pdf->SetFont('Arial','',14);
+      $pdf->Cell(190,4,'Listado Ordenado Por '.$criterio,0,0,'C');
+      $pdf->Ln();
+      $pdf->SetFont('Arial','',10);
+      $date = date('j\-m\-Y  H:i \h\s.');
+      $pdf->Cell(190,10,$date,0,0,'C');
+      $pdf->Ln();
+      $pdf->SetFont('Arial','B',12);
+      $pdf->Cell(35,7,'Nombre',1,0,'C');
+      $pdf->Cell(35,7,'Apellido',1,0,'C');
+      $pdf->Cell(30,7,'Fecha',1,0,'C');
+      $pdf->Cell(50,7,'Diagnostico',1,0,'C');
+      if($i == 1){
+        $pdf->Cell(40,7,'Motivo',1,0,'C');
+      }
+      if($i == 2){
+        $pdf->Cell(40,7,'Genero',1,0,'C');
+      }
+      if($i == 3){
+        $pdf->Cell(40,7,'Localidad',1,0,'C');
+      }
+      $pdf->Ln();
+      $pdf->SetFont('Arial','',12);
+      foreach($datos as $dato){
+        $pdf->Cell(35,7,$dato->getNombre(),1,0,'C');
+        $pdf->Cell(35,7,$dato->getApellido(),1,0,'C');
+        $pdf->Cell(30,7,$dato->getFecha(),1,0,'C');
+        $pdf->Cell(50,7,$dato->getDiagnostico(),1,0,'C');
+        $pdf->Cell(40,7,$dato->getCriterio(),1,0,'C');
+        $pdf->Ln();
+      }
       $pdf->Output();
     }
 
@@ -220,18 +272,22 @@ class AtencionController {
     public function listadoPorCriterio(){
       $i = $_GET['i'];
       if($i == 1){
+        $datos = PDOConsulta::getInstance()->consultasPorMotivo();
         $criterio = "Motivo";
+        $i = 1;
       }
       else if ($i == 2){
         $datos = PDOConsulta::getInstance()->consultasPorGenero();
         $criterio = "Género";
+        $i = 2;
       }
       else if($i == 3){
         $datos = PDOConsulta::getInstance()->consultasPorLocalidad();
-        $criterio = "Localidades";
+        $criterio = "Localidad";
+        $i = 3;
       }
       $view = new ListadoPorCriterio();
-      $resources = array('usuario' =>PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0],'criterio' => $criterio, 'datos' => $datos);
+      $resources = array('usuario' =>PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(), 'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0],'criterio' => $criterio, 'datos' => $datos, 'i' => $i);
       $view->show($resources);
     }
 
