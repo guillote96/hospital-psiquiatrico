@@ -51,13 +51,14 @@ switch ($cmd) {
         break;
 
     case '/instituciones-region-sanitaria':
-         $cmd_params = explode(" ", $cmd_params);
+         //$cmd_params = explode(" ", $cmd_params);
         $msg['text']  = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/region-sanitaria/".$cmd_params[1],false);
         break;
  
     default:
         $msg['text']  = 'Lo siento ' . $response['message']['from']['first_name'] . ', pero [' . $cmd . '] no es un comando válido.' . PHP_EOL;
         $msg['text'] .= 'Prueba /help para ver la lista de comandos disponibles';
+        
         break;
 }
 

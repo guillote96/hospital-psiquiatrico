@@ -71,7 +71,7 @@ class PDOConsulta extends PDORepository {
     public function listarCantidad($pagina,$cantidad,$id){
 
         $page=($pagina - 1);
-        $answer = $this->query("select * from consulta; where paciente_id = :id; limit :pagina , :cantidad;" , array(":id"=> $id,":pagina" => $page ,":cantidad"=> $cantidad));
+        $answer = $this->query("select * from consulta where paciente_id = :id LIMIT :pagina , :cantidad" , array(":id"=> $id,":pagina" => $page ,":cantidad"=> $cantidad));
         $final_answer=[];
         foreach ($answer as &$element) {
             $final_answer[] = new Consulta ($element['id'],$element['paciente_id'],$element['fecha'],$element['motivo_id'],$element['derivacion_id'],$element['articulacion_con_instituciones'],$element['internacion'],$element['diagnostico'],$element['observaciones'],$element['tratamiento_farmacologico_id'],$element['acompanamiento_id']);
