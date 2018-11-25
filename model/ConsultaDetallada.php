@@ -17,8 +17,10 @@ class ConsultaDetallada {
     private $apellido;
     private $genero;
     private $localidad;
+    private $latitud;
+    private $longitud;
 
-    public function __construct($id,$paciente_id,$fecha,$motivo_id,$derivacion_id,$articulacion_con_instituciones,$internacion,$diagnostico,$observaciones,$tratamiento_farmacologico_id,$acompanamiento_id,$nombre,$apellido,$criterio) {
+    public function __construct($id,$paciente_id,$fecha,$motivo_id,$derivacion_id,$articulacion_con_instituciones,$internacion,$diagnostico,$observaciones,$tratamiento_farmacologico_id,$acompanamiento_id,$nombre,$apellido,$criterio,$latitud,$longitud) {
         $this->id=$id;
             $this->paciente_id=$paciente_id;
             $this->fecha=$fecha;
@@ -33,8 +35,8 @@ class ConsultaDetallada {
             $this->nombre=$nombre;
             $this->apellido=$apellido;
             $this->criterio=$criterio;
-            //$this->genero=$genero;
-            //$this->localidad=$localidad;
+            $this->latitud=$latitud;
+            $this->longitud=$longitud;
     }
 
     public function getId() {
@@ -93,11 +95,12 @@ class ConsultaDetallada {
     public function getCriterio() {
         return $this->criterio;
     }
-    /*public function getGenero() {
-        return $this->genero;
+
+    public function getLatitud() {
+        return $this->latitud;
     }
 
-    public function getLocalidad() {
-        return $this->localidad;
-    }*/
+    public function getLongitud() {
+        return $this->longitud;
+    }
 }

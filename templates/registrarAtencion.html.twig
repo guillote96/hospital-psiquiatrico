@@ -17,9 +17,12 @@
       );
       var zoom=12;
       var markers = new OpenLayers.Layer.Markers( "Markers" );
-      map.addLayer(markers);    
-      //markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat().transform(new OpenLayers.Projection("EPSG:4326"),map.getProjectionObject())));
+      map.addLayer(markers);
+      {% for i in consultas %}
+        markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat({{i.longitud}},{{i.latitud}}).transform(new OpenLayers.Projection("EPSG:4326"),map.getProjectionObject())));
+      {% endfor %}
       map.setCenter (lonLat, zoom);
+
     }
   </script>
 
@@ -47,8 +50,6 @@ function getData(){
 </script>
 
 <body onload="getData()">
-
-
 
   <!-- Modal -->
   <div class="modal fade bd-example-modal-lg" id="myModal" role="dialog">

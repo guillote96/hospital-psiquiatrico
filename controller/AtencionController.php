@@ -77,14 +77,16 @@ class AtencionController {
         return false;
       }
     	$string=PDOPaciente::getInstance()->traer_paciente($_GET['id'])[0]->getNombre()." ".PDOPaciente::getInstance()->traer_paciente($_GET['id'])[0]->getApellido();
+      $id = PDOPaciente::getInstance()->traer_paciente($_GET['id'])[0]->getId();
+      $info = array(':pacienteid' => $id);
+      $consultas = PDOConsulta::getInstance()->traer_consultas_de_paciente($info);
     	$datos = array('paciente' => PDOPaciente::getInstance()->traer_paciente($_GET['id'])[0],
     		           'nombreapellido' => $string, 
     		           'resources' => array("usuario"=>PDOUsuario::getInstance()->traer_usuario($_SESSION['id'])[0]->getUsername(),'titulo' => PDOConfiguracion::getInstance()->traer_titulo()[0][0]),
                        'motivos' => PDOMotivoConsulta::getInstance()->listAll(),
                        'tratamientos' => PDOTratamientoFarmacologico::getInstance()->listAll(),
                        'acompanamientos' => PDOacompanamiento::getInstance()->listAll(),
-                       'permisos' => $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]));
-
+                       'permisos' => $permisos = PDOPermiso::getInstance()->traer_permisos_usuario($_SESSION["id"]),'consultas' => $consultas);
      $view = new RegistrarAtencion();
      $view->show($datos);
 
