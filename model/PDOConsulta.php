@@ -71,7 +71,7 @@ class PDOConsulta extends PDORepository {
     public function listarCantidad($pagina,$cantidad,$id){
 
         $page=($pagina - 1);
-        $answer = $this->query("select * from consulta where paciente_id = :id LIMIT :pagina , :cantidad" , array(":id"=> $id,":pagina" => $page ,":cantidad"=> $cantidad));
+        $answer = $this->query("select * from consulta where paciente_id = :id LIMIT :pagina ,:cantidad" , array(":id"=> $id,":pagina" => $page ,":cantidad"=> $cantidad));
         $final_answer=[];
         foreach ($answer as &$element) {
             $final_answer[] = new Consulta ($element['id'],$element['paciente_id'],$element['fecha'],$element['motivo_id'],$element['derivacion_id'],$element['articulacion_con_instituciones'],$element['internacion'],$element['diagnostico'],$element['observaciones'],$element['tratamiento_farmacologico_id'],$element['acompanamiento_id']);
@@ -90,21 +90,31 @@ class PDOConsulta extends PDORepository {
     }
 
     public function consultasPorGenero(){
-        $answer = $this->query("SELECT c.id,c.paciente_id,c.fecha,c.motivo_id,c.derivacion_id,c.articulacion_con_instituciones,c.internacion,c.diagnostico,c.observaciones,c.tratamiento_farmacologico_id,c.acompanamiento_id,p.nombre,p.apellido,g.nombre as genero,l.nombre as localidad FROM consulta as c INNER JOIN paciente as p ON (c.paciente_id = p.id) INNER JOIN genero as g ON (p.genero_id = g.id) INNER JOIN localidad as l ON(p.localidad_id = l.id) ORDER BY g.id", array());
+        $answer = $this->query("SELECT c.id,c.paciente_id,c.fecha,c.motivo_id,c.derivacion_id,c.articulacion_con_instituciones,c.internacion,c.diagnostico,c.observaciones,c.tratamiento_farmacologico_id,c.acompanamiento_id,p.nombre,p.apellido,g.nombre as criterio,l.nombre as localidad FROM consulta as c INNER JOIN paciente as p ON (c.paciente_id = p.id) INNER JOIN genero as g ON (p.genero_id = g.id) INNER JOIN localidad as l ON(p.localidad_id = l.id) ORDER BY g.id", array());
         $final_answer=[];
         foreach ($answer as &$element) {
-            $final_answer[] = new ConsultaDetallada ($element['id'],$element['paciente_id'],$element['fecha'],$element['motivo_id'],$element['derivacion_id'],$element['articulacion_con_instituciones'],$element['internacion'],$element['diagnostico'],$element['observaciones'],$element['tratamiento_farmacologico_id'],$element['acompanamiento_id'],$element['nombre'],$element['apellido'],$element['genero'],$element['localidad']);
+            $final_answer[] = new ConsultaDetallada ($element['id'],$element['paciente_id'],$element['fecha'],$element['motivo_id'],$element['derivacion_id'],$element['articulacion_con_instituciones'],$element['internacion'],$element['diagnostico'],$element['observaciones'],$element['tratamiento_farmacologico_id'],$element['acompanamiento_id'],$element['nombre'],$element['apellido'],$element['criterio']);
+        }
+        return $final_answer;   
+    }
+
+    public function consultasPorLocalidad(){
+        $answer = $this->query("SELECT c.id,c.paciente_id,c.fecha,c.motivo_id,c.derivacion_id,c.articulacion_con_instituciones,c.internacion,c.diagnostico,c.observaciones,c.tratamiento_farmacologico_id,c.acompanamiento_id,p.nombre,p.apellido,g.nombre as genero,l.nombre as criterio FROM consulta as c INNER JOIN paciente as p ON (c.paciente_id = p.id) INNER JOIN genero as g ON (p.genero_id = g.id) INNER JOIN localidad as l ON(p.localidad_id = l.id) ORDER BY l.id", array());
+        $final_answer=[];
+        foreach ($answer as &$element) {
+            $final_answer[] = new ConsultaDetallada ($element['id'],$element['paciente_id'],$element['fecha'],$element['motivo_id'],$element['derivacion_id'],$element['articulacion_con_instituciones'],$element['internacion'],$element['diagnostico'],$element['observaciones'],$element['tratamiento_farmacologico_id'],$element['acompanamiento_id'],$element['nombre'],$element['apellido'],$element['criterio']);
         }
         return $final_answer;    
     }
 
-    public function consultasPorLocalidad(){
-        $answer = $this->query("SELECT c.id,c.paciente_id,c.fecha,c.motivo_id,c.derivacion_id,c.articulacion_con_instituciones,c.internacion,c.diagnostico,c.observaciones,c.tratamiento_farmacologico_id,c.acompanamiento_id,p.nombre,p.apellido,g.nombre as genero,l.nombre as localidad FROM consulta as c INNER JOIN paciente as p ON (c.paciente_id = p.id) INNER JOIN genero as g ON (p.genero_id = g.id) INNER JOIN localidad as l ON(p.localidad_id = l.id) ORDER BY l.id", array());
+    public function consultasPorMotivo(){
+        $answer = $this->query("SELECT c.id,c.paciente_id,c.fecha,c.motivo_id,c.derivacion_id,c.articulacion_con_instituciones,c.internacion,c.diagnostico,c.observaciones,c.tratamiento_farmacologico_id,c.acompanamiento_id,p.nombre,p.apellido,mc.nombre as criterio,l.nombre as localidad FROM consulta as c INNER JOIN paciente as p ON (c.paciente_id = p.id) INNER JOIN motivo_consulta as mc ON (c.motivo_id = mc.id) INNER JOIN localidad as l ON(p.localidad_id = l.id) ORDER BY l.id", array());
         $final_answer=[];
         foreach ($answer as &$element) {
-            $final_answer[] = new ConsultaDetallada ($element['id'],$element['paciente_id'],$element['fecha'],$element['motivo_id'],$element['derivacion_id'],$element['articulacion_con_instituciones'],$element['internacion'],$element['diagnostico'],$element['observaciones'],$element['tratamiento_farmacologico_id'],$element['acompanamiento_id'],$element['nombre'],$element['apellido'],$element['genero'],$element['localidad']);
+            $final_answer[] = new ConsultaDetallada ($element['id'],$element['paciente_id'],$element['fecha'],$element['motivo_id'],$element['derivacion_id'],$element['articulacion_con_instituciones'],$element['internacion'],$element['diagnostico'],$element['observaciones'],$element['tratamiento_farmacologico_id'],$element['acompanamiento_id'],$element['nombre'],$element['apellido'],$element['criterio']);
         }
-        return $final_answer;    
+        return $final_answer;
+        var_dump($final_answer);
     }
 
     public function ConsultasAgrupadasPorLocalidad(){
@@ -112,6 +122,15 @@ class PDOConsulta extends PDORepository {
         $final_answer=[];
         foreach ($answer as &$element) {
             $final_answer[] = new Localidad ($element['localidad'],$element['cantidad'],$element['partido_id']);
+        }
+        return $final_answer;
+    }
+
+    public function ConsultasAgrupadasPorMotivo(){
+        $answer = $this->query("SELECT mc.id, mc.nombre as motivo, COUNT(mc.id) as cantidad FROM consulta as c INNER JOIN motivo_consulta as mc ON (c.motivo_id = mc.id) GROUP BY mc.id", array());
+        $final_answer=[];
+        foreach ($answer as &$element) {
+            $final_answer[] = new MotivoConsulta ($element['motivo'],$element['cantidad']);
         }
         return $final_answer;
     }

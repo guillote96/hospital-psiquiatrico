@@ -295,7 +295,7 @@ if(isset($_GET["action"])){
 	    if(!isset($_SESSION['id'])){
 			UsuarioController::getInstance()->home(null);
 		}
-         else if(UsuarioController::getInstance()->checkPermiso('paciente_show', $_SESSION['id'])){
+         else if(UsuarioController::getInstance()->checkPermiso('atencion_new', $_SESSION['id'])){
 		    AtencionController::getInstance()->registrarAtencion();
 	   }
 	   else{ UsuarioController::getInstance()->accesoNoAutorizado($_SESSION['id']);}
@@ -304,16 +304,37 @@ if(isset($_GET["action"])){
 		AtencionController::getInstance()->registrar_atencion();
 	}
 	else if ($_GET["action"] == 'editarAtencion'){
-		AtencionController::getInstance()->editarAtencion($_GET['id']);
+
+	    if(!isset($_SESSION['id'])){
+			UsuarioController::getInstance()->home(null);
+		}
+        else if(UsuarioController::getInstance()->checkPermiso('atencion_update', $_SESSION['id'])){
+		    AtencionController::getInstance()->editarAtencion($_GET['id']);
+	    }
+	   else{ UsuarioController::getInstance()->accesoNoAutorizado($_SESSION['id']);}
+		
 	}
 	else if ($_GET["action"] == 'editar_atencion'){
 		AtencionController::getInstance()->editar_atencion();
 	}
 	else if ($_GET["action"] == 'eliminar_atencion'){
-		AtencionController::getInstance()->eliminar_atencion();
+	    if(!isset($_SESSION['id'])){
+			UsuarioController::getInstance()->home(null);
+		}
+        else if(UsuarioController::getInstance()->checkPermiso('atencion_destroy', $_SESSION['id'])){
+		    AtencionController::getInstance()->eliminar_atencion();
+	    }
+	   else{ UsuarioController::getInstance()->accesoNoAutorizado($_SESSION['id']);}		
 	}
 	else if ($_GET["action"] == 'listarAtenciones'){
-		AtencionController::getInstance()->listarAtenciones($_GET['id']);
+	    if(!isset($_SESSION['id'])){
+			UsuarioController::getInstance()->home(null);
+		}
+        else if(UsuarioController::getInstance()->checkPermiso('atencion_show', $_SESSION['id'])){
+			AtencionController::getInstance()->listarAtenciones($_GET['id']);
+	    }
+	   else{ UsuarioController::getInstance()->accesoNoAutorizado($_SESSION['id']);}	
+
 	}
 	else if ($_GET["action"] == 'listar_atenciones'){
 		AtencionController::getInstance()->listar_atenciones($_GET["id"]);
