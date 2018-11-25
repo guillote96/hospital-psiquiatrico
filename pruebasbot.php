@@ -58,6 +58,9 @@ switch ($cmd) {
     default:
         $msg['text']  = 'Lo siento ' . $response['message']['from']['first_name'] . ', pero [' . $cmd . '] no es un comando válido.' . PHP_EOL;
         $msg['text'] .= 'Prueba /help para ver la lista de comandos disponibles';
+               $msg['text'].=var_dump($cmd);
+        $msg['text'].= " ";
+        $msg['text'].=var_dump($cmd_params);
         break;
 }
 
