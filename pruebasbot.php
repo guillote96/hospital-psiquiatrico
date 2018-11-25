@@ -41,7 +41,7 @@ switch ($cmd) {
         //$msg['text'] .= '/start Inicializa el bot' . PHP_EOL;
         $msg['text'] .= '/instituciones Lista las instituciones' . PHP_EOL;
         $msg['text'] .= '/instituciones-region-sanitaria:{id}' . PHP_EOL;
-        $msg['text'] .= '/help Muestra esta ayuda1';
+        $msg['text'] .= '/help Muestra esta ayuda';
         $msg['reply_to_message_id'] = null;
         break;
 
@@ -50,7 +50,6 @@ switch ($cmd) {
         $cmd_params = explode(" ", $cmd_params);
         $informacion = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/region-sanitaria/".$cmd_params[1],false);
         $informacion = json_decode($informacion,true);
-        echo $informacion['nombre'];
         $msg['text']  = $informacion->nombre; //file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones",false);
         break;
 
