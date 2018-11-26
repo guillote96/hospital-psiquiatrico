@@ -64,7 +64,11 @@ switch ($cmd) {
             $msg['text']  = 'Debe ingresar un id de región sanitaria';
         }
         else{
-            $msg['text']  = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/region-sanitaria/".$cmd_params,false);
+            $informacion  = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/region-sanitaria/".$cmd_params,false);
+            $informacion = json_decode($informacion);
+            $msg['text']  = '';
+            foreach ($informacion as $i)
+                $msg['text'] = $msg['text'].$i->nombre.PHP_EOL;
         }
         break;
 
