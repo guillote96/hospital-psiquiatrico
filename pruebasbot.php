@@ -69,7 +69,7 @@ switch ($cmd) {
         break;
 
     case '/comando':
-        $msg['text'] = $aResults[1].' '. $aResults[2];
+        $msg['text'] = $aResults[1];
         break;
  
     default:
