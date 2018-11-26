@@ -137,7 +137,7 @@ class AtencionController {
            }
          $array = array(':id' => $_GET['id']);
          PDOConsulta::getInstance()->eliminarConsulta($array);
-
+          $this->listarAtenciones($_GET['idPaciente']);
           //falta redireccionar alguna view
      }
 
