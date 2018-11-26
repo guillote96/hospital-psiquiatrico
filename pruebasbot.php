@@ -64,7 +64,7 @@ switch ($cmd) {
             $msg['text']  = 'Debe ingresar un id de región sanitaria';
         }
         else{
-            $msg['text']  = '1'; //file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/region-sanitaria/".$cmd_params,false);
+            $msg['text']  = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/region-sanitaria/".$cmd_params,false);
         }
         break;
 
