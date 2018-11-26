@@ -121,13 +121,13 @@ class AtencionController {
     }
 
     public function editar_atencion(){
-        $array= self::validador_campos();
+        $array= $this->validador_campos();
          if(!isset($_GET['id']) || empty($_GET['id'])){
             return false;
         }
         $array[':id']=$_GET['id'];
         PDOConsulta::getInstance()->actualizarConsulta($array);
-
+        $this->listarAtenciones($_GET['pacienteId']);
          //falta redireccionar alguna view
     }
 
@@ -137,7 +137,7 @@ class AtencionController {
            }
          $array = array(':id' => $_GET['id']);
          PDOConsulta::getInstance()->eliminarConsulta($array);
-
+          $this->listarAtenciones($_GET['idPaciente']);
           //falta redireccionar alguna view
      }
 
