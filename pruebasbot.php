@@ -54,8 +54,8 @@ switch ($cmd) {
             $msg['text'] = $msg['text'].$i->nombre.PHP_EOL;
         break;
 
-    case '/instituciones {id}':
-        $cmd_params = explode(" ", $cmd);
+    case '/instituciones/'.$id:
+        $cmd_params = explode("/", $cmd);
         $informacion = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/".$cmd_params[1],false);
         $informacion = json_decode($informacion);
         $msg['text']  = '';
@@ -78,7 +78,14 @@ switch ($cmd) {
 //Descomentar para ver todo lo que envía telegram
 /////////////$msg['text']= json_encode($response);
     
-        
+$cmd = '/instituciones 1';
+$cmd_params = explode(" ", $cmd);
+echo $cmd_params[1];
+ $informacion = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/".$cmd_params[1],false);
+        $informacion = json_decode($informacion);
+        $msg['text']  = '';
+        foreach ($informacion as $i)
+            echo $msg['text'] = $msg['text'].$i->nombre.PHP_EOL;
 
 //Realizamos el envío
 $url = 'https://api.telegram.org/bot733229952:AAHPHl4rhawU1jX_nSnhGlAjTAykj6MnACs/sendMessage';
