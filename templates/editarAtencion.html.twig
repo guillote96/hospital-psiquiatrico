@@ -2,7 +2,26 @@
     <head>
         <title>Home</title>
 
-   
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" ></script>
+
+<script>
+var   xmlhttp, myObj, x, txt = "";
+
+xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        myObj = JSON.parse(this.responseText);
+        txt += "<option value=0>Elegir Opción</option>" + "<br>";
+        for (x in myObj) {
+            txt += "<option value="+myObj[x].id+">"+myObj[x].nombre+"</option>" + "<br>";
+        }
+        document.getElementById("derivacion").innerHTML = txt;
+    }
+};
+xmlhttp.open("GET", "https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones", true);
+xmlhttp.send();
+
+</script>
     </head>
     <body>
 {% include 'barra.html'%}
