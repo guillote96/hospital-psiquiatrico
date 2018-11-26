@@ -41,7 +41,7 @@ switch ($cmd) {
         //$msg['text'] .= '/start Inicializa el bot' . PHP_EOL;
         $msg['text'] .= '/instituciones Lista las instituciones' . PHP_EOL;
         $msg['text'] .= '/instituciones-region-sanitaria:{id}' . PHP_EOL;
-        $msg['text'] .= '/help Muestra esta ayuda1';
+        $msg['text'] .= '/help Muestra esta ayuda';
         $msg['reply_to_message_id'] = null;
         break;
 
@@ -49,7 +49,7 @@ switch ($cmd) {
     case '/instituciones':
         //$informacion = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones",false);
         //$informacion = json_decode($informacion,true);
-        $msg['text']  = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones",false);
+        $msg['text']  = '{"id":"1","nombre":"Hospital Municipal de Rivadavia","director":"Dr.Vergara","telefono":"20392","region_sanitaria_id":"1","tipo_institucion_id":"1"},{"id":"2","nombre":"Clinica los tilos","director":"nose","telefono":"223","region_sanitaria_id":"1","tipo_institucion_id":"1"},{"id":"3","nombre":"Hospital 1","director":"Juan Perez","telefono":"1234","region_sanitaria_id":"1","tipo_institucion_id":"1"}' //file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones",false);
         break;
 
     case '/instituciones-region-sanitaria':
