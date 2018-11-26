@@ -63,10 +63,10 @@ xmlhttp.send();
     <div class="form-group col-md-5">
       <label for="derivacion">Derivacion:</label>
       <select class="form-control" name="derivacion" id="derivacion" >
-        <option value="">Elegir Opcion</option>
-        {% for derivacion in derivaciones %}
+        <!--<option value="">Elegir Opcion</option>-->
+        <!--{% for derivacion in derivaciones %}
         <option value="{{derivacion.id}}" {% if derivacion.id == atencion.derivacionid  %} selected {% endif %}>{{derivacion.nombre}}</option>
-        {% endfor %}    
+        {% endfor %}-->
   	  </select>
     </div>
   </div>
