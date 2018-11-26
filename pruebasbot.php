@@ -56,7 +56,7 @@ switch ($cmd) {
 
     case '/instituciones/'.$id:
         $cmd_params = explode("/", $cmd);
-        $informacion = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/".$cmd_params[1],false);
+        $informacion = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/".$id,false);
         $informacion = json_decode($informacion);
         $msg['text']  = '';
         foreach ($informacion as $i)
