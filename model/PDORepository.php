@@ -37,7 +37,6 @@ abstract class PDORepository {
     protected function query($sql,$array){
         $connection = $this->getConnection();
         $stmt = $connection->prepare($sql);
-        $connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, FALSE);
         $stmt->execute($array);
         return $stmt->fetchAll();
     }
