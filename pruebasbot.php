@@ -71,10 +71,6 @@ switch ($cmd) {
                 $msg['text'] = $msg['text'].$i->nombre.PHP_EOL;
         }
         break;
-
-    case '/comando':
-        $msg['text'] = $cmd_params;
-        break;
  
     default:
         $msg['text']  = 'Lo siento ' . $response['message']['from']['first_name'] . ', pero [' . $cmd . '] no es un comando válido.' . PHP_EOL;
