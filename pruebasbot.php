@@ -46,7 +46,7 @@ switch ($cmd) {
         $msg['reply_to_message_id'] = null;
         break;
 
-    case 'comando':
+    case '/comando':
         $msg['text']  = $cmd;
         break;
 
