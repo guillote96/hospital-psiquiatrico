@@ -127,7 +127,7 @@ class AtencionController {
         }
         $array[':id']=$_GET['id'];
         PDOConsulta::getInstance()->actualizarConsulta($array);
-
+        $this->listarAtenciones($_GET['pacienteId']);
          //falta redireccionar alguna view
     }
 
