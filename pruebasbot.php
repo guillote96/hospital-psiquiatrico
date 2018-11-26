@@ -48,6 +48,7 @@ switch ($cmd) {
 
     case 'comando':
         $msg['text']  = $cmd;
+        break;
 
     case '/instituciones':
         $informacion = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones",false);
