@@ -121,7 +121,7 @@ class AtencionController {
     }
 
     public function editar_atencion(){
-        $array= self::validador_campos();
+        $array= $this->validador_campos();
          if(!isset($_GET['id']) || empty($_GET['id'])){
             return false;
         }
