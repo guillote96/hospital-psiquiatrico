@@ -47,22 +47,26 @@ switch ($cmd) {
         break;
 
     case '/instituciones':
-        $informacion = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones",false);
+        if($cmd_params == ''){
+            $informacion = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones",false);
+        }
+        else{
+             $informacion = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/".$cmd_params,false);
+        }
         $informacion = json_decode($informacion);
         $msg['text']  = '';
         foreach ($informacion as $i)
             $msg['text'] = $msg['text'].$i->nombre.PHP_EOL;
         break;
 
-    case '/instituciones {id}':
-        $cmd_params = explode(" ", $cmd);
-        $informacion = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/".$cmd_params[1],false);
+    /*case '/instituciones':
+        $informacion = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/".$cmd_params,false);
         $informacion = json_decode($informacion);
         $msg['text']  = '';
         foreach ($informacion as $i)
             $msg['text'] = $msg['text'].$i->nombre.PHP_EOL;
         break;
-
+    */
     case '/instituciones/region-sanitaria':
         $cmd_params = explode(" ", $cmd_params);
         $msg['text']  = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/region-sanitaria/".$cmd_params[1],false);
