@@ -68,8 +68,8 @@ switch ($cmd) {
         $msg['text']  = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/region-sanitaria/".$cmd_params[1],false);
         break;
 
-    case '/comando/{id}':
-        $msg['text'] = $cmd;
+    case '/comando':
+        $msg['text'] = $aResults[1].' '. $aResults[2];
         break;
  
     default:
