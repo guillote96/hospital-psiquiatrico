@@ -54,8 +54,8 @@ switch ($cmd) {
             $msg['text'] = $msg['text'].$i->nombre.PHP_EOL;
         break;
 
-    case '/instituciones':
-        $cmd_params = explode(" ", $cmd_params);
+    case '/instituciones/id':
+        $cmd_params = explode("/", $cmd);
         $informacion = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/".$cmd_params[1],false);
         $informacion = json_decode($informacion);
         $msg['text']  = '';
