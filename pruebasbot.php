@@ -67,6 +67,10 @@ switch ($cmd) {
         $cmd_params = explode(" ", $cmd_params);
         $msg['text']  = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/region-sanitaria/".$cmd_params[1],false);
         break;
+
+    case 'comando {id}':
+        $msg['text'] = $cmd;
+        break;
  
     default:
         $msg['text']  = 'Lo siento ' . $response['message']['from']['first_name'] . ', pero [' . $cmd . '] no es un comando válido.' . PHP_EOL;
