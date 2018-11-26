@@ -51,7 +51,7 @@ switch ($cmd) {
         $informacion = json_decode($informacion);
         $msg['text']  = '';
         foreach ($informacion as $i)
-            $msg['text'] = $msg['text'].' '.$i->nombre;
+            $msg['text'] = $msg['text'].$i->nombre.PHP_EOL;
         break;
 
     case '/instituciones-region-sanitaria':
@@ -68,7 +68,6 @@ switch ($cmd) {
 
 //Descomentar para ver todo lo que envía telegram
 /////////////$msg['text']= json_encode($response);
-
 
 //Realizamos el envío
 $url = 'https://api.telegram.org/bot733229952:AAHPHl4rhawU1jX_nSnhGlAjTAykj6MnACs/sendMessage';
