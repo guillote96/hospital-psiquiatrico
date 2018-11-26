@@ -39,9 +39,9 @@ switch ($cmd) {
     case '/help':
         $msg['text']  = 'Los comandos disponibles son estos:' . PHP_EOL;
         //$msg['text'] .= '/start Inicializa el bot' . PHP_EOL;
-        $msg['text'] .= '/instituciones, Lista las instituciones' . PHP_EOL;
-        $msg['text'] .= '/instituciones id, Devuelve la institución' . PHP_EOL;
-        $msg['text'] .= '/instituciones/region-sanitaria id, Devuelve las instituciones según la región sanitaria' . PHP_EOL;
+        $msg['text'] .= '/instituciones, lista las instituciones' . PHP_EOL;
+        $msg['text'] .= '/instituciones id, devuelve la institución' . PHP_EOL;
+        $msg['text'] .= '/instituciones/region-sanitaria id, devuelve las instituciones según la región sanitaria' . PHP_EOL;
         $msg['text'] .= '/help Muestra esta ayuda';
         $msg['reply_to_message_id'] = null;
         break;
@@ -60,6 +60,7 @@ switch ($cmd) {
         break;
     
     case '/instituciones/region-sanitaria':
+        $msg['text']  = $cmd_params;
         if($cmd_params == ''){
             $msg['text']  = 'Debe ingresar un id de región sanitaria';
         }
