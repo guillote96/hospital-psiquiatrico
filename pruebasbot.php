@@ -59,7 +59,7 @@ switch ($cmd) {
             $msg['text'] = $msg['text'].$i->nombre.PHP_EOL;
         break;
     
-    case '/instituciones-regionsanitaria':
+    case '/instituciones/regionsanitaria':
         $msg['text']  = $cmd_params;
         /*if($cmd_params == ''){
             $msg['text']  = 'Debe ingresar un id de región sanitaria';
