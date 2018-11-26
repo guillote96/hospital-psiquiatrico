@@ -40,14 +40,10 @@ switch ($cmd) {
         $msg['text']  = 'Los comandos disponibles son estos:' . PHP_EOL;
         //$msg['text'] .= '/start Inicializa el bot' . PHP_EOL;
         $msg['text'] .= '/instituciones Lista las instituciones' . PHP_EOL;
-        $msg['text'] .= '/instituciones:id Devuelve la institución' . PHP_EOL;
+        $msg['text'] .= '/instituciones id Devuelve la institución' . PHP_EOL;
         $msg['text'] .= '/instituciones/region-sanitaria:{id}' . PHP_EOL;
         $msg['text'] .= '/help Muestra esta ayuda';
         $msg['reply_to_message_id'] = null;
-        break;
-
-    case '/comando':
-        $msg['text']  = $cmd;
         break;
 
     case '/instituciones':
@@ -58,8 +54,8 @@ switch ($cmd) {
             $msg['text'] = $msg['text'].$i->nombre.PHP_EOL;
         break;
 
-    case '/instituciones:{id}':
-        $cmd_params = explode(":", $cmd);
+    case '/instituciones id}':
+        $cmd_params = explode(" ", $cmd);
         $informacion = file_get_contents("https://grupo2.proyecto2018.linti.unlp.edu.ar/api/index.php/instituciones/".$cmd_params[1],false);
         $informacion = json_decode($informacion);
         $msg['text']  = '';
