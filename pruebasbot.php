@@ -83,7 +83,7 @@ switch ($cmd) {
 /////////////$msg['text']= json_encode($response);
     
 //Realizamos el envío
-$url = 'https://api.telegram.org/bot733229952:AAHPHl4rhawU1jX_nSnhGlAjTAykj6MnACs/sendMessage';
+$url = '';
 
 $options = array(
     'http' => array(
